@@ -2,10 +2,19 @@
 
 namespace App\Controllers;
 
+use \Http\Response;
+
 class Homepage
 {
+    private Response $response;
+
+    public function __construct(Response $response)
+    {
+        $this->response = $response;
+    }
+
     public function show()
     {
-        echo 'Hello World!';
+        $this->response->setContent('Hello World!');
     }
 }
