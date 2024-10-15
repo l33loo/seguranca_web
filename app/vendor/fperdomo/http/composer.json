@@ -1,0 +1,24 @@
+{
+    "name": "fperdomo/http",
+    "description": "HTTP Component",
+    "keywords": ["http", "request", "response"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Fermin Perdomo",
+            "email": "masterfermin02@gmail.com",
+            "role": "Creator / Main Developer"
+        }
+    ],
+    "require": {
+        "php": ">=8.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "9.5.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Http\\": "src/"
+        }
+    }
+}
