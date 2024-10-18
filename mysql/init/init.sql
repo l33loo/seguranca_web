@@ -1,7 +1,7 @@
 USE booking;
 
--- Tabela Comment
-CREATE TABLE Comment (
+-- Tabela comment
+CREATE TABLE comment (
   id INT NOT NULL AUTO_INCREMENT,
   comment VARCHAR(215) NOT NULL,
   activity_id INT NOT NULL,
@@ -10,14 +10,14 @@ CREATE TABLE Comment (
   PRIMARY KEY (id),
   CONSTRAINT fk_comment_activity
     FOREIGN KEY (activity_id)
-    REFERENCES Activity (id),
+    REFERENCES activity (id),
   CONSTRAINT fk_comment_user
     FOREIGN KEY (user_id)
-    REFERENCES User (id)
+    REFERENCES user (id)
 );
 
--- Tabela User
-CREATE TABLE User (
+-- Tabela user
+CREATE TABLE user (
   id INT NOT NULL AUTO_INCREMENT,
   firstname VARCHAR(45) NOT NULL,
   lastname VARCHAR(45) NOT NULL,
@@ -28,11 +28,11 @@ CREATE TABLE User (
   PRIMARY KEY (id),
   CONSTRAINT fk_user_creditcard
     FOREIGN KEY (creditcard_id)
-    REFERENCES CreditCard (id)
+    REFERENCES creditcard (id)
 );
 
--- Tabela CreditCard
-CREATE TABLE CreditCard (
+-- Tabela creditcard
+CREATE TABLE creditcard (
   id INT NOT NULL AUTO_INCREMENT,
   number VARCHAR(16) NOT NULL,
   cvv VARCHAR(3) NOT NULL,
@@ -40,8 +40,8 @@ CREATE TABLE CreditCard (
   PRIMARY KEY (id)
 );
 
--- Tabela Reservation
-CREATE TABLE Reservation (
+-- Tabela reservation
+CREATE TABLE reservation (
   id INT NOT NULL AUTO_INCREMENT,
   reservedbyuser_id INT NOT NULL,
   reservedon DATETIME NOT NULL,
@@ -51,20 +51,20 @@ CREATE TABLE Reservation (
   PRIMARY KEY (id),
   CONSTRAINT fk_reservation_user
     FOREIGN KEY (reservedbyuser_id)
-    REFERENCES User (id),
-  CONSTRAINT fk_reservation_activity
+    REFERENCES user (id),
+  CONSTRAINT fk_reservationactivity
     FOREIGN KEY (activity_id)
-    REFERENCES Activity (id),
+    REFERENCES activity (id),
   CONSTRAINT fk_reservation_creditcard
     FOREIGN KEY (creditcard_id)
-    REFERENCES CreditCard (id),
+    REFERENCES creditcard (id),
   CONSTRAINT fk_reservation_status
     FOREIGN KEY (reservationstatus_id)
-    REFERENCES ReservationStatus (id)
+    REFERENCES reservationstatus (id)
 );
 
--- Tabela Activity
-CREATE TABLE Activity (
+-- Tabela activity
+CREATE TABLE activity (
   id INT NOT NULL AUTO_INCREMENT,
   name VARCHAR(45) NOT NULL,
   description VARCHAR(215) NOT NULL,
@@ -75,36 +75,36 @@ CREATE TABLE Activity (
   PRIMARY KEY (id),
   CONSTRAINT fk_activity_vendoruser
     FOREIGN KEY (vendoruser_id)
-    REFERENCES User (id)
+    REFERENCES user (id)
 );
 
--- Tabela ReservationStatus
-CREATE TABLE ReservationStatus (
+-- Tabela reservationstatus
+CREATE TABLE reservationstatus (
   id INT NOT NULL AUTO_INCREMENT,
   name VARCHAR(15) NOT NULL UNIQUE,
   PRIMARY KEY (id)
 );
 
--- Tabela UserCreditCard
-CREATE TABLE UserCreditCard{
+-- Tabela usercreditcard
+CREATE TABLE usercreditcard{
     user_id INT NOT NULL,
     creditcard_id INT NOT NULL,
-    CONSTRAINT fk_UserCreditCard_creditcard
+    CONSTRAINT fk_usercreditcard_creditcard
     FOREIGN KEY (creditcard_id)
-    REFERENCES CreditCard (id),
-    CONSTRAINT fk_UserCreditCard_user
+    REFERENCES creditcard (id),
+    CONSTRAINT fk_usercreditcard_user
     FOREIGN KEY (user_id)
-    REFERENCES User (id)
+    REFERENCES user (id)
 }
 
--- Tabela ReservationActivity
-CREATE TABLE Reservation_Activity{
+-- Tabela reservationactivity
+CREATE TABLE reservationactivity{
     reservation_id: INT NOT NULL
     activity_id: INT NOT NULL
-    CONSTRAINT fk_reservation_activity
+    CONSTRAINT fk_reservationactivity
     FOREIGN KEY (reservation_id)
-    REFERENCES Reservation (id),
-    CONSTRAINT fk_reservation_activity_activity
+    REFERENCES reservation (id),
+    CONSTRAINT fk_reservationactivity_activity
     FOREIGN KEY (activity_id)
-    REFERENCES Activity (id)
+    REFERENCES activity (id)
 }
