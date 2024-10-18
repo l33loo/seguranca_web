@@ -19,8 +19,8 @@ services:
     volumes:
       - ./mysql/data:/var/lib/mysql
       - ./mysql/init:/docker-entrypoint-initdb.d/:ro
-    environment:
-      MYSQL_DATABASE: booking
-      MYSQL_ROOT_PASSWORD:
-      MYSQL_USER:
-      MYSQL_PASSWORD:
+    env_file:
+      - path: ./mysql/mysql.dev.env
+        required: false # development
+      - path: /mnt/seguranca_web/secrets/mysql.prod.env
+        required: false # production, for Linux. See compose.sh for details.
