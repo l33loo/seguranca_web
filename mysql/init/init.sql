@@ -86,7 +86,7 @@ CREATE TABLE reservationstatus (
 );
 
 -- Tabela usercreditcard
-CREATE TABLE usercreditcard{
+CREATE TABLE usercreditcard(
     user_id INT NOT NULL,
     creditcard_id INT NOT NULL,
     CONSTRAINT fk_usercreditcard_creditcard
@@ -95,16 +95,16 @@ CREATE TABLE usercreditcard{
     CONSTRAINT fk_usercreditcard_user
     FOREIGN KEY (user_id)
     REFERENCES user (id)
-}
+)
 
 -- Tabela reservationactivity
-CREATE TABLE reservationactivity{
-    reservation_id: INT NOT NULL
-    activity_id: INT NOT NULL
+CREATE TABLE reservationactivity(
+    reservation_id INT NOT NULL,
+    activity_id INT NOT NULL,
     CONSTRAINT fk_reservationactivity
     FOREIGN KEY (reservation_id)
     REFERENCES reservation (id),
     CONSTRAINT fk_reservationactivity_activity
     FOREIGN KEY (activity_id)
     REFERENCES activity (id)
-}
+)
