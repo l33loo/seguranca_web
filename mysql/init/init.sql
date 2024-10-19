@@ -136,3 +136,8 @@ CREATE TABLE reservation_activity (
     FOREIGN KEY (activity_id)
     REFERENCES activity (id)
 );
+
+INSERT INTO reservation_activity(reservation_id, activity_id)
+VALUES (1,1),
+(1,2),
+(2,1);
