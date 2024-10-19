@@ -104,6 +104,11 @@ CREATE TABLE reservation (
     REFERENCES reservation_status (id)
 );
 
+INSERT INTO reservation(reservedbyuser_id, reservedon, activity_id, creditcard_id, reservationtatus_id)
+VALUES (1, '10-11-2024', 1, 1, 1),
+(1, '10-11-2024', 2, 1, 3),
+(2, '10-11-2024', 1, 2, 2);
+
 -- Tabela user_creditcard
 CREATE TABLE user_creditcard (
   user_id INT NOT NULL,
