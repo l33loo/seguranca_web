@@ -64,6 +64,11 @@ CREATE TABLE comment (
     REFERENCES user (id)
 );
 
+INSERT INTO comment(comment, activity_id, user_id, postedon)
+VALUES ('Muito Bom', 1, 1, '05-02-2024'),
+('Muito Mau', 1, 1, '05-02-2024'),
+('Bom', 2, 2, '05-02-2024');
+
 -- Tabela reservation_status
 CREATE TABLE reservation_status (
   id INT NOT NULL AUTO_INCREMENT,
