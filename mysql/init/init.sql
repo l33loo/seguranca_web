@@ -121,6 +121,10 @@ CREATE TABLE user_creditcard (
     REFERENCES user (id)
 );
 
+INSERT INTO user_creditcard(user_id, creditcard_id)
+VALUES (1,1),
+(2,2);
+
 -- Tabela reservation_activity
 CREATE TABLE reservation_activity (
   reservation_id INT NOT NULL,
