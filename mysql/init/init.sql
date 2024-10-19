@@ -76,6 +76,11 @@ CREATE TABLE reservation_status (
   PRIMARY KEY (id)
 );
 
+INSERT INTO reservation_status(name)
+VALUES ('Realized'),
+('Posponed'),
+('Cancel');
+
 -- Tabela reservation
 CREATE TABLE reservation (
   id INT NOT NULL AUTO_INCREMENT,
