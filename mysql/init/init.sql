@@ -43,6 +43,11 @@ CREATE TABLE activity (
     REFERENCES user (id)
 );
 
+INSERT INTO activity(name, description, date, cost, vendoruser_id, isarchived)
+VALUES ('Bananas', 'Descascar', '01-01-2025', 15, 1, true),
+('Maças', 'Descascar', '02-01-2025', 10, 1, false),
+('Abacaxi', 'Cortar', '03-01-2025', 20, 2, false);
+
 -- Tabela comment
 CREATE TABLE comment (
   id INT NOT NULL AUTO_INCREMENT,
