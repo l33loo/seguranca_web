@@ -24,6 +24,10 @@ CREATE TABLE user (
   PRIMARY KEY (id)
 );
 
+INSERT INTO user(firstname, lastname, email, password, isvendor)
+VALUES ('Pedro','Paula','pedropaula@uac.pt','123', true),
+('Lila','Karpowicz','lilakarpowicz@uac.pt','246', false);
+
 -- Tabela activity
 CREATE TABLE activity (
   id INT NOT NULL AUTO_INCREMENT,
