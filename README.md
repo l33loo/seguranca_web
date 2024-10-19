@@ -16,6 +16,8 @@ The production setup only works on Linux machines.
 
 **Make sure to delete `mysql/mysql.dev.env` beforehand.**
 
+Inspired from (this)[https://github.com/mashiox/dotfiles/blob/master/docker/secrets.md].
+
 ### Pass
 
 You will need to have [password-manager](https://www.passwordstore.org/) installed to run the project in production mode. The MySQL production secrets will need to be stored in an entry as a file (`pass insert -m {entry-name}`). You can use the content of `mysql/mysql.dev.env` as a template.
