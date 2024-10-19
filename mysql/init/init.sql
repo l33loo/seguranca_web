@@ -9,6 +9,10 @@ CREATE TABLE creditcard (
   PRIMARY KEY (id)
 );
 
+INSERT INTO creditcard(number, cvv, expiry)
+VALUES ('1234567891234567', '123', '10-10-2024'),
+('1234567891234568', '124', '11-10-2024');
+
 -- Tabela user
 CREATE TABLE user (
   id INT NOT NULL AUTO_INCREMENT,
