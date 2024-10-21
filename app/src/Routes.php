@@ -3,7 +3,7 @@
 return [
     // Non-authenticated Users
     ['GET', '/[activities]', ['App\Controllers\Homepage', 'show']],
-    // ['GET', '/activities/{id:\d+}', ['App\Controllers\Activity', 'show']],
+    ['GET', '/activities/{id:\d+}', ['App\Controllers\Activity', 'show']],
 
     // Authenticated Users - Clients and Vendors
     // ['POST', '/login', ['App\Controllers\Homepage', 'show']],
