@@ -9,7 +9,7 @@ return [
     ['GET', '/login', ['App\Controllers\Login', 'show']],
     ['POST', '/login', ['App\Controllers\Login', 'login']],
     ['POST', '/logout', ['App\Controllers\Login', 'logout']],
-    // ['GET', '/users/me/', ['App\Controllers\Homepage', 'show']],
+    ['GET', '/users/me', ['App\Controllers\User', 'show']],
     // ['GET', '/reservations', ['App\Controllers\Homepage', 'show']],
     // ['GET', '/reservations/{id:\d+}', ['App\Controllers\Homepage', 'show']],
     // ['POST', '/reservations', ['App\Controllers\Homepage', 'show']],
