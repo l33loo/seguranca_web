@@ -6,8 +6,9 @@ return [
     ['GET', '/activities/{id:\d+}', ['App\Controllers\Activity', 'show']],
 
     // Authenticated Users - Clients and Vendors
-    // ['POST', '/login', ['App\Controllers\Homepage', 'show']],
-    // ['POST', '/logout', ['App\Controllers\Homepage', 'show']],
+    ['GET', '/login', ['App\Controllers\Login', 'show']],
+    ['POST', '/login', ['App\Controllers\Login', 'login']],
+    ['POST', '/logout', ['App\Controllers\Login', 'logout']],
     // ['GET', '/users/me/', ['App\Controllers\Homepage', 'show']],
     // ['GET', '/reservations', ['App\Controllers\Homepage', 'show']],
     // ['GET', '/reservations/{id:\d+}', ['App\Controllers\Homepage', 'show']],
