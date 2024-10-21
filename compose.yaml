@@ -19,6 +19,8 @@ services:
     volumes:
       - ./mysql/data:/var/lib/mysql
       - ./mysql/init:/docker-entrypoint-initdb.d/:ro
-    environment:
-      MYSQL_ROOT_PASSWORD:
-      MYSQL_DATABASE:
+    env_file:
+      - path: /mnt/seguranca_web/secrets/mysql.prod.env
+        required: false # production, for Linux. Created by running `./compose.sh`.
+      - path: ./mysql/mysql.dev.env
+        required: false # development, overrides the production env file
