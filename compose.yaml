@@ -21,6 +21,6 @@ services:
       - ./mysql/init:/docker-entrypoint-initdb.d/:ro
     env_file:
       - path: /mnt/seguranca_web/secrets/mysql.prod.env
-        required: true # production, for Linux. Created by running `./compose.sh`.
+        required: false # production, for Linux. Created by running `./compose.sh`.
       - path: ./mysql/mysql.dev.env
         required: false # development, overrides the production env file
