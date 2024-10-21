@@ -6,7 +6,7 @@ use Http\Request;
 use Http\Response;
 use App\Template\Renderer;
 
-class Activity
+class UserController
 {
     private Request $request;
     private Response $response;
@@ -22,13 +22,25 @@ class Activity
         $this->renderer = $renderer;
     }
 
-    public function show($params)
+    public function showProfile()
     {
-        $data = [
-            'id' => $params['id'],
-        ];
-        
-        $html = $this->renderer->render('Activity', $data);
+        $html = $this->renderer->render('users/profile');
         $this->response->setContent($html);
+    }
+
+    public function showLoginForm()
+    {
+        $html = $this->renderer->render('users/login');
+        $this->response->setContent($html);
+    }
+
+    public function login()
+    {
+
+    }
+
+    public function logout()
+    {
+        
     }
 }

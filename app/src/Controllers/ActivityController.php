@@ -6,7 +6,7 @@ use Http\Request;
 use Http\Response;
 use App\Template\Renderer;
 
-class User
+class ActivityController
 {
     private Request $request;
     private Response $response;
@@ -22,9 +22,19 @@ class User
         $this->renderer = $renderer;
     }
 
-    public function show()
+    public function list()
     {
-        $html = $this->renderer->render('User');
+        $html = $this->renderer->render('activities/list');
+        $this->response->setContent($html);
+    }
+
+    public function show($params)
+    {
+        $data = [
+            'id' => $params['id'],
+        ];
+        
+        $html = $this->renderer->render('activities/show', $data);
         $this->response->setContent($html);
     }
 }

@@ -2,14 +2,14 @@
 
 return [
     // Non-authenticated Users
-    ['GET', '/[activities]', ['App\Controllers\Homepage', 'show']],
-    ['GET', '/activities/{id:\d+}', ['App\Controllers\Activity', 'show']],
+    ['GET', '/[activities]', ['App\Controllers\ActivityController', 'list']],
+    ['GET', '/activities/{id:\d+}', ['App\Controllers\ActivityController', 'show']],
+    ['GET', '/login', ['App\Controllers\UserController', 'showLoginForm']],
+    ['POST', '/login', ['App\Controllers\UserController', 'login']],
 
     // Authenticated Users - Clients and Vendors
-    ['GET', '/login', ['App\Controllers\Login', 'show']],
-    ['POST', '/login', ['App\Controllers\Login', 'login']],
-    ['POST', '/logout', ['App\Controllers\Login', 'logout']],
-    ['GET', '/users/me', ['App\Controllers\User', 'show']],
+    ['POST', '/logout', ['App\Controllers\UserController', 'logout']],
+    ['GET', '/users/me', ['App\Controllers\UserController', 'showProfile']],
     // ['GET', '/reservations', ['App\Controllers\Homepage', 'show']],
     // ['GET', '/reservations/{id:\d+}', ['App\Controllers\Homepage', 'show']],
     // ['POST', '/reservations', ['App\Controllers\Homepage', 'show']],
