@@ -12,7 +12,7 @@ return [
     ['GET', '/users/me', ['App\Controllers\UserController', 'showProfile']],
     ['GET', '/reservations', ['App\Controllers\ReservationController', 'list']],
     ['GET', '/reservations/{id:\d+}', ['App\Controllers\ReservationController', 'show']],
-    // ['POST', '/reservations', ['App\Controllers\Homepage', 'show']],
+    ['POST', '/reservations', ['App\Controllers\ReservationController', 'reserve']],
     ['GET', '/{slug}', ['App\Controllers\Page', 'show']],
 
     // Vendors only

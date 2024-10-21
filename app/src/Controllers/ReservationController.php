@@ -37,4 +37,9 @@ class ReservationController
         $html = $this->renderer->render('reservations/show', $data);
         $this->response->setContent($html);
     }
+
+    public function reserve($ids)
+    {
+        
+    }
 }
