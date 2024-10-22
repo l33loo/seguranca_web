@@ -47,4 +47,9 @@ class ActivityController
     {
         // IF VENDOR
     }
+
+    public function archive()
+    {
+        // If VENDOR
+    }
 }
