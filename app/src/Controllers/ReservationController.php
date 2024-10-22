@@ -40,6 +40,11 @@ class ReservationController
 
     public function reserve($ids)
     {
-        
+        // Logged in user only
+    }
+
+    public function updateStatus($newStatus)
+    {
+        // For VENDOR
     }
 }
