@@ -20,5 +20,5 @@ return [
     ['PUT', '/activities/{id:\d+}', ['App\Controllers\ActivityController', 'update']],
     ['PATCH', '/activities/{id:\d+}/archive', ['App\Controllers\ActivityController', 'archive']],
     ['GET', '/activities/{id:\d+}/reservations', ['App\Controllers\ActivityController', 'listReservations']],
-    // ['PATCH', '/reservations/{id:\d+}', ['App\Controllers\Homepage', 'show']],
+    ['PATCH', '/reservations/{id:\d+}', ['App\Controllers\ReservationController', 'updateStatus']],
 ];
