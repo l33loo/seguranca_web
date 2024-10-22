@@ -4,18 +4,18 @@ namespace App\Controllers;
 
 use Http\Request;
 use Http\Response;
-use App\Template\Renderer;
+use App\Template\FrontendRenderer;
 
 class ReservationController
 {
     private Request $request;
     private Response $response;
-    private Renderer $renderer;
+    private FrontendRenderer $renderer;
 
     public function __construct(
         Request $request,
         Response $response,
-        Renderer $renderer
+        FrontendRenderer $renderer
     ) {
         $this->request = $request;
         $this->response = $response;

@@ -1,5 +1,6 @@
+{% extends "layout.html" %} {% block content %}
 <h1>Reservations</h1>
 
 {% if activityId|trim is not empty %}
 <div>Activity #{{ activityId }}</div>
-{% endif %}
+{% endif %} {% endblock %}

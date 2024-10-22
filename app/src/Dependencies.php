@@ -15,6 +15,7 @@ $injector->define('Http\HttpRequest', [
 $injector->alias('Http\Response', 'Http\HttpResponse');
 $injector->share('Http\HttpResponse');
 
+$injector->alias('App\Template\FrontendRenderer', 'App\Template\FrontendTwigRenderer');
 $injector->alias('App\Template\Renderer', 'App\Template\TwigRenderer');
 $injector->delegate('\Twig\Environment', function () use ($injector) {
     $loader = new \Twig\Loader\FilesystemLoader(dirname(__DIR__) . '/templates');
@@ -27,5 +28,8 @@ $injector->define('App\Page\FilePageReader', [
 ]);
 $injector->alias('App\Page\PageReader', 'App\Page\FilePageReader');
 $injector->share('App\Page\FilePageReader');
+
+$injector->alias('App\Menu\MenuReader', 'App\Menu\ArrayMenuReader');
+$injector->share('App\Menu\ArrayMenuReader');
 
 return $injector;
