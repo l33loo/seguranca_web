@@ -29,4 +29,7 @@ $injector->define('App\Page\FilePageReader', [
 $injector->alias('App\Page\PageReader', 'App\Page\FilePageReader');
 $injector->share('App\Page\FilePageReader');
 
+$injector->alias('App\Menu\MenuReader', 'App\Menu\ArrayMenuReader');
+$injector->share('App\Menu\ArrayMenuReader');
+
 return $injector;
