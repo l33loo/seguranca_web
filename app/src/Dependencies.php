@@ -15,6 +15,7 @@ $injector->define('Http\HttpRequest', [
 $injector->alias('Http\Response', 'Http\HttpResponse');
 $injector->share('Http\HttpResponse');
 
+$injector->alias('App\Template\FrontendRenderer', 'App\Template\FrontendTwigRenderer');
 $injector->alias('App\Template\Renderer', 'App\Template\TwigRenderer');
 $injector->delegate('\Twig\Environment', function () use ($injector) {
     $loader = new \Twig\Loader\FilesystemLoader(dirname(__DIR__) . '/templates');
