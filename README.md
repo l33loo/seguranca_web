@@ -26,4 +26,4 @@ Adapt the script to use the names of your `pass` entry and directories/files.
 
 ## Design Details
 
-We used (this tutorial)[https://github.com/l33loo/no-framework-tutorial] to help us implement a MVC-type design for this project.
+We used (this tutorial)[https://github.com/PatrickLouys/no-framework-tutorial] to help us implement a MVC-type design for this project.
