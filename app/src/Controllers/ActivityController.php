@@ -52,4 +52,15 @@ class ActivityController
     {
         // If VENDOR
     }
+
+    public function listReservations($params): void
+    {
+        // If VENDOR
+        $data = [
+            'activityId' => $params['id'],
+        ];
+
+        $html = $this->renderer->render('reservations/list', $data);
+        $this->response->setContent($html);
+    }
 }

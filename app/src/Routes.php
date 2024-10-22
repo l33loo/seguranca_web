@@ -18,7 +18,7 @@ return [
     // Vendors only
     ['POST', '/activities', ['App\Controllers\ActivityController', 'create']],
     ['PUT', '/activities/{id:\d+}', ['App\Controllers\ActivityController', 'update']],
-    ['PATCH', '/activities/{id:\d+}/archive', ['App\ActivityController', 'archive']],
-    // ['GET', '/activities/{id:\d+}/reservations', ['App\Controllers\Homepage', 'show']],
+    ['PATCH', '/activities/{id:\d+}/archive', ['App\Controllers\ActivityController', 'archive']],
+    ['GET', '/activities/{id:\d+}/reservations', ['App\Controllers\ActivityController', 'listReservations']],
     // ['PATCH', '/reservations/{id:\d+}', ['App\Controllers\Homepage', 'show']],
 ];
