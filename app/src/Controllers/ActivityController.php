@@ -40,6 +40,11 @@ class ActivityController
 
     public function create()
     {
-        
+        // If VENDOR
+    }
+
+    public function update()
+    {
+        // IF VENDOR
     }
 }
