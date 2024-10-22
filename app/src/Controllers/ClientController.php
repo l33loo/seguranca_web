@@ -6,7 +6,7 @@ use Http\Request;
 use Http\Response;
 use App\Template\Renderer;
 
-class ActivityController
+class ClientController
 {
     private Request $request;
     private Response $response;
@@ -22,23 +22,13 @@ class ActivityController
         $this->renderer = $renderer;
     }
 
-    public function list()
+    public function showProfile()
     {
-        $html = $this->renderer->render('activities/list');
+        $html = $this->renderer->render('users/profile');
         $this->response->setContent($html);
     }
 
-    public function show($params)
-    {
-        $data = [
-            'id' => $params['id'],
-        ];
-        
-        $html = $this->renderer->render('activities/show', $data);
-        $this->response->setContent($html);
-    }
-
-    public function create()
+    public function showReservations()
     {
         
     }
