@@ -6,7 +6,7 @@ use Http\Request;
 use Http\Response;
 use App\Template\Renderer;
 
-class Homepage
+class ReservationController
 {
     private Request $request;
     private Response $response;
@@ -22,13 +22,24 @@ class Homepage
         $this->renderer = $renderer;
     }
 
-    public function show()
+    public function list()
+    {
+        $html = $this->renderer->render('reservations/list');
+        $this->response->setContent($html);
+    }
+
+    public function show($params)
     {
         $data = [
-            'name' => $this->request->getParameter('name', 'stranger'),
+            'id' => $params['id'],
         ];
         
-        $html = $this->renderer->render('Homepage', $data);
+        $html = $this->renderer->render('reservations/show', $data);
         $this->response->setContent($html);
+    }
+
+    public function reserve($ids)
+    {
+        
     }
 }
