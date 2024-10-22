@@ -37,4 +37,30 @@ class ActivityController
         $html = $this->renderer->render('activities/show', $data);
         $this->response->setContent($html);
     }
+
+    public function create()
+    {
+        // If VENDOR
+    }
+
+    public function update()
+    {
+        // IF VENDOR
+    }
+
+    public function archive()
+    {
+        // If VENDOR
+    }
+
+    public function listReservations($params): void
+    {
+        // If VENDOR
+        $data = [
+            'activityId' => $params['id'],
+        ];
+
+        $html = $this->renderer->render('reservations/list', $data);
+        $this->response->setContent($html);
+    }
 }
