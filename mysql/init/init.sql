@@ -9,9 +9,9 @@ CREATE TABLE IF NOT EXISTS creditcard (
   PRIMARY KEY (id)
 );
 
-INSERT INTO creditcard(number, cvv, expiry)
-VALUES ('1234567891234567', '123', '10-10-2024'),
-('1234567891234568', '124', '11-10-2024');
+INSERT INTO creditcard(id, number, cvv, expiry)
+VALUES (1, '1234567891234567', '123', '2026-12-01'),
+(2, '1234567891234568', '124', '2025-10-11');
 
 -- Tabela user
 CREATE TABLE IF NOT EXISTS user (
@@ -27,9 +27,9 @@ CREATE TABLE IF NOT EXISTS user (
 -- Pedro's passwordhash: 123
 -- Lila's passwordhash: 456
 -- bcrypt without salt for now
-INSERT INTO user(firstname, lastname, email, passwordhash, isvendor)
-VALUES ('Pedro','Paula','pedropaula@uac.pt','$2y$10$HkCd5wTbke4wG4wWh9t0pOLsDsYaDPAxS8JwW5cyZoUmQ4WiaJ9Y6', true),
-('Lila','Karpowicz','lilakarpowicz@uac.pt','$2y$10$4GFUqTp1GUTlQxMeO4QCceqXLA75nr7g9k01MHJ6ZdnGS6K8gXgwq', false);
+INSERT INTO user(id, firstname, lastname, email, passwordhash, isvendor)
+VALUES (1, 'Pedro','Paula','pedropaula@uac.pt','$2y$10$HkCd5wTbke4wG4wWh9t0pOLsDsYaDPAxS8JwW5cyZoUmQ4WiaJ9Y6', true),
+(2, 'Lila','Karpowicz','lilakarpowicz@uac.pt','$2y$10$4GFUqTp1GUTlQxMeO4QCceqXLA75nr7g9k01MHJ6ZdnGS6K8gXgwq', false);
 
 -- Tabela activity
 CREATE TABLE IF NOT EXISTS activity (
@@ -46,10 +46,10 @@ CREATE TABLE IF NOT EXISTS activity (
     REFERENCES user (id)
 );
 
-INSERT INTO activity(name, description, date, cost, vendoruser_id, isarchived)
-VALUES ('Bananas', 'Descascar', '01-01-2025', 15, 1, true),
-('Maças', 'Descascar', '02-01-2025', 10, 1, false),
-('Abacaxi', 'Cortar', '03-01-2025', 20, 2, false);
+INSERT INTO activity(id, name, description, date, cost, vendoruser_id, isarchived)
+VALUES (1, 'Bananas', 'Descascar', '2025-01-01 15:00:00', 15, 1, true),
+(2, 'Maças', 'Descascar', '2024-10-04 19:30:00', 10, 1, false),
+(3, 'Abacaxi', 'Cortar', '2024-12-13  12:30:00', 20, 2, false);
 
 -- Tabela comment
 CREATE TABLE IF NOT EXISTS comment (
@@ -67,10 +67,10 @@ CREATE TABLE IF NOT EXISTS comment (
     REFERENCES user (id)
 );
 
-INSERT INTO comment(comment, activity_id, user_id, postedon)
-VALUES ('Muito Bom', 1, 1, '05-02-2024'),
-('Muito Mau', 1, 1, '05-02-2024'),
-('Bom', 2, 2, '05-02-2024');
+INSERT INTO comment(id, comment, activity_id, user_id, postedon)
+VALUES (1, 'Muito Bom', 2, 1, '2024-10-05 15:45:34'),
+(2, 'Muito Mau', 2, 1, '2024-10-06 11:35:14'),
+(3, 'Bom', 2, 2, '2024-10-05 07:05:01');
 
 -- Tabela reservation_status
 CREATE TABLE IF NOT EXISTS reservation_status (
@@ -79,10 +79,10 @@ CREATE TABLE IF NOT EXISTS reservation_status (
   PRIMARY KEY (id)
 );
 
-INSERT INTO reservation_status(name)
-VALUES ('Realized'),
-('Posponed'),
-('Cancel');
+INSERT INTO reservation_status(id, name)
+VALUES (1, 'Realized'),
+(2, 'Posponed'),
+(3, 'Cancelled');
 
 -- Tabela reservation
 CREATE TABLE IF NOT EXISTS reservation (
@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS reservation (
   reservedon DATETIME NOT NULL,
   activity_id INT NOT NULL,
   creditcard_id INT NOT NULL,
-  reservationtatus_id INT NOT NULL,
+  reservationstatus_id INT NOT NULL,
   PRIMARY KEY (id),
   CONSTRAINT fk_reservation_user
     FOREIGN KEY (reservedbyuser_id)
@@ -103,14 +103,14 @@ CREATE TABLE IF NOT EXISTS reservation (
     FOREIGN KEY (creditcard_id)
     REFERENCES creditcard (id),
   CONSTRAINT fk_reservation_status
-    FOREIGN KEY (reservationtatus_id)
+    FOREIGN KEY (reservationstatus_id)
     REFERENCES reservation_status (id)
 );
 
-INSERT INTO reservation(reservedbyuser_id, reservedon, activity_id, creditcard_id, reservationtatus_id)
-VALUES (1, '10-11-2024', 1, 1, 1),
-(1, '10-11-2024', 2, 1, 3),
-(2, '10-11-2024', 1, 2, 2);
+INSERT INTO reservation(reservedbyuser_id, reservedon, activity_id, creditcard_id, reservationstatus_id)
+VALUES (1, '2024-10-15 20:55:04', 1, 1, 1),
+(1, '2024-10-20 07:05:22', 2, 1, 3),
+(2, '2024-09-22 17:44:31', 1, 2, 2);
 
 -- Tabela user_creditcard
 CREATE TABLE IF NOT EXISTS user_creditcard (
