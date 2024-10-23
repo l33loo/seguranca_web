@@ -1,7 +1,7 @@
 USE booking;
 
 -- Tabela creditcard
-CREATE TABLE creditcard (
+CREATE TABLE IF NOT EXISTS creditcard (
   id INT NOT NULL AUTO_INCREMENT,
   number VARCHAR(16) NOT NULL,
   cvv VARCHAR(3) NOT NULL,
@@ -14,22 +14,25 @@ VALUES ('1234567891234567', '123', '10-10-2024'),
 ('1234567891234568', '124', '11-10-2024');
 
 -- Tabela user
-CREATE TABLE user (
+CREATE TABLE IF NOT EXISTS user (
   id INT NOT NULL AUTO_INCREMENT,
   firstname VARCHAR(45) NOT NULL,
   lastname VARCHAR(45) NOT NULL,
   email VARCHAR(45) NOT NULL UNIQUE,
-  password VARCHAR(215) NOT NULL,
+  passwordhash VARCHAR(215) NOT NULL,
   isvendor BOOLEAN NOT NULL,
   PRIMARY KEY (id)
 );
 
-INSERT INTO user(firstname, lastname, email, password, isvendor)
-VALUES ('Pedro','Paula','pedropaula@uac.pt','123', true),
-('Lila','Karpowicz','lilakarpowicz@uac.pt','246', false);
+-- Pedro's passwordhash: 123
+-- Lila's passwordhash: 456
+-- bcrypt without salt for now
+INSERT INTO user(firstname, lastname, email, passwordhash, isvendor)
+VALUES ('Pedro','Paula','pedropaula@uac.pt','$2y$10$HkCd5wTbke4wG4wWh9t0pOLsDsYaDPAxS8JwW5cyZoUmQ4WiaJ9Y6', true),
+('Lila','Karpowicz','lilakarpowicz@uac.pt','$2y$10$4GFUqTp1GUTlQxMeO4QCceqXLA75nr7g9k01MHJ6ZdnGS6K8gXgwq', false);
 
 -- Tabela activity
-CREATE TABLE activity (
+CREATE TABLE IF NOT EXISTS activity (
   id INT NOT NULL AUTO_INCREMENT,
   name VARCHAR(45) NOT NULL,
   description VARCHAR(215) NOT NULL,
@@ -49,7 +52,7 @@ VALUES ('Bananas', 'Descascar', '01-01-2025', 15, 1, true),
 ('Abacaxi', 'Cortar', '03-01-2025', 20, 2, false);
 
 -- Tabela comment
-CREATE TABLE comment (
+CREATE TABLE IF NOT EXISTS comment (
   id INT NOT NULL AUTO_INCREMENT,
   comment VARCHAR(215) NOT NULL,
   activity_id INT NOT NULL,
@@ -70,7 +73,7 @@ VALUES ('Muito Bom', 1, 1, '05-02-2024'),
 ('Bom', 2, 2, '05-02-2024');
 
 -- Tabela reservation_status
-CREATE TABLE reservation_status (
+CREATE TABLE IF NOT EXISTS reservation_status (
   id INT NOT NULL AUTO_INCREMENT,
   name VARCHAR(15) NOT NULL UNIQUE,
   PRIMARY KEY (id)
@@ -82,7 +85,7 @@ VALUES ('Realized'),
 ('Cancel');
 
 -- Tabela reservation
-CREATE TABLE reservation (
+CREATE TABLE IF NOT EXISTS reservation (
   id INT NOT NULL AUTO_INCREMENT,
   reservedbyuser_id INT NOT NULL,
   reservedon DATETIME NOT NULL,
@@ -110,7 +113,7 @@ VALUES (1, '10-11-2024', 1, 1, 1),
 (2, '10-11-2024', 1, 2, 2);
 
 -- Tabela user_creditcard
-CREATE TABLE user_creditcard (
+CREATE TABLE IF NOT EXISTS user_creditcard (
   user_id INT NOT NULL,
   creditcard_id INT NOT NULL,
   CONSTRAINT fk_user_creditcard_creditcard
@@ -126,7 +129,7 @@ VALUES (1,1),
 (2,2);
 
 -- Tabela reservation_activity
-CREATE TABLE reservation_activity (
+CREATE TABLE IF NOT EXISTS reservation_activity (
   reservation_id INT NOT NULL,
   activity_id INT NOT NULL,
   CONSTRAINT fk_reservation_activity_reservation
