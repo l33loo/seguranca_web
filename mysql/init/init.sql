@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS reservation_status (
 INSERT INTO reservation_status(id, name)
 VALUES (1, 'Scheduled'),
 (2, 'Realized'),
-(3, 'Posponed'),
+(3, 'Postponed'),
 (4, 'Cancelled');
 
 -- Tabela reservation
