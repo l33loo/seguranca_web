@@ -4,39 +4,55 @@ namespace App\Booking;
 
 class Activity
 {
-    private ?int $id;
-    private ?string $name;
-    private ?string $description;
-    private ?string $date;
-    private ?string $time;
-    private ?float $cost;
-    private ?int $vendoruser_id;
-    private ?int $isarchived;
+    protected int $id;
+    protected string $name;
+    protected string $description;
+    protected string $date;
+    protected string $time;
+    protected float $cost;
+    protected int $vendoruser_id;
+    protected int $isarchived;
 
     public function __construct(
-        ?int $id,
-        ?string $name,
-        ?string $description,
-        ?string $date,
-        ?string $time,
-        ?float $cost,
-        ?int $vendoruser_id,
-        ?int $isarchived,
+        ?int $id = null,
+        ?string $name = null,
+        ?string $description = null,
+        ?string $date = null,
+        ?string $time = null,
+        ?float $cost = null,
+        ?int $vendoruser_id = null,
+        ?int $isarchived = null,
     ) {
-        $this->id = $id;
-        $this->name = $name;
-        $this->description = $description;
-        $this->date = $date;
-        $this->time = $time;
-        $this->cost = $cost;
-        $this->vendoruser_id = $vendoruser_id;
-        $this->isarchived = $isarchived;
+        if ($id !== null) {
+            $this->id = $id;
+        }
+        if ($name !== null) {
+            $this->name = $name;
+        }
+        if ($description !== null) {
+            $this->description = $description;
+        }
+        if ($date !== null) {
+            $this->date = $date;
+        }
+        if ($time !== null) {
+            $this->time = $time;
+        }
+        if ($cost !== null) {
+            $this->cost = $cost;
+        }
+        if ($vendoruser_id !== null) {
+            $this->vendoruser_id = $vendoruser_id;
+        }
+        if ($isarchived !== null) {
+            $this->isarchived = $isarchived;
+        }
     }
 
     /**
      * Get the value of name
      */ 
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -46,7 +62,7 @@ class Activity
      *
      * @return  self
      */ 
-    public function setName($name)
+    public function setName(string $name): self
     {
         $this->name = $name;
 
@@ -56,7 +72,7 @@ class Activity
     /**
      * Get the value of description
      */ 
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
@@ -66,7 +82,7 @@ class Activity
      *
      * @return  self
      */ 
-    public function setDescription($description)
+    public function setDescription(string $description): self
     {
         $this->description = $description;
 
@@ -76,7 +92,7 @@ class Activity
     /**
      * Get the value of date
      */ 
-    public function getDate()
+    public function getDate(): string
     {
         return $this->date;
     }
@@ -86,7 +102,7 @@ class Activity
      *
      * @return  self
      */ 
-    public function setDate($date)
+    public function setDate(string $date): self
     {
         $this->date = $date;
 
@@ -96,7 +112,7 @@ class Activity
     /**
      * Get the value of time
      */ 
-    public function getTime()
+    public function getTime():string
     {
         return $this->time;
     }
@@ -106,7 +122,7 @@ class Activity
      *
      * @return  self
      */ 
-    public function setTime($time)
+    public function setTime(string $time): self
     {
         $this->time = $time;
 
@@ -116,7 +132,7 @@ class Activity
     /**
      * Get the value of cost
      */ 
-    public function getCost()
+    public function getCost(): float
     {
         return $this->cost;
     }
@@ -126,7 +142,7 @@ class Activity
      *
      * @return  self
      */ 
-    public function setCost($cost)
+    public function setCost(float $cost): self
     {
         $this->cost = $cost;
 
@@ -136,7 +152,7 @@ class Activity
     /**
      * Get the value of vendoruser_id
      */ 
-    public function getVendoruser_id()
+    public function getVendoruser_id(): int
     {
         return $this->vendoruser_id;
     }
@@ -146,7 +162,7 @@ class Activity
      *
      * @return  self
      */ 
-    public function setVendoruser_id($vendoruser_id)
+    public function setVendoruser_id(int $vendoruser_id): self
     {
         $this->vendoruser_id = $vendoruser_id;
 
@@ -156,7 +172,7 @@ class Activity
     /**
      * Get the value of isarchived
      */ 
-    public function getIsarchived()
+    public function getIsarchived(): int
     {
         return $this->isarchived;
     }
@@ -166,9 +182,29 @@ class Activity
      *
      * @return  self
      */ 
-    public function setIsarchived($isarchived)
+    public function setIsarchived(int $isarchived): self
     {
         $this->isarchived = $isarchived;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of id
+     */ 
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set the value of id
+     *
+     * @return  self
+     */ 
+    public function setId(int $id): self
+    {
+        $this->id = $id;
 
         return $this;
     }
