@@ -30,14 +30,7 @@ class ActivityController
         try {
             $db = MySQLConnect::getInstance();
             $stmt = $db->escapedSelectQuery('SELECT * FROM activity;');
-            $objects = $stmt->fetchAll(\PDO::FETCH_CLASS, Activity::class);
-            $data['activities'] = $objects;
-            // print_r($stmt->fetchAll());  
-            // $results = [];
-            // while($row = $stmt->fetchObject(Activity::class)) {
-            //     $results[] = $row;
-            // }
-            // $data['activities'] = $results;
+            $data['activities'] = $stmt->fetchAll(\PDO::FETCH_CLASS|\PDO::FETCH_PROPS_LATE, Activity::class);
         } catch(\PDOException $e) {
             echo 'ERROR <3: ' . $e->getMessage();
         }
