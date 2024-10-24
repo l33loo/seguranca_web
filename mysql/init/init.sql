@@ -36,7 +36,8 @@ CREATE TABLE IF NOT EXISTS activity (
   id INT NOT NULL AUTO_INCREMENT,
   name VARCHAR(45) NOT NULL,
   description VARCHAR(215) NOT NULL,
-  date DATETIME NOT NULL,
+  date DATE NOT NULL,
+  time TIME NOT NULL,
   cost FLOAT NOT NULL,
   vendoruser_id INT NOT NULL,
   isarchived BOOLEAN NOT NULL,
@@ -46,10 +47,10 @@ CREATE TABLE IF NOT EXISTS activity (
     REFERENCES user (id)
 );
 
-INSERT INTO activity(id, name, description, date, cost, vendoruser_id, isarchived)
-VALUES (1, 'Bananas', 'Descascar', '2025-01-01 15:00:00', 15, 1, true),
-(2, 'Maças', 'Descascar', '2024-10-04 19:30:00', 10, 1, false),
-(3, 'Abacaxi', 'Cortar', '2024-12-13  12:30:00', 20, 2, false);
+INSERT INTO activity(id, name, description, date, time, cost, vendoruser_id, isarchived)
+VALUES (1, 'Bananas', 'Descascar', '2025-01-01', '15:00', 15, 1, true),
+(2, 'Maças', 'Descascar', '2024-10-04', '19:30', 10, 1, false),
+(3, 'Abacaxi', 'Cortar', '2024-12-13', '12:30', 20, 2, false);
 
 -- Tabela comment
 CREATE TABLE IF NOT EXISTS comment (
