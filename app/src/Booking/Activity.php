@@ -208,4 +208,9 @@ class Activity
 
         return $this;
     }
+
+    // public static function list(): array
+    // {
+
+    // }
 }
