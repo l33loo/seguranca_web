@@ -1,3 +1,3 @@
 {% extends "layout.html" %} {% block content %}
 <h1>Homepage / Activities</h1>
-{% endblock %}
+{% for activity in activities %} {{ activity.name }} {% endfor %} {% endblock %}

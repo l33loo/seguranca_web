@@ -10,6 +10,11 @@ services:
     working_dir: /var/www/html
     volumes:
       - ./app:/var/www/html
+    env_file:
+      - path: /mnt/seguranca_web/secrets/mysql.prod.env
+        required: false # production, for Linux. Created by running `./compose.sh`.
+      - path: ./mysql/mysql.dev.env
+        required: false # development, overrides the production env file
     depends_on:
       - mysql
 

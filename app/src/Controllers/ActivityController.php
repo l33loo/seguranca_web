@@ -4,7 +4,9 @@ namespace App\Controllers;
 
 use Http\Request;
 use Http\Response;
+use App\Booking\Activity;
 use App\Template\FrontendRenderer;
+use App\DB\MySQLConnect;
 
 class ActivityController
 {
@@ -24,7 +26,16 @@ class ActivityController
 
     public function list()
     {
-        $html = $this->renderer->render('activities/list');
+        $data = [];
+        try {
+            $db = MySQLConnect::getInstance();
+            $stmt = $db->escapedSelectQuery('SELECT * FROM activity;');
+            $data['activities'] = $stmt->fetchAll(\PDO::FETCH_CLASS|\PDO::FETCH_PROPS_LATE, Activity::class);
+        } catch(\PDOException $e) {
+            echo 'ERROR <3: ' . $e->getMessage();
+        }
+
+        $html = $this->renderer->render('activities/list', $data);
         $this->response->setContent($html);
     }
 
