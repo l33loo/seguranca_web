@@ -26,15 +26,17 @@ class ActivityController
     {
         $data = [];
         $filters = [
+            // TODO: fix filter by date - not working
             [
                 'column' => 'DATE(date) + 0',
                 'operator' => '>=',
-                'value' => 'CURDATE() + 0',
+                'value' => 'DATE(NOW())',
             ],
+            // TODO: fix filter by time - not working
             [
                 'column' => 'TIME(time) + 0',
                 'operator' => '>=',
-                'value' => 'CURTIME() + 0',
+                'value' => 'TIME(NOW()) + 0',
             ],
             [
                 'column' => 'isArchived',
@@ -43,7 +45,6 @@ class ActivityController
             ]
         ];
 
-        // WHERE  DATE(c.create_date) = date(NOW());
         $search = $this->request->getQueryParameter('search');
         if (!empty($search) && strlen(trim($search)) > 0) {
             $filters[] = [
