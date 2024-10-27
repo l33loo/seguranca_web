@@ -2,9 +2,12 @@
 
 namespace App\Booking;
 
+require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
+
 class Activity
 {
-    protected int $id;
+    use DB\DBModel;
+
     protected string $name;
     protected string $description;
     protected string $date;

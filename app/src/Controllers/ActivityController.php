@@ -6,7 +6,7 @@ use Http\Request;
 use Http\Response;
 use App\Booking\Activity;
 use App\Template\FrontendRenderer;
-use App\DB\MySQLConnect;
+use App\DB\MyConnect;
 
 class ActivityController
 {
@@ -28,7 +28,7 @@ class ActivityController
     {
         $data = [];
         try {
-            $db = MySQLConnect::getInstance();
+            $db = MyConnect::getInstance();
             $stmt = $db->escapedSelectQuery('SELECT * FROM activity;');
             $data['activities'] = $stmt->fetchAll(\PDO::FETCH_CLASS|\PDO::FETCH_PROPS_LATE, Activity::class);
         } catch(\PDOException $e) {
