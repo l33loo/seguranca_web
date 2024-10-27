@@ -51,7 +51,7 @@ INSERT INTO activity(id, name, description, date, time, cost, vendoruser_id, isa
 VALUES (1, 'Surfing at Santa Barbara Beach', 'Enjoy a surfing session with renowed local surf instructor. Duration 2 hours.', '2025-01-01', '15:00', 15, 1, true),
 (2, 'Hike Lagoa do Fogo', "Half day hike around one of Sao Miguel's most beautiful lakes", '2024-10-04', '19:30', 10, 1, false),
 (3, 'Learn to cook Cozido from Furnas', 'Chef Alberto will teach you how to cook Cozido Azorean style, in geothermal pits', '2024-12-13', '12:30', 20, 2, false),
-(4, 'Learn to cook Cozido from Furnas', 'Chef Alberto will teach you how to cook Cozido Azorean style, in geothermal pits', '2023-12-13', '12:30', 20, 2, false),
+(4, 'Learn to cook Cozido from Furnas', 'Chef Alberto will teach you how to cook Cozido Azorean style, in geothermal pits', '2024-11-13', '12:30', 20, 2, false),
 (5, 'Surfing at Monte Verde Beach', 'Enjoy a surfing session with renowed local surf instructor. Duration 3 hours.', '2025-01-01', '15:00', 15, 1, false);
 
 -- Tabela comment
