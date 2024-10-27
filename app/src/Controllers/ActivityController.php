@@ -1,5 +1,4 @@
 <?php declare(strict_types = 1);
-
 namespace App\Controllers;
 
 use Http\Request;
@@ -26,8 +25,20 @@ class ActivityController
     public function list()
     {
         $data = [];
-        $filters = [];
+        $filters = [
+            [
+                'column' => 'DATE(date) + 0',
+                'operator' => '>=',
+                'value' => 'CURDATE() + 0',
+            ],
+            [
+                'column' => 'TIME(time) + 0',
+                'operator' => '>=',
+                'value' => 'CURTIME() + 0',
+            ],
+        ];
 
+        // WHERE  DATE(c.create_date) = date(NOW());
         $search = $this->request->getQueryParameter('search');
         if (!empty($search) && strlen(trim($search)) > 0) {
             $filters[] = [
