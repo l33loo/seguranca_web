@@ -13,7 +13,8 @@
     {% if search is not empty %}
     <small
       >Search results for: {{ search }} ({{ activities|length }} result{{
-      (activities|length != 1) ? 's' : '' }})</small
+      (activities|length != 1) ? 's' : '' }})
+      <a href="/activities">Clear Search</a></small
     >
     {% endif %}
   </div>
