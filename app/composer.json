@@ -15,7 +15,8 @@
       "App\\": "src/",
       "App\\Booking\\": "src/Booking/",
       "App\\Booking\\DB\\": "src/Booking/DB/",
-      "App\\Controllers\\": "src/Controllers/"
+      "App\\Controllers\\": "src/Controllers/",
+      "App\\Utils\\": "src/Utils/"
     }
   }
 }

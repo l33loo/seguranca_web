@@ -192,4 +192,14 @@ class Activity
 
         return $this;
     }
+
+    public function getCostToString(): string
+    {
+        return \App\Utils\Helper::priceToString($this->cost);
+    }
+
+    public function getDateTimeToString(): string
+    {
+        return \App\Utils\Helper::dateTimeToString($this->date, $this->time);
+    }
 }
