@@ -57,7 +57,7 @@ class ActivityController
         }
 
         try {
-            $data['activities'] = Activity::search($filters);
+            $data['activities'] = Activity::search($filters, '', 'date');
         } catch(\PDOException $e) {
             // TODO: fix error handling
             echo 'ERROR <3: ' . $e->getMessage();
