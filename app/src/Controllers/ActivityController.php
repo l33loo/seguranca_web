@@ -26,17 +26,10 @@ class ActivityController
     {
         $data = [];
         $filters = [
-            // TODO: fix filter by date - not working
             [
-                'column' => 'DATE(date) + 0',
-                'operator' => '>=',
-                'value' => 'DATE(NOW())',
-            ],
-            // TODO: fix filter by time - not working
-            [
-                'column' => 'TIME(time) + 0',
-                'operator' => '>=',
-                'value' => 'TIME(NOW()) + 0',
+                'column' => "CONCAT(date, ' ', time)",
+                'operator' => '>',
+                'value' => date('Y-m-d H:i:s'),
             ],
             [
                 'column' => 'isArchived',
