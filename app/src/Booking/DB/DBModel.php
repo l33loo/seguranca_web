@@ -170,7 +170,6 @@ trait DBModel
 
     public static function snakeToCamel($string, $capitalizeFirstCharacter = true): string
     {
-
         $str = str_replace(' ', '', ucwords(str_replace('_', ' ', $string)));
 
         if (!$capitalizeFirstCharacter) {
