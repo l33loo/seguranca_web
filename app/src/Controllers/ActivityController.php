@@ -28,12 +28,12 @@ class ActivityController
         $data = [];
         $filters = [];
 
-        $search = trim($this->request->getQueryParameter('search'));
-        if (!empty($search) && strlen($search) > 0) {
+        $search = $this->request->getQueryParameter('search');
+        if (!empty($search) && strlen(trim($search)) > 0) {
             $filters[] = [
                 'column' => 'name',
                 'operator' => 'LIKE',
-                'value' => $search,
+                'value' => '%' . trim($search) . '%',
 
             ];
 
