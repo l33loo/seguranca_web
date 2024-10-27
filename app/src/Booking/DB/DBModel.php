@@ -117,7 +117,7 @@ trait DBModel
 
         $sql = "SELECT * FROM " . $tableName;
 
-        if (!empty($filters)) {
+        if (!empty($filters) && count($filters) > 0) {
             $sql .= " WHERE ";
 
             foreach ($filters as $pos => $filter) {

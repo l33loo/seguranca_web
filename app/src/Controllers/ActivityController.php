@@ -26,8 +26,22 @@ class ActivityController
     public function list()
     {
         $data = [];
+        $filters = [];
+
+        $search = trim($this->request->getQueryParameter('search'));
+        if (!empty($search) && strlen($search) > 0) {
+            $filters[] = [
+                'column' => 'name',
+                'operator' => 'LIKE',
+                'value' => $search,
+
+            ];
+
+            $data['search'] = htmlspecialchars($search);
+        }
+
         try {
-            $data['activities'] = Activity::search();
+            $data['activities'] = Activity::search($filters);
         } catch(\PDOException $e) {
             // TODO: fix error handling
             echo 'ERROR <3: ' . $e->getMessage();
