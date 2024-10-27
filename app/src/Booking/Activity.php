@@ -2,7 +2,7 @@
 
 namespace App\Booking;
 
-require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php';
 
 class Activity
 {
@@ -14,6 +14,7 @@ class Activity
     protected string $time;
     protected float $cost;
     protected int $vendoruser_id;
+    protected array $vendor;
     protected int $isarchived;
 
     public function __construct(
