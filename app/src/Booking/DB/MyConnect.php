@@ -1,8 +1,8 @@
 <?php declare(strict_types = 1);
 
-namespace App\DB;
+namespace App\Booking\DB;
 
-class MySQLConnect implements DBConnect
+class MyConnect
 {
     protected $connection;
     private static $instance = null;
@@ -30,7 +30,7 @@ class MySQLConnect implements DBConnect
     public static function getInstance(): self
     {
         if (self::$instance === null) {
-            self::$instance = new MySQLConnect();
+            self::$instance = new MyConnect();
         }
 
         return self::$instance;
