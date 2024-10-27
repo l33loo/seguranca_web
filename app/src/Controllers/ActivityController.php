@@ -36,6 +36,11 @@ class ActivityController
                 'operator' => '>=',
                 'value' => 'CURTIME() + 0',
             ],
+            [
+                'column' => 'isArchived',
+                'operator' => '=',
+                'value' => 'false',
+            ]
         ];
 
         // WHERE  DATE(c.create_date) = date(NOW());
