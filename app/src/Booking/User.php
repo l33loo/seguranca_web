@@ -42,4 +42,96 @@ abstract class User
             }
     }
 
+
+    /**
+     * Get the value of firstname
+     */ 
+    public function getFirstname(): string
+    {
+        return $this->firstname;
+    }
+
+    /**
+     * Set the value of firstname
+     *
+     * @return  self
+     */ 
+    public function setFirstname(string $firstname): self
+    {
+        $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of lastname
+     */ 
+    public function getLastname(): string
+    {
+        return $this->lastname;
+    }
+
+    /**
+     * Set the value of lastname
+     *
+     * @return  self
+     */ 
+    public function setLastname(string $lastname): self
+    {
+        $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of email
+     */ 
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set the value of email
+     *
+     * @return  self
+     */ 
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of password
+     *
+     * @return  self
+     */ 
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of creditcards
+     */ 
+    public function getCreditcards(): int
+    {
+        return $this->creditcards;
+    }
+
+    /**
+     * Set the value of creditcards
+     *
+     * @return  self
+     */ 
+    public function setCreditcards(int $creditcards): self
+    {
+        $this->creditcards = $creditcards;
+
+        return $this;
+    }
 }
