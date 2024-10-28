@@ -4,6 +4,7 @@ namespace App\Controllers;
 use Http\Request;
 use Http\Response;
 use App\Booking\Activity;
+use App\Booking\Comment;
 use App\Booking\User;
 use App\Template\FrontendRenderer;
 
@@ -65,7 +66,7 @@ class ActivityController
     public function show($params)
     {
         $data = [
-            'activity' => Activity::find(intval($params['id']))/* TODO: ->loadRelation(User::class) */,
+            'activity' => Activity::find(intval($params['id']))->loadComments()/* TODO: ->loadRelation('user') */,
         ];
         
         $html = $this->renderer->render('activities/show', $data);

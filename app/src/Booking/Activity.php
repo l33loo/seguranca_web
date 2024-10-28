@@ -4,6 +4,8 @@ namespace App\Booking;
 
 require $_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php';
 
+use App\Booking\Comment;
+
 class Activity
 {
     use DB\DBModel;
@@ -14,7 +16,9 @@ class Activity
     protected string $time;
     protected float $cost;
     protected int $vendoruser_id;
+    // TODO: change to User type
     protected array $vendor;
+    protected array $comments;
     protected int $isarchived;
 
     public function __construct(
@@ -201,5 +205,43 @@ class Activity
     public function getDateTimeToString(): string
     {
         return \App\Utils\Helper::dateTimeToString($this->date, $this->time);
+    }
+
+    /**
+     * Get the value of comments
+     */ 
+    public function getComments(): array
+    {
+        return $this->comments;
+    }
+
+    /**
+     * Set the value of comments
+     *
+     * @return  self
+     */ 
+    public function setComments(array $comments): self
+    {
+        $this->comments = $comments;
+
+        return $this;
+    }
+
+    public function loadComments(): self
+    {
+        $filter = [
+            [
+                'column' => 'activity_id',
+                'operator' => '=',
+                'value' => $this->id,
+            ],
+        ];
+
+        try {
+            $this->comments = Comment::search($filter, '', 'postedon', 'DESC');
+            return $this;
+        } catch (\PDOException) {
+            // TODO
+        }
     }
 }
