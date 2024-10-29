@@ -2,8 +2,6 @@
 
 namespace App\Booking;
 
-require $_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php';
-
 use App\Booking\Comment;
 
 class Activity
@@ -31,6 +29,8 @@ class Activity
         ?int $vendoruser_id = null,
         ?int $isarchived = null,
     ) {
+        $this->tableName = 'activity';
+        
         if ($id !== null) {
             $this->id = $id;
         }

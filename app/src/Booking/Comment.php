@@ -2,8 +2,6 @@
 
 namespace App\Booking;
 
-require $_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php';
-
 class Comment
 {
     use DB\DBModel;
@@ -14,12 +12,14 @@ class Comment
     protected int $activity_id;
 
     public function __construct(
-        ?int $id = null,
         ?string $comment = null,
         ?int $user_id = null,
-        ?string $postedon = null,
-        ?int $activity_id = null
+        ?int $activity_id = null,
+        ?int $id = null,
+        ?string $postedon = null
     ) {
+        $this->tableName = 'comment';
+        
         if ($id !== null) {
             $this->id = $id;
         }

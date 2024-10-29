@@ -13,6 +13,7 @@ return [
     ['GET', '/reservations', ['App\Controllers\ReservationController', 'list']],
     ['GET', '/reservations/{id:\d+}', ['App\Controllers\ReservationController', 'show']],
     ['POST', '/reservations', ['App\Controllers\ReservationController', 'reserve']],
+    ['POST', '/activities/{id:\d+}', ['App\Controllers\ActivityController', 'postComment']],
 
     // Vendors only
     ['POST', '/activities', ['App\Controllers\ActivityController', 'create']],

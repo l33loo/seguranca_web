@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS comment (
   comment VARCHAR(215) NOT NULL,
   activity_id INT NOT NULL,
   user_id INT NOT NULL,
-  postedon DATETIME NOT NULL,
+  postedon DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
   CONSTRAINT fk_comment_activity
     FOREIGN KEY (activity_id)
@@ -92,7 +92,7 @@ VALUES (1, 'Scheduled'),
 CREATE TABLE IF NOT EXISTS reservation (
   id INT NOT NULL AUTO_INCREMENT,
   reservedbyuser_id INT NOT NULL,
-  reservedon DATETIME NOT NULL,
+  reservedon DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   activity_id INT NOT NULL,
   creditcard_id INT NOT NULL,
   reservationstatus_id INT NOT NULL,
