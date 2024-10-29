@@ -3,6 +3,7 @@
 namespace App\Booking;
 
 require $_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/DB/DBModel.php';
 
 abstract class User 
 {
@@ -104,15 +105,21 @@ abstract class User
     }
 
     /**
-     * Set the value of password
-     *
-     * @return  self
-     */ 
-    public function setPassword(string $password): self
+     * Undocumented function
+     * Usado o search()
+     * @param string $password
+     * @return boolean
+     */
+    public function validPasswordHash(string $password): bool
     {
-        $this->password = $password;
+        $user = self::search(['email' => $this->email, 'password' => password_hash($password, PASSWORD_DEFAULT)]);
 
-        return $this;
+        if ($user) {
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
     /**
