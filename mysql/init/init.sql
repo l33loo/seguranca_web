@@ -111,6 +111,7 @@ CREATE TABLE IF NOT EXISTS reservation (
     REFERENCES reservation_status (id)
 );
 
+-- TODO: delete either activity_id here, or the reservation_activity table
 INSERT INTO reservation(reservedbyuser_id, reservedon, activity_id, creditcard_id, reservationstatus_id)
 VALUES (1, '2024-10-15 20:55:04', 1, 1, 1),
 (1, '2024-10-20 07:05:22', 2, 1, 3),

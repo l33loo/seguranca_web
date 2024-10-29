@@ -4,13 +4,17 @@
 </div>
 <div class="row">
   <div class="card">
-    <img src="img/surfing.jpg" alt="" class="card-img-top" />
+    <img src="/img/surfing.jpg" alt="" class="card-img-top" />
     <div class="card-body">
       <p class="card-text">{{ activity.description }}</p>
       <p class="card-text">{{ activity.dateTimeToString }}</p>
       <p class="card-text">Cost: {{ activity.costToString() }} per person</p>
-      {# TODO: hide 'Add to Cart' button if the activity is not bookable #}
-      <a href="" class="btn btn-success">Add to Cart</a>
+      {# TODO: hide 'Book Now' button if the activity is not bookable #}
+      <a
+        href="/reservations/new?activity={{ activity.id }}"
+        class="btn btn-success"
+        >Book Now</a
+      >
     </div>
   </div>
 </div>
@@ -41,13 +45,11 @@
           <form action="/activities/{{ activity.id }}" method="post">
             <div class="mb-3">
               <label for="comment" class="form-label">Comment:</label>
-              <input
-                type="text"
+              <textarea
                 class="form-control"
                 id="comment"
                 name="comment"
-                aria-describedby="emailHelp"
-              />
+              ></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
           </form>

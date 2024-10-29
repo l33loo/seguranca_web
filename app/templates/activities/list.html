@@ -26,7 +26,7 @@
   {% for activity in activities %}
   <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 d-flex align-items-stretch">
     <div class="card">
-      <img src="img/surfing.jpg" alt="" class="card-img-top" />
+      <img src="/img/surfing.jpg" alt="" class="card-img-top" />
       <div class="card-body">
         <h2 class="h5 card-title">{{ activity.name }}</h2>
         <p class="card-text">{{ activity.description }}</p>
@@ -35,7 +35,11 @@
         <a href="/activities/{{ activity.id }}" class="btn btn-primary"
           >View Details</a
         >
-        <a href="" class="btn btn-success">Add to Cart</a>
+        <a
+          href="/reservations/new?activity={{ activity.id }}"
+          class="btn btn-success"
+          >Book Now</a
+        >
       </div>
     </div>
   </div>

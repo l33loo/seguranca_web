@@ -11,8 +11,9 @@ return [
     ['POST', '/logout', ['App\Controllers\UserController', 'logout']],
     ['GET', '/users/me', ['App\Controllers\UserController', 'showProfile']],
     ['GET', '/reservations', ['App\Controllers\ReservationController', 'list']],
+    ['GET', '/reservations/new', ['App\Controllers\ReservationController', 'new']],
+    ['POST', '/reservations/new', ['App\Controllers\ReservationController', 'reserve']],
     ['GET', '/reservations/{id:\d+}', ['App\Controllers\ReservationController', 'show']],
-    ['POST', '/reservations', ['App\Controllers\ReservationController', 'reserve']],
     ['POST', '/activities/{id:\d+}', ['App\Controllers\ActivityController', 'postComment']],
 
     // Vendors only
