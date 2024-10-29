@@ -2,8 +2,6 @@
 
 namespace App\Booking\DB;
 
-require $_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php';
-
 use App\Booking\DB\MyConnect;
 
 trait DBModel

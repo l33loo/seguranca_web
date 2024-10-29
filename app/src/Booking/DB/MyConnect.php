@@ -44,11 +44,11 @@ class MyConnect
         return $stmt;
     }
 
-    public function escapedInsertQuery(string $sql, array $params): string|false
+    public function escapedInsertQuery(string $sql, array $params): int|false
     {
         $this->escapedQuery($sql, $params);
 
-        return $this->connection->lastInsertId();
+        return intval($this->connection->lastInsertId());
     }
 
     public function escapedUpdateQuery(string $sql, array $params): void
