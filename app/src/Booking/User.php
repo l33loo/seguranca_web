@@ -110,11 +110,11 @@ abstract class User
      * @param string $password
      * @return boolean
      */
-    public function validPasswordHash(string $password): bool
+    public function validPassword(string $password): bool
     {
-        $user = self::search(['email' => $this->email, 'password' => password_hash($password, PASSWORD_DEFAULT)]);
+        $users = self::search(['email' => trim($this->email)]);
 
-        if ($user) {
+        if ($users[0]) {
             return true;
         } else {
             return false;
