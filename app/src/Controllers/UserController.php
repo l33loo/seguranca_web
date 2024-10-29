@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use Http\Request;
 use Http\Response;
+use App\Booking\User;
 use App\Template\FrontendRenderer;
 
 class UserController
@@ -36,11 +37,23 @@ class UserController
 
     public function login()
     {
-
+        //Lógica de verificação do login
+        //! FALTA MAIS VERIFICAÇÕES
+        $email = $this->request->post('email');
+        $password = $this->request->post('password');
+        $user = User::login($email, $password);
+        if ($user) {
+            $this->response->setCookie('user_id', $user->getId());
+            //redireciona do Login para a página do profile
+            $this->response->redirect('/users/profile');
+        } else {
+            $this->response->setContent('Invalid email or password');
+            $this->response->setStatusCode(401);
+            }
     }
 
     public function logout()
     {
-        
+        //Redirecionar para a página Login?
     }
 }
