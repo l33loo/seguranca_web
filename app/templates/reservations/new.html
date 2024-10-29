@@ -2,31 +2,42 @@
 <div class="row my-5">
   <h1>Book {{ activity.name }}</h1>
 </div>
-<div class="row">
-  <div class="card">
-    <img src="img/surfing.jpg" alt="" class="card-img-top" />
-    <div class="card-body">
-      <p class="card-text">{{ activity.description }}</p>
-      <p class="card-text">{{ activity.dateTimeToString }}</p>
-      <p class="card-text">Cost: {{ activity.costToString() }} per person</p>
-      {# TODO: hide 'Book Now' button if the activity is not bookable #}
-    </div>
+<div class="card">
+  <img src="/img/surfing.jpg" alt="" class="card-img-top" />
+  <div class="card-body">
+    <p class="card-text">{{ activity.description }}</p>
+    <p class="card-text">{{ activity.dateTimeToString }}</p>
+    <p class="card-text">Cost: {{ activity.costToString() }} per person</p>
   </div>
 </div>
-<div class="row">
-  <h2>Book Now</h2>
-  <form action="" method="post">
-    <div class="mb-3">
-      <label for="comment" class="form-label">Comment:</label>
-      <input
-        type="text"
-        class="form-control"
-        id="comment"
-        name="comment"
-        aria-describedby="emailHelp"
-      />
-    </div>
+<h2>Book Now</h2>
+<form action="" method="post">
+  <div class="mb-3">
+    <label for="ccNumber" class="form-label">Cerdit Card Number:</label>
+    <input
+      type="text"
+      class="form-control"
+      id="ccNumber"
+      name="ccNumber"
+      aria-describedby="emailHelp"
+    />
+    <label for="ccExpiry" class="form-label">Expiry Date:</label>
+    <input
+      type="date"
+      class="form-control"
+      id="ccExpiry"
+      name="ccExpiry"
+      aria-describedby="emailHelp"
+    />
+    <label for="cvv" class="form-label">CVV:</label>
+    <input
+      type="text"
+      class="form-control"
+      id="cvv"
+      name="cvv"
+      aria-describedby="emailHelp"
+    />
     <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
-</div>
+  </div>
+</form>
 {% endblock %}
