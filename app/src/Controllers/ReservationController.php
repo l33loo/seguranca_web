@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use Http\Request;
 use Http\Response;
+use App\Booking\Activity;
 use App\Template\FrontendRenderer;
 
 class ReservationController
@@ -35,6 +36,19 @@ class ReservationController
         ];
         
         $html = $this->renderer->render('reservations/show', $data);
+        $this->response->setContent($html);
+    }
+
+    public function new()
+    {
+        // TODO: redirect to login form if user is not logged in
+
+        $activityId = $this->request->getQueryParameter('activity');
+
+        $data = [
+            'activity' => Activity::find(intval($activityId)),
+        ];
+        $html = $this->renderer->render('reservations/new', $data);
         $this->response->setContent($html);
     }
 

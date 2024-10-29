@@ -1,0 +1,32 @@
+{% extends "layout.html" %} {% block content %}
+<div class="row my-5">
+  <h1>Book {{ activity.name }}</h1>
+</div>
+<div class="row">
+  <div class="card">
+    <img src="img/surfing.jpg" alt="" class="card-img-top" />
+    <div class="card-body">
+      <p class="card-text">{{ activity.description }}</p>
+      <p class="card-text">{{ activity.dateTimeToString }}</p>
+      <p class="card-text">Cost: {{ activity.costToString() }} per person</p>
+      {# TODO: hide 'Book Now' button if the activity is not bookable #}
+    </div>
+  </div>
+</div>
+<div class="row">
+  <h2>Book Now</h2>
+  <form action="" method="post">
+    <div class="mb-3">
+      <label for="comment" class="form-label">Comment:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="comment"
+        name="comment"
+        aria-describedby="emailHelp"
+      />
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+{% endblock %}

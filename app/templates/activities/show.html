@@ -9,8 +9,12 @@
       <p class="card-text">{{ activity.description }}</p>
       <p class="card-text">{{ activity.dateTimeToString }}</p>
       <p class="card-text">Cost: {{ activity.costToString() }} per person</p>
-      {# TODO: hide 'Add to Cart' button if the activity is not bookable #}
-      <a href="" class="btn btn-success">Add to Cart</a>
+      {# TODO: hide 'Book Now' button if the activity is not bookable #}
+      <a
+        href="/reservations/new?activity={{ activity.id }}"
+        class="btn btn-success"
+        >Book Now</a
+      >
     </div>
   </div>
 </div>
