@@ -64,7 +64,7 @@ class ActivityController
     public function show($params)
     {
         $data = [
-            'id' => $params['id'],
+            'activity' => Activity::find(intval($params['id']))->loadComments()/* TODO: ->loadRelation('user') */,
         ];
         
         $html = $this->renderer->render('activities/show', $data);
@@ -95,5 +95,24 @@ class ActivityController
 
         $html = $this->renderer->render('reservations/list', $data);
         $this->response->setContent($html);
+    }
+
+    public function postComment($params): void
+    {
+        $newComment = new \App\Booking\Comment(
+            htmlspecialchars($this->request->getBodyParameters()['comment']),
+            // TODO: put id of logged-in user
+            2,
+            intval($params['id'])
+        );
+
+        try {
+            $newComment->save();
+        } catch (\PDOException $e) {
+            // TODO: handle error
+            echo $e->getMessage();
+        } finally {
+            $this->show($params);
+        }
     }
 }
