@@ -14,7 +14,7 @@ class MyConnect
         $dbUser = getenv('MYSQL_USER');
         $dbPass = getenv('MYSQL_PASSWORD');
         
-        $dsn = "mysql:host={$dbHost};dbname=$dbName";
+        $dsn = "mysql:host=$dbHost;dbname=$dbName";
         $this->connection = new \PDO($dsn, $dbUser, $dbPass, [\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION]);
     }
 
