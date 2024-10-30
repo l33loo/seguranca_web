@@ -47,13 +47,14 @@ $dispatcher = \FastRoute\simpleDispatcher($routeDefinitionCallback);
 $routeInfo = $dispatcher->dispatch($request->getMethod(), $request->getPath());
 switch ($routeInfo[0]) {
     case \FastRoute\Dispatcher::NOT_FOUND:
-        echo 'HELLO 404';
         $response->setContent('404 - Page not found');
         $response->setStatusCode(404);
+        echo $response->getContent();
         break;
     case \FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
         $response->setContent('405 - Method not allowed');
         $response->setStatusCode(405);
+        echo $response->getContent();
         break;
     case \FastRoute\Dispatcher::FOUND:
         $className = $routeInfo[1][0];
