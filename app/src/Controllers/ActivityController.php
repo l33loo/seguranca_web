@@ -50,12 +50,7 @@ class ActivityController
             $data['search'] = htmlspecialchars($search);
         }
 
-        try {
-            $data['activities'] = Activity::search($filters, '', 'date');
-        } catch(\PDOException $e) {
-            // TODO: fix error handling
-            echo 'ERROR <3: ' . $e->getMessage();
-        }
+        $data['activities'] = Activity::search($filters, '', 'date');
 
         $html = $this->renderer->render('activities/list', $data);
         $this->response->setContent($html);
@@ -106,13 +101,7 @@ class ActivityController
             intval($params['id'])
         );
 
-        try {
-            $newComment->save();
-        } catch (\PDOException $e) {
-            // TODO: handle error
-            echo $e->getMessage();
-        } finally {
-            $this->show($params);
-        }
+        $newComment->save();
+        $this->show($params);
     }
 }

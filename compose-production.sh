@@ -17,15 +17,15 @@ if [[ "$OS" == "Linux" ]]; then
     else
         if sudo mount -t tmpfs -o size=500m --onlyonce tmpfs "$DIR"; then
             echo "Mounted tmpfs at ${DIR}."
-            chmod 0600 "$DIR"
+            sudo chmod 0600 "$DIR"
         else
             echo "Failed to mount tmpfs at ${DIR}." >&2
             exit 1
         fi
     fi
 
-    FILE="${DIR}mysql.prod.env"
-    if pass uac/seguranca_web/mysql.prod.env > "$FILE"; then
+    FILE="${DIR}prod.env"
+    if pass uac/seguranca_web/prod.env > "$FILE"; then
         chmod 0400 "$FILE"
         echo "MySQL production secrets have been loaded into ${FILE}."
     else

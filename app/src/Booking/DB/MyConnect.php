@@ -10,21 +10,12 @@ class MyConnect
     private function __construct()
     {
         $dbName = getenv('MYSQL_DATABASE');
+        $dbHost = getenv('MYSQL_HOST');
         $dbUser = getenv('MYSQL_USER');
         $dbPass = getenv('MYSQL_PASSWORD');
         
-        $dsn = "mysql:host=mysql;dbname={$dbName}";
-
-        try {
-            $this->connection = new \PDO($dsn, $dbUser, $dbPass, [\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION]);    
-        } catch (\PDOException $e) {
-            $errorMsg = 'Database connection failed' . $e->getMessage();
-            // Log messages to OS's log files
-            error_log($errorMsg, 0);
-            // This would normally send an email. Adding only as an example of logging messages.
-            error_log($errorMsg, 1, "operator@example.com");
-            die('Database connection failed.');
-        }
+        $dsn = "mysql:host=$dbHost;dbname=$dbName";
+        $this->connection = new \PDO($dsn, $dbUser, $dbPass, [\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION]);
     }
 
     public static function getInstance(): self

@@ -11,10 +11,10 @@ services:
     volumes:
       - ./app:/var/www/html
     env_file:
-      - path: /mnt/seguranca_web/secrets/mysql.prod.env
-        required: false # production, for Linux. Created by running `./compose.sh`.
-      - path: ./mysql/mysql.dev.env
+      - path: ./dev.env
         required: false # development, overrides the production env file
+      - path: /mnt/seguranca_web/secrets/prod.env
+        required: false # production, for Linux. Created by running `./compose-production.sh`. Overrides the development env file.
     depends_on:
       - mysql
 
@@ -25,7 +25,7 @@ services:
       - ./mysql/data:/var/lib/mysql
       - ./mysql/init:/docker-entrypoint-initdb.d/:ro
     env_file:
-      - path: /mnt/seguranca_web/secrets/mysql.prod.env
-        required: false # production, for Linux. Created by running `./compose.sh`.
-      - path: ./mysql/mysql.dev.env
-        required: false # development, overrides the production env file
+      - path: ./dev.env
+        required: false # development
+      - path: /mnt/seguranca_web/secrets/prod.env
+        required: false # production, for Linux. Created by running `./compose-production.sh`. Overrides the development env file.
