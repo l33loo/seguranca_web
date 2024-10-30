@@ -23,6 +23,8 @@ abstract class User
         ?string $password = null,
         ?array $creditcards = null
     ){
+        $this->tableName = 'user';
+
         if ($id !== null) {
             $this->id = $id;
         }
@@ -113,9 +115,9 @@ abstract class User
     public function validPassword(string $password): bool
     {
         $users = self::search(['email' => trim($this->email)]);
-
         if ($users[0]) {
-            return true;
+            $passwordHash = $users[0]['password'];
+            return password_verify($password, $passwordHash);
         } else {
             return false;
         }
