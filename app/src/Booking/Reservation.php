@@ -13,16 +13,17 @@ class Reservation
     protected int $reservationstatus_id;
     // TODO: change to User type
     protected array $user;
+    protected Activity $activity;
     protected CreditCard $creditCard;
     protected ReservationStatus $status;
 
     public function __construct(
-        ?int $reservedbyuser_id,
-        ?string $reservedon,
-        ?int $activity_id,
-        ?int $creditcard_id,
-        ?int $reservationstatus_id,
-        ?int $id
+        ?int $reservedbyuser_id = null,
+        ?string $reservedon = null,
+        ?int $activity_id = null,
+        ?int $creditcard_id = null,
+        ?int $reservationstatus_id = null,
+        ?int $id = null
     ) {
         $this->tableName = 'reservation';
 

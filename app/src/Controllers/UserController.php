@@ -22,6 +22,23 @@ class UserController
         $this->renderer = $renderer;
     }
 
+    public function reservations() {
+        $filters = [
+            [
+                'column' => 'reservedbyuser_id',
+                'operator' => '=',
+                'value' => 1,
+            ],
+        ];
+
+        $data = [
+            'reservations' => \App\Booking\Reservation::search($filters, '', 'reservedon', 'DESC'),
+        ];
+        // TODO: change to having a user, and loading reservations onto it
+        $html = $this->renderer->render('users/reservations', $data);
+        $this->response->setContent($html);
+    }
+
     public function showProfile()
     {
         $html = $this->renderer->render('users/profile');
