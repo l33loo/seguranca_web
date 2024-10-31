@@ -1,10 +1,22 @@
 {% extends "layout.html" %} {% block content %}
-<h1>Login</h1>
-<form method="post" action="/login">
-  <label for="email">email:</label>
-  <input type="text" id="email" name="email" />
-  <label for="password">Password:</label>
-  <input type="password" id="password" name="password" />
-  <input type="submit" value="Login" />
+<div class="row my-5">
+  <h1>Login</h1>
+</div>
+<form action="/login" method="POST">
+  <div class="mb-3">
+    <label for="email">Email:</label>
+    <input type="text" id="email" name="email" class="form-control" required />
+  </div>
+  <div class="mb-3">
+    <label for="password">Password:</label>
+    <input
+      type="password"
+      id="password"
+      name="password"
+      class="form-control"
+      required
+    />
+  </div>
+  <input type="submit" value="Login" class="btn btn-primary" />
 </form>
 {% endblock %}
