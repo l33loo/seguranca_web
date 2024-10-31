@@ -57,6 +57,11 @@ class ReservationController
                 'operator' => '=',
                 'value' => $userId,
             ],
+            [
+                'column' => "expiry",
+                'operator' => '>',
+                'value' => date('Y-m-d'),
+            ],
         ];
 
         // TODO: Expose just the last 4 digits of the credit card
