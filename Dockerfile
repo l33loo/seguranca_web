@@ -7,7 +7,12 @@ ENV APACHE_DOCUMENT_ROOT /var/www/html/public
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
 RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
-# Enable Apache mod_rewrite
-RUN a2enmod rewrite
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+
+# Enable Apache mod_rewrite and ssl module
+RUN a2enmod rewrite && a2enmod ssl
+
+# 
+COPY ./tls/000-default.conf /etc/apache2/sites-available/000-default.conf
 
 RUN docker-php-ext-install pdo_mysql

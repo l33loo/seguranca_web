@@ -1,9 +1,12 @@
 # Enable mod_rewrite
+
 RewriteEngine On
 
 # Exclude direct access to file and directories
+
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
 # Redirect all other requests to index.php
-RewriteRule ^(.*)$ index.php [L]
+
+RewriteRule ^(.\*)$ index.php [L]

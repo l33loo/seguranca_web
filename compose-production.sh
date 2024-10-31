@@ -6,6 +6,8 @@ OS=$(uname)
 
 # Load production MySQL secrets from `pass` into RAM.
 if [[ "$OS" == "Linux" ]]; then
+    ./tls/generate-tls.sh
+    
     DIR="/mnt/seguranca_web/secrets/"
 
     if [ ! -d "$DIR" ]; then
