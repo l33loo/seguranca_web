@@ -9,11 +9,13 @@ class Creditcard
     protected string $number;
     protected string $cvv;
     protected string $expiry;
+    protected int $user_id;
 
     public function __construct(
         ?string $number = null,
         ?string $cvv = null,
         ?string $expiry = null,
+        ?int $user_id = null,
         ?int $id = null
     ) {
         $this->tableName = 'creditcard';
@@ -26,6 +28,9 @@ class Creditcard
         }
         if ($expiry !== null) {
             $this->expiry = $expiry;
+        }
+        if ($user_id !== null) {
+            $this->user_id = $user_id;
         }
         if ($id !== null) {
             $this->id = $id;

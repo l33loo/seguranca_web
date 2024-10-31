@@ -10,9 +10,30 @@
     <p class="card-text">Cost: {{ activity.costToString() }} per person</p>
   </div>
 </div>
-<h2>Book Now</h2>
+<h2 class="h1 mt-5 mb-4">Book Now</h2>
 <form action="" method="post">
-  <div class="mb-3">
+  <fieldset>
+    <legend>Select payment method:</legend>
+    {% for creditCard in creditCards %}
+    <div>
+      <input
+        type="radio"
+        id="cc-{{ creditCard.id }}"
+        name="cc"
+        value="{{ creditCard.id }}"
+      />
+      <label for="cc-{{ creditCard.id }}"
+        >TODO: Credit card ending in: {{ creditCard.number }}</label
+      >
+    </div>
+    {% endfor %}
+
+    <div>
+      <input type="radio" id="cc-other" name="cc" value="cc-other" />
+      <label for="cc-other">Other credit card:</label>
+    </div>
+  </fieldset>
+  <fieldset>
     <label for="ccNumber" class="form-label">Cerdit Card Number:</label>
     <input
       type="text"
@@ -37,6 +58,9 @@
       name="cvv"
       aria-describedby="emailHelp"
     />
+  </fieldset>
+
+  <div class="mb-3">
     <button type="submit" class="btn btn-primary">Submit</button>
   </div>
 </form>

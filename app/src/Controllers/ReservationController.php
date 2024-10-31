@@ -48,6 +48,22 @@ class ReservationController
         $data = [
             'activity' => Activity::find(intval($activityId)),
         ];
+
+        // TODO: use id of logged-in user
+        $userId = 1;
+        $filters = [
+            [
+                'column' => 'user_id',
+                'operator' => '=',
+                'value' => $userId,
+            ],
+        ];
+
+        // TODO: Expose just the last 4 digits of the credit card
+        $creditCards = \App\Booking\Creditcard::search($filters);
+
+        $data['creditCards'] = $creditCards;
+
         $html = $this->renderer->render('reservations/new', $data);
         $this->response->setContent($html);
     }
