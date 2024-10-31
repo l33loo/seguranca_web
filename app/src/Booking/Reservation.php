@@ -14,8 +14,8 @@ class Reservation
     // TODO: change to User type
     protected array $user;
     protected Activity $activity;
-    protected CreditCard $creditCard;
-    protected ReservationStatus $status;
+    protected Creditcard $creditcard;
+    protected ReservationStatus $reservationstatus;
 
     public function __construct(
         ?int $reservedbyuser_id = null,
@@ -168,41 +168,61 @@ class Reservation
     }
 
     /**
-     * Get the value of creditCard
+     * Get the value of creditcard
      */ 
-    public function getCreditCard(): CreditCard
+    public function getCreditcard(): Creditcard
     {
-        return $this->creditCard;
+        return $this->creditcard;
     }
 
     /**
-     * Set the value of creditCard
+     * Set the value of creditcard
      *
      * @return  self
      */ 
-    public function setCreditCard(CreditCard $creditCard): self
+    public function setCreditcard(Creditcard $creditcard): self
     {
-        $this->creditCard = $creditCard;
+        $this->creditcard = $creditcard;
 
         return $this;
     }
 
     /**
-     * Get the value of status
+     * Get the value of reservationstatus
      */ 
-    public function getStatus(): ReservationStatus
+    public function getReservationstatus(): ReservationStatus
     {
-        return $this->status;
+        return $this->reservationstatus;
     }
 
     /**
-     * Set the value of status
+     * Set the value of reservationstatus
      *
      * @return  self
      */ 
-    public function setStatus(ReservationStatus $status): self
+    public function setReservationstatus(ReservationStatus $reservationstatus): self
     {
-        $this->status = $status;
+        $this->reservationstatus = $reservationstatus;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of activity
+     */ 
+    public function getActivity()
+    {
+        return $this->activity;
+    }
+
+    /**
+     * Set the value of activity
+     *
+     * @return  self
+     */ 
+    public function setActivity($activity)
+    {
+        $this->activity = $activity;
 
         return $this;
     }

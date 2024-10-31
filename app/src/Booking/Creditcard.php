@@ -2,7 +2,7 @@
 
 namespace App\Booking;
 
-class CreditCard
+class Creditcard
 {
     use DB\DBModel;
 
@@ -11,10 +11,10 @@ class CreditCard
     protected string $expiry;
 
     public function __construct(
-        ?string $number,
-        ?string $cvv,
-        ?string $expiry,
-        ?int $id
+        ?string $number = null,
+        ?string $cvv = null,
+        ?string $expiry = null,
+        ?int $id = null
     ) {
         $this->tableName = 'creditcard';
 

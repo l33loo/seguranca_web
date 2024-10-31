@@ -31,8 +31,16 @@ class UserController
             ],
         ];
 
+        $reservations = \App\Booking\Reservation::search($filters, '', 'reservedon', 'DESC');
+        foreach ($reservations as $reservation) {
+            $reservation
+                ->loadRelation('activity')
+                ->loadRelation('reservationstatus', 'reservation_status')
+                ->loadRelation('creditcard', 'creditcard');
+        }
+
         $data = [
-            'reservations' => \App\Booking\Reservation::search($filters, '', 'reservedon', 'DESC'),
+            'reservations' => $reservations,
         ];
         // TODO: change to having a user, and loading reservations onto it
         $html = $this->renderer->render('users/reservations', $data);

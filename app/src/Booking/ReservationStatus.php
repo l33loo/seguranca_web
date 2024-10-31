@@ -8,7 +8,7 @@ class ReservationStatus
 
     protected string $name;
 
-    public function __construct(?string $name, ?int $id)
+    public function __construct(?string $name = null, ?int $id = null)
     {
         if ($name !== null) {
             $this->name = $name;
@@ -16,5 +16,26 @@ class ReservationStatus
         if ($id !== null) {
             $this->id = $id;
         }
+    }
+    
+
+    /**
+     * Get the value of name
+     */ 
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set the value of name
+     *
+     * @return  self
+     */ 
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
     }
 }

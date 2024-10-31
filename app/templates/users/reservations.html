@@ -1,7 +1,7 @@
 {% extends "layout.html" %} {% block content %}
-<h1>My Reservations</h1>
+<h1 class="my-5">My Reservations</h1>
 <div>
-  <div class="accordion" id="accordionExample">
+  <div class="accordion" id="accordion">
     {% for reservation in reservations %}
     <div class="accordion-item">
       <h3 class="accordion-header">
@@ -9,24 +9,34 @@
           class="accordion-button"
           type="button"
           data-bs-toggle="collapse"
-          data-bs-target="#collapseOne"
+          data-bs-target="#collapseOne-{{ reservation.id }}"
           aria-expanded="true"
-          aria-controls="collapseOne"
+          aria-controls="collapseOne-{{ reservation.id }}"
         >
-          <strong>Reservation #{{ reservation.id }}:</strong> {{
-          reservation.loadRelation('activity').name }}
+          <div class="d-flex justify-content-between w-100">
+            <div>
+              <strong class="me-5">Reservation #{{ reservation.id }}</strong>
+              <span>{{ reservation.activity.name }}</span>
+            </div>
+            <div class="me-5">{{ reservation.activity.dateTimeToString }}</div>
+          </div>
         </button>
       </h3>
       <div
-        id="collapseOne"
-        class="accordion-collapse collapse show"
-        data-bs-parent="#accordionExample"
+        id="collapseOne-{{ reservation.id }}"
+        class="accordion-collapse collapse"
+        data-bs-parent="#accordion"
       >
         <div class="accordion-body">
-          <div class="fw-bold">Posted by TODO: user name</div>
-          <small>On {{ reservation.postedOnToString }}</small>
-          <p class="mt-3">
-            <i>{{ reservation.id }}</i>
+          <p>
+            <strong>Description: </strong>{{ reservation.activity.description }}
+          </p>
+          <p><strong>Cost: </strong>{{ reservation.activity.costToString }}</p>
+          <p>
+            <strong>Reserved On: </strong>{{ reservation.reservedon }}
+          </p>
+          <p></p>
+            <strong>Status: </strong>{{ reservation.reservationstatus.name }}
           </p>
         </div>
       </div>
