@@ -2,19 +2,15 @@
 
 ## Development Setup
 
+Rename the `/dev.env.sample` file to `/dev.env`, and add in the missing MySQL secrets.
+
 `docker compose up`
-
-The MySQL secrets for the development environment are included in `/dev.env`. (**Note**: Normally, this file would not be committed in git, but it is included to make this class project easier to run.)
-
-Docker Compose is configured to use `/dev.env` to override the production secrets. See the `env_file` properties in the `/compose.yaml` file for more details.
 
 ## Production Setup
 
 `./compose-production.sh`
 
 The production setup only works on Linux machines.
-
-**Make sure to delete `/dev.env` beforehand.**
 
 Inspired from [this](https://github.com/mashiox/dotfiles/blob/master/docker/secrets.md).
 

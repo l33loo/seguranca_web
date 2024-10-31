@@ -3,6 +3,6 @@ vendor/
 
 # mysql
 /mysql/data/
-# dev.env should normally be gitignored,
-# but leaving it out to make this course project easy to run.
-# Normally, we would put in a dev.env.sample file instead.
+
+# Development env vars file that includes secrets
+/dev.env
