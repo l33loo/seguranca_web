@@ -42,7 +42,7 @@
       </label>
     </div>
   </fieldset>
-  <fieldset class="my-3 text-bg-secondary p-3 w-50">
+  <fieldset class="my-3 text-bg-secondary p-4 w-50">
     <label for="ccNumber" class="form-label">Credit Card Number:</label>
     <input
       type="text"
@@ -51,26 +51,32 @@
       name="ccNumber"
       aria-describedby="emailHelp"
     />
-    <label for="ccExpiry" class="form-label">Expiry Date:</label>
-    <input
-      type="date"
-      class="form-control"
-      id="ccExpiry"
-      name="ccExpiry"
-      aria-describedby="emailHelp"
-    />
-    <label for="cvv" class="form-label">CVV:</label>
-    <input
-      type="text"
-      class="form-control"
-      id="cvv"
-      name="cvv"
-      aria-describedby="emailHelp"
-    />
+    <div class="row mt-1">
+      <div class="col">
+        <label for="ccExpiry" class="form-label">Expiry Date:</label>
+        <input
+          type="date"
+          class="form-control"
+          id="ccExpiry"
+          name="ccExpiry"
+          aria-describedby="emailHelp"
+        />
+      </div>
+      <div class="col">
+        <label for="cvv" class="form-label">CVV:</label>
+        <input
+          type="text"
+          class="form-control"
+          id="cvv"
+          name="cvv"
+          aria-describedby="emailHelp"
+        />
+      </div>
+    </div>
   </fieldset>
 
   <div class="mb-3">
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <input type="submit" value="Book Activity" class="btn btn-primary" />
   </div>
 </form>
 {% endblock %}
