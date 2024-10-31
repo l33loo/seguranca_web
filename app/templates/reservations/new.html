@@ -21,16 +21,25 @@
         id="cc-{{ creditCard.id }}"
         name="cc"
         value="{{ creditCard.id }}"
+        class="form-check-input"
       />
-      <label for="cc-{{ creditCard.id }}"
-        >TODO: Credit card ending in: {{ creditCard.number }}</label
-      >
+      <label for="cc-{{ creditCard.id }}" class="form-check-label">
+        <strong> TODO: Credit card ending in: </strong>{{ creditCard.number }}
+      </label>
     </div>
     {% endfor %}
 
     <div>
-      <input type="radio" id="cc-other" name="cc" value="cc-other" />
-      <label for="cc-other">Other credit card:</label>
+      <input
+        type="radio"
+        id="cc-other"
+        name="cc"
+        value="cc-other"
+        class="form-check-input"
+      />
+      <label for="cc-other" class="form-check-label">
+        <strong>Other credit card:</strong>
+      </label>
     </div>
   </fieldset>
   <fieldset>
