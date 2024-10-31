@@ -10,7 +10,7 @@ return [
     // Authenticated Users - Clients and Vendors
     ['POST', '/logout', ['App\Controllers\UserController', 'logout']],
     ['GET', '/users/me', ['App\Controllers\UserController', 'showProfile']],
-    ['GET', '/reservations', ['App\Controllers\ReservationController', 'list']],
+    ['GET', '/users/me/reservations', ['App\Controllers\UserController', 'reservations']],
     ['GET', '/reservations/new', ['App\Controllers\ReservationController', 'new']],
     ['POST', '/reservations/new', ['App\Controllers\ReservationController', 'reserve']],
     ['GET', '/reservations/{id:\d+}', ['App\Controllers\ReservationController', 'show']],
