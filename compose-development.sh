@@ -2,5 +2,4 @@
 
 set -e
 
-# Create TLS certificate
-./tls/generate-tls.sh
+docker compose up
