@@ -2,9 +2,6 @@
 
 namespace App\Booking;
 
-require $_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php';
-require $_SERVER['DOCUMENT_ROOT'] . '/DB/DBModel.php';
-
 abstract class User 
 {
     use DB\DBModel;

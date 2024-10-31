@@ -37,29 +37,16 @@ class UserController
 
     public function login()
     {
-        //Lógica de verificação do login
         $email = $this->request->post('email');
         $password = $this->request->post('password');
-        if (empty($email) || empty($password)) {
-            $this->response->setContent('Email and password are required');
-            $this->response->setStatusCode(400);
-            return;
+        $user = User::find($id);
+        if ($user && password_verify($password, $user->password)) {
+            $this->response->redirect('/users/profile');
+        } else {
+            $this->response->redirect('/users/login');
         }
-        try {
-            $user = User::login($email, $password);
-            if ($user) {
-                $this->response->setCookie('id', (string) $user->getId());
-                // Redireciona do login para a página de profile
-                $this->response->redirect('/users/profile');
-            } else {
-                $this->response->setContent('Invalid email or password');
-                $this->response->setStatusCode(401);
-            }
-        } catch (\Exception $e) {
-            // Captura e trata exceções, caso ocorram
-            $this->response->setContent('An error occurred during login');
-            $this->response->setStatusCode(500);
-        }
+        $html = $this->renderer->render('/activities/list');
+        $this->response->setContent($html);
     }
 
     public function logout()
