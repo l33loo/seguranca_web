@@ -66,6 +66,11 @@ class ActivityController
         $this->response->setContent($html);
     }
 
+    public function new()
+    {
+        // If VENDOR
+    }
+
     public function create()
     {
         // If VENDOR

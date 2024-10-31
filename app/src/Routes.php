@@ -17,7 +17,10 @@ return [
     ['POST', '/activities/{id:\d+}', ['App\Controllers\ActivityController', 'postComment']],
 
     // Vendors only
-    ['POST', '/activities', ['App\Controllers\ActivityController', 'create']],
+    ['GET', '/users/me/activities', ['App\Controllers\UserController', 'vendorActivities']],
+    ['GET', '/users/me/activities/{id:\d+}', ['App\Controllers\UserController', 'vendorActivity']],
+    ['GET', '/activities/new', ['App\Controllers\ActivityController', 'new']],
+    ['POST', '/activities/new', ['App\Controllers\ActivityController', 'create']],
     ['PUT', '/activities/{id:\d+}', ['App\Controllers\ActivityController', 'update']],
     ['PATCH', '/activities/{id:\d+}/archive', ['App\Controllers\ActivityController', 'archive']],
     ['GET', '/activities/{id:\d+}/reservations', ['App\Controllers\ActivityController', 'listReservations']],
