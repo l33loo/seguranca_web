@@ -11,7 +11,8 @@ services:
     working_dir: /var/www/html
     volumes:
       - ./app:/var/www/html
-      #- ./tls/000-default.conf:/etc/apache2/sites-available/000-default.conf
+      - ./tls/000-default.conf:/etc/apache2/sites-available/000-default.conf
+      - ./tls/default-ssl.conf:/etc/apache2/sites-available/default-ssl.conf
       - ./tls/MyCertificate.crt:/etc/ssl/certs/MyCertificate.crt
       - ./tls/server.key:/etc/ssl/private/server.key
     env_file:

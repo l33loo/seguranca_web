@@ -9,14 +9,12 @@ RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf
 
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
-# Enable Apache mod_rewrite and ssl module
+# Enable Apache mod_rewrite
 RUN a2enmod rewrite
+
+# Enable Apache modules needed for TLS
 RUN a2enmod ssl
 RUN a2enmod headers
 RUN a2ensite default-ssl
-
-# Custom config files to enable TLS
-COPY ./tls/000-default.conf /etc/apache2/sites-available/000-default.conf
-COPY ./tls/default-ssl.conf /etc/apache2/sites-available/default-ssl.conf
 
 RUN docker-php-ext-install pdo_mysql
