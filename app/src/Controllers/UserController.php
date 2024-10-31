@@ -22,12 +22,43 @@ class UserController
         $this->renderer = $renderer;
     }
 
+    public function vendorActivities(): void
+    {
+        // TODO: get logged-in user's id
+        $vendorId = 1;
+        $data = [];
+        $filters = [
+            [
+                'column' => "vendoruser_id",
+                'operator' => '=',
+                'value' => $vendorId,
+            ],
+        ];
+
+        $search = $this->request->getQueryParameter('search');
+        if (!empty($search) && strlen(trim($search)) > 0) {
+            $filters[] = [
+                'column' => 'name',
+                'operator' => 'LIKE',
+                'value' => '%' . trim($search) . '%',
+
+            ];
+
+            $data['search'] = htmlspecialchars($search);
+        }
+
+        $data['activities'] = \App\Booking\Activity::search($filters, '', 'date');
+
+        $html = $this->renderer->render('/users/vendors/activities/list', $data);
+        $this->response->setContent($html);
+    }
+
     public function reservations() {
         $filters = [
             [
                 'column' => 'reservedbyuser_id',
                 'operator' => '=',
-                'value' => 1,
+                'value' => 1, // TODO: change to having a user, and loading reservations onto it
             ],
         ];
 
@@ -42,7 +73,7 @@ class UserController
         $data = [
             'reservations' => $reservations,
         ];
-        // TODO: change to having a user, and loading reservations onto it
+
         $html = $this->renderer->render('users/reservations', $data);
         $this->response->setContent($html);
     }
