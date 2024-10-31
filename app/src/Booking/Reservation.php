@@ -11,6 +11,10 @@ class Reservation
     protected int $activity_id;
     protected int $creditcard_id;
     protected int $reservationstatus_id;
+    // TODO: change to User type
+    protected array $user;
+    protected CreditCard $creditCard;
+    protected ReservationStatus $status;
 
     public function __construct(
         ?int $reservedbyuser_id,
@@ -20,6 +24,8 @@ class Reservation
         ?int $reservationstatus_id,
         ?int $id
     ) {
+        $this->tableName = 'reservation';
+
         if ($reservedbyuser_id !== null) {
             $this->reservedbyuser_id = $reservedbyuser_id;
         }
@@ -136,6 +142,66 @@ class Reservation
     public function setReservationstatus_id(int $reservationstatus_id): self
     {
         $this->reservationstatus_id = $reservationstatus_id;
+
+        return $this;
+    }
+    
+    /**
+     * Get the value of user
+     */ 
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set the value of user
+     *
+     * @return  self
+     */ 
+    public function setUser($user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of creditCard
+     */ 
+    public function getCreditCard(): CreditCard
+    {
+        return $this->creditCard;
+    }
+
+    /**
+     * Set the value of creditCard
+     *
+     * @return  self
+     */ 
+    public function setCreditCard(CreditCard $creditCard): self
+    {
+        $this->creditCard = $creditCard;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of status
+     */ 
+    public function getStatus(): ReservationStatus
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set the value of status
+     *
+     * @return  self
+     */ 
+    public function setStatus(ReservationStatus $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }

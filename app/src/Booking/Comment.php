@@ -10,6 +10,8 @@ class Comment
     protected int $user_id;
     protected string $postedon;
     protected int $activity_id;
+    // TODO: Change to User type
+    protected array $user;
 
     public function __construct(
         ?string $comment = null,
