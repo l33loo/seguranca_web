@@ -7,9 +7,14 @@ services:
     container_name: seguranca-web_app
     ports:
       - 8080:80
+      - 443:443
     working_dir: /var/www/html
     volumes:
       - ./app:/var/www/html
+      - ./tls/000-default.conf:/etc/apache2/sites-available/000-default.conf
+      - ./tls/default-ssl.conf:/etc/apache2/sites-available/default-ssl.conf
+      - ./tls/MyCertificate.crt:/etc/ssl/certs/MyCertificate.crt
+      - ./tls/server.key:/etc/ssl/private/server.key
     env_file:
       - path: ./dev.env
         required: false # development, overrides the production env file

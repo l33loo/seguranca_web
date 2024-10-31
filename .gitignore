@@ -6,3 +6,6 @@ vendor/
 
 # Development env vars file that includes secrets
 /dev.env
+
+# TLS-related files
+/tls
