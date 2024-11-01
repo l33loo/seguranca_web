@@ -226,4 +226,9 @@ class Reservation
 
         return $this;
     }
+
+    public function getDateTimeToString(): string
+    {
+        return \App\Utils\Helper::dateTimeToString($this->reservedon);
+    }
 }

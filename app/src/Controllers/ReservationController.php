@@ -34,10 +34,16 @@ class ReservationController
 
     public function show($params)
     {
+        $reservation = Reservation::find(intval($params['id']));
+        $reservation
+            ->loadRelation('activity')
+            ->loadRelation('creditcard')
+            ->loadRelation('reservationstatus', 'reservation_status');
+
         $data = [
-            'id' => $params['id'],
+            'reservation' => $reservation,
         ];
-        
+
         $html = $this->renderer->render('reservations/show', $data);
         $this->response->setContent($html);
     }
