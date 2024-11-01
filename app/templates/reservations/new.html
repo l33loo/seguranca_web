@@ -1,82 +1,87 @@
 {% extends "layout.html" %} {% block content %}
-<div class="row my-5">
-  <h1>Book {{ activity.name }}</h1>
-</div>
-<div class="card">
-  <img src="/img/surfing.jpg" alt="" class="card-img-top" />
-  <div class="card-body">
-    <p class="card-text">{{ activity.description }}</p>
-    <p class="card-text">{{ activity.dateTimeToString }}</p>
-    <p class="card-text">Cost: {{ activity.costToString() }} per person</p>
-  </div>
-</div>
-<h2 class="h1 mt-5 mb-4">Book Now</h2>
-<form action="" method="post">
-  <fieldset>
-    <legend>Select payment method:</legend>
-    {% for creditCard in creditCards %}
-    <div>
-      <input
-        type="radio"
-        id="cc-{{ creditCard.id }}"
-        name="cc"
-        value="{{ creditCard.id }}"
-        class="form-check-input"
-      />
-      <label for="cc-{{ creditCard.id }}" class="form-check-label">
-        <strong> TODO: Credit card ending in: </strong>{{ creditCard.number }}
-      </label>
-    </div>
-    {% endfor %}
+<div class="row">
+  <div class="col">
+    <h2 class="h1 mt-5 mb-4">Book <i>{{ activity.name }}</i> Now</h2>
+    <form action="" method="post">
+      <fieldset>
+        <legend>Select payment method:</legend>
+        {% for creditCard in creditCards %}
+        <div>
+          <input
+            type="radio"
+            id="cc-{{ creditCard.id }}"
+            name="cc"
+            value="{{ creditCard.id }}"
+            class="form-check-input"
+          />
+          <label for="cc-{{ creditCard.id }}" class="form-check-label">
+            <strong> TODO: Credit card ending in: </strong>{{ creditCard.number
+            }}
+          </label>
+        </div>
+        {% endfor %}
 
-    <div>
-      <input
-        type="radio"
-        id="cc-other"
-        name="cc"
-        value="cc-other"
-        class="form-check-input"
-      />
-      <label for="cc-other" class="form-check-label">
-        <strong>Other credit card:</strong>
-      </label>
-    </div>
-  </fieldset>
-  <fieldset class="my-3 text-bg-secondary p-4 w-50">
-    <label for="ccNumber" class="form-label">Credit Card Number:</label>
-    <input
-      type="text"
-      class="form-control"
-      id="ccNumber"
-      name="ccNumber"
-      aria-describedby="emailHelp"
-    />
-    <div class="row mt-1">
-      <div class="col">
-        <label for="ccExpiry" class="form-label">Expiry Date:</label>
-        <input
-          type="date"
-          class="form-control"
-          id="ccExpiry"
-          name="ccExpiry"
-          aria-describedby="emailHelp"
-        />
-      </div>
-      <div class="col">
-        <label for="cvv" class="form-label">CVV:</label>
+        <div>
+          <input
+            type="radio"
+            id="cc-other"
+            name="cc"
+            value="cc-other"
+            class="form-check-input"
+            checked
+          />
+          <label for="cc-other" class="form-check-label">
+            <strong>Other credit card:</strong>
+          </label>
+        </div>
+      </fieldset>
+      <fieldset class="my-3 text-bg-secondary p-4">
+        <label for="ccNumber" class="form-label">Credit Card Number:</label>
         <input
           type="text"
           class="form-control"
-          id="cvv"
-          name="cvv"
+          id="ccNumber"
+          name="ccNumber"
           aria-describedby="emailHelp"
         />
+        <div class="row mt-1">
+          <div class="col">
+            <label for="ccExpiry" class="form-label">Expiry Date:</label>
+            <input
+              type="date"
+              class="form-control"
+              id="ccExpiry"
+              name="ccExpiry"
+              aria-describedby="emailHelp"
+            />
+          </div>
+          <div class="col">
+            <label for="cvv" class="form-label">CVV:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="cvv"
+              name="cvv"
+              aria-describedby="emailHelp"
+            />
+          </div>
+        </div>
+      </fieldset>
+
+      <div class="mb-3">
+        <input type="submit" value="Book Activity" class="btn btn-primary" />
+      </div>
+    </form>
+  </div>
+  <div class="col">
+    <div class="card">
+      <img src="/img/surfing.jpg" alt="" class="card-img-top" />
+      <div class="card-body">
+        <p class="card-text">{{ activity.description }}</p>
+        <p class="card-text">{{ activity.dateTimeToString }}</p>
+        <p class="card-text">Cost: {{ activity.costToString() }} per person</p>
       </div>
     </div>
-  </fieldset>
-
-  <div class="mb-3">
-    <input type="submit" value="Book Activity" class="btn btn-primary" />
   </div>
-</form>
+</div>
 {% endblock %}

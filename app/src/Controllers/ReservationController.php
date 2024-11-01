@@ -77,20 +77,21 @@ class ReservationController
     public function reserve($params)
     {
         if ($this->request->getParameter('cc-other') !== null) {
+            // TODO: validate fields of new cc
             // TODO: get other form fields
             // TODO: create new credit card and save
         }
         // TODO: Logged in user only
         $activityId = $params['id'];
-        $reservation = new Reservation(
-            1,
-            $activityId,
-            ?int $creditcard_id = null
-        );
+        // $reservation = new Reservation(
+        //     1,
+        //     $activityId,
+        //     ?int $creditcard_id = null
+        // );
 
-        $reservation->save();
+        // $reservation->save();
 
-        $params['id'] = $reservation->getId();
+        // $params['id'] = $reservation->getId();
 
         $this->show($params);
     }
