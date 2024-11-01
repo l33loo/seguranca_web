@@ -5,8 +5,10 @@ namespace App\Controllers;
 use Http\Request;
 use Http\Response;
 use App\Booking\Activity;
+use App\Booking\Creditcard;
 use App\Booking\Reservation;
 use App\Template\FrontendRenderer;
+use Exception;
 
 class ReservationController
 {
@@ -66,7 +68,7 @@ class ReservationController
         ];
 
         // TODO: Expose just the last 4 digits of the credit card
-        $creditCards = \App\Booking\Creditcard::search($filters);
+        $creditCards = Creditcard::search($filters);
 
         $data['creditCards'] = $creditCards;
 
@@ -76,24 +78,50 @@ class ReservationController
 
     public function reserve($params)
     {
-        if ($this->request->getParameter('cc-other') !== null) {
+        $paymentOption = $this->request->getParameter('cc');
+        // TODO: use id of user that's logged in
+        $userId = 1;
+        $activityId = intval($params['id']);
+        if ($paymentOption === 'cc-other') {
             // TODO: validate fields of new cc
             // TODO: get other form fields
             // TODO: create new credit card and save
+        } else if ($paymentOption !== null) {
+            // In this case, payment option is cc id
+
+            // TODO: set up try / catch
+            // try {
+                $filters = [
+                    [
+                        'column' => 'id',
+                        'operator' => '=',
+                        'value' => $paymentOption,
+                    ],
+                    [
+                        'column' => 'user_id',
+                        'operator' => '=',
+                        'value' => $userId,
+                    ],
+                ];
+
+                $cc = Creditcard::search($filters);
+                if (count($cc) !== 1) {
+                    throw new Exception('Error retrieving credit card information');
+                }
+
+                $newReservation = new Reservation($userId, $activityId, $cc[0]->getId());
+                $newReservation->save();
+                header('Location: /reservations/' . $newReservation->getId());
+                $resParams = [
+                    'id' => $newReservation->getId(),
+                ];
+                $this->show($resParams);
+            // } catch (\Exception) {
+                // TODO: display error message to user
+            // }
+        } else {
+            // TODO: display same page with error message
         }
-        // TODO: Logged in user only
-        $activityId = $params['id'];
-        // $reservation = new Reservation(
-        //     1,
-        //     $activityId,
-        //     ?int $creditcard_id = null
-        // );
-
-        // $reservation->save();
-
-        // $params['id'] = $reservation->getId();
-
-        $this->show($params);
     }
 
     public function updateStatus($newStatus)
