@@ -1,18 +1,5 @@
 USE booking;
 
--- Tabela creditcard
-CREATE TABLE IF NOT EXISTS creditcard (
-  id INT NOT NULL AUTO_INCREMENT,
-  number VARCHAR(16) NOT NULL,
-  cvv VARCHAR(3) NOT NULL,
-  expiry DATE NOT NULL,
-  PRIMARY KEY (id)
-);
-
-INSERT INTO creditcard(id, number, cvv, expiry)
-VALUES (1, '1234567891234567', '123', '2026-12-01'),
-(2, '1234567891234568', '124', '2025-10-11');
-
 -- Tabela user
 CREATE TABLE IF NOT EXISTS user (
   id INT NOT NULL AUTO_INCREMENT,
@@ -30,6 +17,24 @@ CREATE TABLE IF NOT EXISTS user (
 INSERT INTO user(id, firstname, lastname, email, passwordhash, isvendor)
 VALUES (1, 'Pedro','Paula','pedropaula@uac.pt','$2y$10$HkCd5wTbke4wG4wWh9t0pOLsDsYaDPAxS8JwW5cyZoUmQ4WiaJ9Y6', true),
 (2, 'Lila','Karpowicz','lilakarpowicz@uac.pt','$2y$10$4GFUqTp1GUTlQxMeO4QCceqXLA75nr7g9k01MHJ6ZdnGS6K8gXgwq', false);
+
+-- Tabela creditcard
+CREATE TABLE IF NOT EXISTS creditcard (
+  id INT NOT NULL AUTO_INCREMENT,
+  number VARCHAR(16) NOT NULL,
+  cvv VARCHAR(4) DEFAULT NULL,
+  expiry DATE DEFAULT NULL,
+  user_id INT DEFAULT NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT fk_user_creditcard
+    FOREIGN KEY (user_id)
+    REFERENCES user (id)
+);
+
+INSERT INTO creditcard(id, number, cvv, expiry, user_id)
+VALUES (1, '1234567891234567', '123', '2026-12-01', 1),
+(2, '1234567891234568', '124', '2025-10-11', 1),
+(3, 'XXXXXXXXXXXX4568', NULL, NULL, NULL);
 
 -- Tabela activity
 CREATE TABLE IF NOT EXISTS activity (
@@ -96,7 +101,7 @@ CREATE TABLE IF NOT EXISTS reservation (
   reservedon DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   activity_id INT NOT NULL,
   creditcard_id INT NOT NULL,
-  reservationstatus_id INT NOT NULL,
+  reservationstatus_id INT NOT NULL DEFAULT 1,
   PRIMARY KEY (id),
   CONSTRAINT fk_reservation_user
     FOREIGN KEY (reservedbyuser_id)
@@ -117,22 +122,6 @@ INSERT INTO reservation(reservedbyuser_id, reservedon, activity_id, creditcard_i
 VALUES (1, '2024-10-15 20:55:04', 1, 1, 1),
 (1, '2024-10-20 07:05:22', 2, 1, 3),
 (2, '2024-09-22 17:44:31', 1, 2, 2);
-
--- Tabela user_creditcard
-CREATE TABLE IF NOT EXISTS user_creditcard (
-  user_id INT NOT NULL,
-  creditcard_id INT NOT NULL,
-  CONSTRAINT fk_user_creditcard_creditcard
-    FOREIGN KEY (creditcard_id)
-    REFERENCES creditcard (id),
-  CONSTRAINT fk_user_creditcard_user
-    FOREIGN KEY (user_id)
-    REFERENCES user (id)
-);
-
-INSERT INTO user_creditcard(user_id, creditcard_id)
-VALUES (1,1),
-(2,2);
 
 -- Tabela reservation_activity
 CREATE TABLE IF NOT EXISTS reservation_activity (

@@ -1,43 +1,102 @@
 {% extends "layout.html" %} {% block content %}
-<div class="row my-5">
-  <h1>Book {{ activity.name }}</h1>
-</div>
-<div class="card">
-  <img src="/img/surfing.jpg" alt="" class="card-img-top" />
-  <div class="card-body">
-    <p class="card-text">{{ activity.description }}</p>
-    <p class="card-text">{{ activity.dateTimeToString }}</p>
-    <p class="card-text">Cost: {{ activity.costToString() }} per person</p>
+<div class="row">
+  <div class="col">
+    <h2 class="h1 mt-5 mb-4">Book <i>{{ activity.name }}</i> Now</h2>
+    <form action="" method="post">
+      <fieldset>
+        <legend>Select payment method:</legend>
+        {% for creditCard in creditCards %}
+        <div>
+          <input
+            type="radio"
+            id="cc-{{ creditCard.id }}"
+            name="cc"
+            value="{{ creditCard.id }}"
+            class="form-check-input"
+          />
+          <label for="cc-{{ creditCard.id }}" class="form-check-label">
+            <strong>Credit card: </strong>{{ creditCard.number }}
+          </label>
+        </div>
+        {% endfor %}
+
+        <div>
+          <input
+            type="radio"
+            id="cc-other"
+            name="cc"
+            value="cc-other"
+            class="form-check-input"
+            checked
+          />
+          <label for="cc-other" class="form-check-label">
+            <strong>Other credit card:</strong>
+          </label>
+        </div>
+      </fieldset>
+      <fieldset class="my-3 text-bg-secondary p-4">
+        <label for="ccNumber" class="form-label">Credit Card Number:</label>
+        <input
+          type="text"
+          class="form-control"
+          id="ccNumber"
+          name="ccNumber"
+          aria-describedby="emailHelp"
+        />
+        <div class="row mt-1">
+          <div class="col">
+            <label for="ccExpiry" class="form-label">Expiry Date:</label>
+            <input
+              type="date"
+              class="form-control"
+              id="ccExpiry"
+              name="ccExpiry"
+              aria-describedby="emailHelp"
+            />
+          </div>
+          <div class="col">
+            <label for="cvv" class="form-label">CVV:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="cvv"
+              name="cvv"
+              aria-describedby="emailHelp"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="form-check mt-2">
+              <input
+                type="checkbox"
+                id="cc-save"
+                name="cc-save"
+                value="yes"
+                class="form-check-input"
+              />
+              <label for="cc-save" class="form-check-label"
+                >Save credit card information to your account</label
+              >
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <div class="mb-3">
+        <input type="submit" value="Book Activity" class="btn btn-primary" />
+      </div>
+    </form>
+  </div>
+  <div class="col">
+    <div class="card">
+      <img src="/img/surfing.jpg" alt="" class="card-img-top" />
+      <div class="card-body">
+        <p class="card-text">{{ activity.description }}</p>
+        <p class="card-text">{{ activity.dateTimeToString }}</p>
+        <p class="card-text">Cost: {{ activity.costToString() }} per person</p>
+      </div>
+    </div>
   </div>
 </div>
-<h2>Book Now</h2>
-<form action="" method="post">
-  <div class="mb-3">
-    <label for="ccNumber" class="form-label">Cerdit Card Number:</label>
-    <input
-      type="text"
-      class="form-control"
-      id="ccNumber"
-      name="ccNumber"
-      aria-describedby="emailHelp"
-    />
-    <label for="ccExpiry" class="form-label">Expiry Date:</label>
-    <input
-      type="date"
-      class="form-control"
-      id="ccExpiry"
-      name="ccExpiry"
-      aria-describedby="emailHelp"
-    />
-    <label for="cvv" class="form-label">CVV:</label>
-    <input
-      type="text"
-      class="form-control"
-      id="cvv"
-      name="cvv"
-      aria-describedby="emailHelp"
-    />
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </div>
-</form>
 {% endblock %}

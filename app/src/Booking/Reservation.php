@@ -19,10 +19,10 @@ class Reservation
 
     public function __construct(
         ?int $reservedbyuser_id = null,
-        ?string $reservedon = null,
         ?int $activity_id = null,
         ?int $creditcard_id = null,
         ?int $reservationstatus_id = null,
+        ?string $reservedon = null,
         ?int $id = null
     ) {
         $this->tableName = 'reservation';
