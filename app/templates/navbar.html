@@ -24,6 +24,7 @@ dynamically #}
         <li class="nav-item">
           <a class="nav-link" href="#">Link</a>
         </li>
+        {% if getUserType() is not same as 'guest' %}
         <li class="nav-item dropdown">
           <a
             class="nav-link dropdown-toggle"
@@ -32,7 +33,7 @@ dynamically #}
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            TODO: user name
+            Welcome back, {{ session.name }}!
           </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="/users/me">Profile</a></li>
@@ -41,16 +42,30 @@ dynamically #}
                 >Reservations</a
               >
             </li>
-            <li><hr class="dropdown-divider" /></li>
             <li>
               <a class="dropdown-item" href="/users/me/activities"
                 >Manage Activities</a
               >
             </li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <form action="/logout" method="post">
+                <input
+                  type="submit"
+                  name="logout"
+                  id="logout"
+                  value="Logout"
+                  class="link nav-link ms-5"
+                />
+              </form>
+            </li>
           </ul>
         </li>
+        {% endif %}
         <li>
-          <a class="nav-link ms-5" aria-current="page" href="\login">Login</a>
+          {% if getUserType() is same as 'guest' %}
+          <a class="nav-link ms-5" href="\login">Login</a>
+          {% endif %}
         </li>
       </ul>
     </div>

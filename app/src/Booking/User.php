@@ -2,24 +2,23 @@
 
 namespace App\Booking;
 
-abstract class User 
+class User 
 {
     use DB\DBModel;
 
     protected string $firstname;
     protected string $lastname;
     protected string $email;
-    protected string $password;
-    protected int $creditcard_id;
-    protected Creditcard $creditcard;
+    protected string $passwordhash;
+    protected bool $isvendor;
 
     public function __construct(
-        ?int $id = null,
         ?string $firstname = null,
         ?string $lastname = null,
         ?string $email = null,
-        ?string $password = null,
-        ?int $creditcard_id = null,
+        ?string $passwordhash = null,
+        ?bool $isvendor = null,
+        ?int $id = null
     ){
         $this->tableName = 'user';
 
@@ -28,21 +27,20 @@ abstract class User
         }
         if ($firstname !== null) {
             $this->firstname = $firstname;
-            }
+        }
         if ($lastname !== null) {
             $this->lastname = $lastname;
-            }
+        }
         if ($email !== null) {
             $this->email = $email;
-            }
-        if ($password !== null) {
-            $this->password = $password;
-            }
-        if ($creditcard_id !== null) {
-            $this->creditcard_id = $creditcard_id;
-            }
+        }
+        if ($passwordhash !== null) {
+            $this->passwordhash = $passwordhash;
+        }
+        if ($isvendor !== null) {
+            $this->isvendor = $isvendor;
+        }
     }
-
 
     /**
      * Get the value of firstname
@@ -103,46 +101,43 @@ abstract class User
 
         return $this;
     }
-
+    
     /**
-     * Undocumented function
-     * Usado o search()
-     * @param string $password
-     * @return boolean
-     */
-    public function validPassword(string $password): bool
-    {
-        if (count($this->password) == 1) {
-            return password_verify($password, $this->password[0]);
-        }
-        return false;
-
-        $users = self::search(['email' => trim($this->email)]);
-        if ($users[0]) {
-            $passwordHash = $users[0]['password'];
-            return password_verify($password, $passwordHash);
-        } else {
-            return false;
-        }
-
-    }
-
-    /**
-     * Get the value of creditcard_id
+     * Get the value of passwordhash
      */ 
-    public function getCreditcard_id()
+    public function getPasswordhash(): string
     {
-        return $this->creditcard_id;
+        return $this->passwordhash;
     }
 
     /**
-     * Set the value of creditcard_id
+     * Set the value of passwordhash
      *
      * @return  self
      */ 
-    public function setCreditcard_id($creditcard_id)
+    public function setPasswordhash(string $passwordhash): self
     {
-        $this->creditcard_id = $creditcard_id;
+        $this->passwordhash = $passwordhash;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of isvendor
+     */ 
+    public function getIsvendor()
+    {
+        return $this->isvendor;
+    }
+
+    /**
+     * Set the value of isvendor
+     *
+     * @return  self
+     */ 
+    public function setIsvendor($isvendor)
+    {
+        $this->isvendor = $isvendor;
 
         return $this;
     }
