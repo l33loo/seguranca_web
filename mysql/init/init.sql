@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS reservation (
   reservedon DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   activity_id INT NOT NULL,
   creditcard_id INT NOT NULL,
-  reservationstatus_id INT NOT NULL,
+  reservationstatus_id INT NOT NULL DEFAULT 1,
   PRIMARY KEY (id),
   CONSTRAINT fk_reservation_user
     FOREIGN KEY (reservedbyuser_id)

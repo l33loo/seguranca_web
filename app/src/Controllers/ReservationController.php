@@ -5,6 +5,7 @@ namespace App\Controllers;
 use Http\Request;
 use Http\Response;
 use App\Booking\Activity;
+use App\Booking\Reservation;
 use App\Template\FrontendRenderer;
 
 class ReservationController
@@ -39,11 +40,11 @@ class ReservationController
         $this->response->setContent($html);
     }
 
-    public function new()
+    public function new($params)
     {
         // TODO: redirect to login form if user is not logged in
 
-        $activityId = $this->request->getQueryParameter('activity');
+        $activityId = $params['id'];
 
         $data = [
             'activity' => Activity::find(intval($activityId)),
@@ -73,9 +74,25 @@ class ReservationController
         $this->response->setContent($html);
     }
 
-    public function reserve($ids)
+    public function reserve($params)
     {
-        // Logged in user only
+        if ($this->request->getParameter('cc-other') !== null) {
+            // TODO: get other form fields
+            // TODO: create new credit card and save
+        }
+        // TODO: Logged in user only
+        $activityId = $params['id'];
+        $reservation = new Reservation(
+            1,
+            $activityId,
+            ?int $creditcard_id = null
+        );
+
+        $reservation->save();
+
+        $params['id'] = $reservation->getId();
+
+        $this->show($params);
     }
 
     public function updateStatus($newStatus)
