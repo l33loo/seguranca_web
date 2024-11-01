@@ -15,8 +15,7 @@
             class="form-check-input"
           />
           <label for="cc-{{ creditCard.id }}" class="form-check-label">
-            <strong> TODO: Credit card ending in: </strong>{{ creditCard.number
-            }}
+            <strong>Credit card: </strong>{{ creditCard.number }}
           </label>
         </div>
         {% endfor %}
@@ -64,6 +63,22 @@
               name="cvv"
               aria-describedby="emailHelp"
             />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="form-check mt-2">
+              <input
+                type="checkbox"
+                id="cc-save"
+                name="cc-save"
+                value="yes"
+                class="form-check-input"
+              />
+              <label for="cc-save" class="form-check-label"
+                >Save credit card information to your account</label
+              >
+            </div>
           </div>
         </div>
       </fieldset>

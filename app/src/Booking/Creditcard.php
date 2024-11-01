@@ -7,9 +7,9 @@ class Creditcard
     use DB\DBModel;
 
     protected string $number;
-    protected string $cvv;
-    protected string $expiry;
-    protected int $user_id;
+    protected ?string $cvv;
+    protected ?string $expiry;
+    protected ?int $user_id;
 
     public function __construct(
         ?string $number = null,
@@ -36,14 +36,13 @@ class Creditcard
             $this->id = $id;
         }
     }
-    
 
     /**
      * Get the value of number
      */ 
     public function getNumber(): string
     {
-        return $this->number;
+        return self::obfuscateNum($this->number);
     }
 
     /**
@@ -61,7 +60,7 @@ class Creditcard
     /**
      * Get the value of cvv
      */ 
-    public function getCvv(): string
+    public function getCvv(): ?string
     {
         return $this->cvv;
     }
@@ -71,7 +70,7 @@ class Creditcard
      *
      * @return  self
      */ 
-    public function setCvv(string $cvv): self
+    public function setCvv(?string $cvv): self
     {
         $this->cvv = $cvv;
 
@@ -81,7 +80,7 @@ class Creditcard
     /**
      * Get the value of expiry
      */ 
-    public function getExpiry(): string
+    public function getExpiry(): ?string
     {
         return $this->expiry;
     }
@@ -91,10 +90,36 @@ class Creditcard
      *
      * @return  self
      */ 
-    public function setExpiry(string $expiry): self
+    public function setExpiry(?string $expiry): self
     {
         $this->expiry = $expiry;
 
         return $this;
+    }
+    
+
+    /**
+     * Get the value of user_id
+     */ 
+    public function getUser_id(): ?int
+    {
+        return $this->user_id;
+    }
+
+    /**
+     * Set the value of user_id
+     *
+     * @return  self
+     */ 
+    public function setUser_id(?int $user_id): self
+    {
+        $this->user_id = $user_id;
+
+        return $this;
+    }
+
+    public static function obfuscateNum(string $num)
+    {
+        return str_repeat('*', strlen($num) - 4) . substr($num, -4);
     }
 }

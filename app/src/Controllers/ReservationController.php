@@ -79,49 +79,104 @@ class ReservationController
     public function reserve($params)
     {
         $paymentOption = $this->request->getParameter('cc');
+
+        // No credit card selected
+        if ($paymentOption === null) {
+            // TODO: add errors
+            $data = [
+
+            ];
+            $html = $this->renderer->render('reservations/new', $data);
+            $this->response->setContent($html);
+            return;
+        }
+
         // TODO: use id of user that's logged in
         $userId = 1;
         $activityId = intval($params['id']);
+        // New credit card
         if ($paymentOption === 'cc-other') {
-            // TODO: validate fields of new cc
-            // TODO: get other form fields
-            // TODO: create new credit card and save
-        } else if ($paymentOption !== null) {
-            // In this case, payment option is cc id
+            $ccNumber = $this->request->getParameter('ccNumber');
+            $ccExpiry = $this->request->getParameter('ccExpiry');
+            $cvv = $this->request->getParameter('cvv');
+            $ccData = new Creditcard(trim($ccNumber), trim($cvv), trim($ccExpiry));
+            // TODO: implement validation
+            // $validation = $ccData->validate();
+            // TODO: something like if $validation->hasErrors()
+            $isValid = true;
+            if (!$isValid) {
+                // TODO: display error messages
+                $data = [
 
-            // TODO: set up try / catch
-            // try {
-                $filters = [
-                    [
-                        'column' => 'id',
-                        'operator' => '=',
-                        'value' => $paymentOption,
-                    ],
-                    [
-                        'column' => 'user_id',
-                        'operator' => '=',
-                        'value' => $userId,
-                    ],
                 ];
+                $html = $this->renderer->render('reservations/new', $data);
+                $this->response->setContent($html);
+                return;
+            }
 
-                $cc = Creditcard::search($filters);
-                if (count($cc) !== 1) {
-                    throw new Exception('Error retrieving credit card information');
-                }
-
-                $newReservation = new Reservation($userId, $activityId, $cc[0]->getId());
-                $newReservation->save();
-                header('Location: /reservations/' . $newReservation->getId());
-                $resParams = [
-                    'id' => $newReservation->getId(),
-                ];
-                $this->show($resParams);
-            // } catch (\Exception) {
-                // TODO: display error message to user
-            // }
-        } else {
-            // TODO: display same page with error message
+            // User requested to save credit card to their account
+            $requestToSave = $this->request->getParameter('cc-save');
+            if ($requestToSave === 'yes') {
+                // TODO: get id of logged in user
+                $ccData->setUser_id(1)->save();
+            
+            } else {
+                // User doesn't want to save their cc to their account,
+                // so hide all numbers except last 4 for record keeping
+                $obfNumber = Creditcard::obfuscateNum($ccData->getNumber(), -4);
+                $ccData->setNumber($obfNumber)->setExpiry(null)->setCvv(null)->save();
+            }
+            
+            $newRes = new Reservation($userId, $activityId, $ccData->getId());
+            $newRes->save();
+            header('Location: /reservations/' . $newRes->getId());
+            $data = [
+                'id' => $newRes->getId(),
+            ];
+            $html = $this->renderer->render('reservations/show', $data);
+            $this->response->setContent($html);
+            return;
         }
+        
+        // In this case, the user chose an existing credit card.
+        // Payment option is cc id
+
+        // TODO: set up try / catch
+        // try {
+            $filters = [
+                [
+                    'column' => 'id',
+                    'operator' => '=',
+                    'value' => $paymentOption,
+                ],
+                [
+                    'column' => 'user_id',
+                    'operator' => '=',
+                    'value' => $userId,
+                ],
+                [
+                    'column' => "expiry",
+                    'operator' => '>',
+                    'value' => date('Y-m-d'),
+                ],
+            ];
+
+            $cc = Creditcard::search($filters);
+            // echo count($cc);
+            // die;
+            if (count($cc) !== 1) {
+                throw new Exception('Error retrieving credit card information');
+            }
+
+            $newReservation = new Reservation($userId, $activityId, $cc[0]->getId());
+            $newReservation->save();
+            header('Location: /reservations/' . $newReservation->getId());
+            $data = [
+                'id' => $newReservation->getId(),
+            ];
+            $html = $this->renderer->render('reservations/show', $data);
+            $this->response->setContent($html);
+        // } catch...
     }
 
     public function updateStatus($newStatus)

@@ -22,9 +22,9 @@ VALUES (1, 'Pedro','Paula','pedropaula@uac.pt','$2y$10$HkCd5wTbke4wG4wWh9t0pOLsD
 CREATE TABLE IF NOT EXISTS creditcard (
   id INT NOT NULL AUTO_INCREMENT,
   number VARCHAR(16) NOT NULL,
-  cvv VARCHAR(3) NOT NULL,
-  expiry DATE NOT NULL,
-  user_id INT NOT NULL,
+  cvv VARCHAR(4) DEFAULT NULL,
+  expiry DATE DEFAULT NULL,
+  user_id INT DEFAULT NULL,
   PRIMARY KEY (id),
   CONSTRAINT fk_user_creditcard
     FOREIGN KEY (user_id)
@@ -33,7 +33,8 @@ CREATE TABLE IF NOT EXISTS creditcard (
 
 INSERT INTO creditcard(id, number, cvv, expiry, user_id)
 VALUES (1, '1234567891234567', '123', '2026-12-01', 1),
-(2, '1234567891234568', '124', '2025-10-11', 1);
+(2, '1234567891234568', '124', '2025-10-11', 1),
+(3, 'XXXXXXXXXXXX4568', NULL, NULL, NULL);
 
 -- Tabela activity
 CREATE TABLE IF NOT EXISTS activity (
