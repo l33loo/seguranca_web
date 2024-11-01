@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use Http\Request;
 use Http\Response;
+use App\Booking\User;
 use App\Template\FrontendRenderer;
 
 class UserController
@@ -92,11 +93,21 @@ class UserController
 
     public function login()
     {
-
+        $request->getParameter($key, $defaultValue = null);
+        $email = $this->request->post('email');
+        $password = $this->request->post('password');
+        $user = User::find($id);
+        if ($user && password_verify($password, $user->password)) {
+            header('Location: /users/profile');
+        } else {
+            header('Location: /users/login');
+        }
     }
 
     public function logout()
     {
-        
+        session_start();
+        session_destroy();
+        header('Location: /app/public');
     }
 }
