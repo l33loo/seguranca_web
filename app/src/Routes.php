@@ -10,13 +10,17 @@ return [
     // Authenticated Users - Clients and Vendors
     ['POST', '/logout', ['App\Controllers\UserController', 'logout']],
     ['GET', '/users/me', ['App\Controllers\UserController', 'showProfile']],
-    ['GET', '/reservations', ['App\Controllers\ReservationController', 'list']],
+    ['GET', '/users/me/reservations', ['App\Controllers\UserController', 'reservations']],
+    ['GET', '/reservations/new', ['App\Controllers\ReservationController', 'new']],
+    ['POST', '/reservations/new', ['App\Controllers\ReservationController', 'reserve']],
     ['GET', '/reservations/{id:\d+}', ['App\Controllers\ReservationController', 'show']],
-    ['POST', '/reservations', ['App\Controllers\ReservationController', 'reserve']],
     ['POST', '/activities/{id:\d+}', ['App\Controllers\ActivityController', 'postComment']],
 
     // Vendors only
-    ['POST', '/activities', ['App\Controllers\ActivityController', 'create']],
+    ['GET', '/users/me/activities', ['App\Controllers\UserController', 'vendorActivities']],
+    ['GET', '/users/me/activities/{id:\d+}', ['App\Controllers\UserController', 'vendorActivity']],
+    ['GET', '/activities/new', ['App\Controllers\ActivityController', 'new']],
+    ['POST', '/activities/new', ['App\Controllers\ActivityController', 'create']],
     ['PUT', '/activities/{id:\d+}', ['App\Controllers\ActivityController', 'update']],
     ['PATCH', '/activities/{id:\d+}/archive', ['App\Controllers\ActivityController', 'archive']],
     ['GET', '/activities/{id:\d+}/reservations', ['App\Controllers\ActivityController', 'listReservations']],

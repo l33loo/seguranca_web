@@ -1,0 +1,47 @@
+{% extends "layout.html" %} {% block content %}
+<h1 class="my-5">My Reservations</h1>
+<div>
+  <div class="accordion" id="accordion">
+    {% for reservation in reservations %}
+    <div class="accordion-item">
+      <h3 class="accordion-header">
+        <button
+          class="accordion-button"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapseOne-{{ reservation.id }}"
+          aria-expanded="true"
+          aria-controls="collapseOne-{{ reservation.id }}"
+        >
+          <div class="d-flex justify-content-between w-100">
+            <div>
+              <strong class="me-5">Reservation #{{ reservation.id }}</strong>
+              <span>{{ reservation.activity.name }}</span>
+            </div>
+            <div class="me-5">{{ reservation.activity.dateTimeToString }}</div>
+          </div>
+        </button>
+      </h3>
+      <div
+        id="collapseOne-{{ reservation.id }}"
+        class="accordion-collapse collapse"
+        data-bs-parent="#accordion"
+      >
+        <div class="accordion-body">
+          <p>
+            <strong>Description: </strong>{{ reservation.activity.description }}
+          </p>
+          <p><strong>Cost: </strong>{{ reservation.activity.costToString }}</p>
+          <p>
+            <strong>Reserved On: </strong>{{ reservation.reservedon }}
+          </p>
+          <p></p>
+            <strong>Status: </strong>{{ reservation.reservationstatus.name }}
+          </p>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

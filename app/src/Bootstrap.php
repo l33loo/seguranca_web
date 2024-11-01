@@ -6,16 +6,23 @@ require __DIR__ . '/../vendor/autoload.php';
 
 error_reporting(E_ALL);
 
-$environment = 'development';
+$environment = getenv('ENVIRONMENT');
 
 // Register the error handler
 $whoops = new \Whoops\Run;
-if ($environment !== 'production') {
-    $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
-} else {
-    $whoops->pushHandler(function($e) {
-        echo 'Todo: Friendly error page and send an email to the developer';
-    });
+switch ($environment) {
+    case 'development':
+        $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
+        break;
+    case 'production':
+    default:
+        $whoops->pushHandler(function($e) {
+            // Echo error
+            echo 'There was an error. Please contact us at support@example.com';
+            error_log($e->getMessage(), 0);
+            // This would normally send an email. Adding only as an example of logging messages.
+            error_log($e->getMessage(), 1, "operator@example.com");
+        });
 }
 
 $whoops->register();
@@ -40,13 +47,14 @@ $dispatcher = \FastRoute\simpleDispatcher($routeDefinitionCallback);
 $routeInfo = $dispatcher->dispatch($request->getMethod(), $request->getPath());
 switch ($routeInfo[0]) {
     case \FastRoute\Dispatcher::NOT_FOUND:
-        echo 'HELLO 404';
         $response->setContent('404 - Page not found');
         $response->setStatusCode(404);
+        echo $response->getContent();
         break;
     case \FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
         $response->setContent('405 - Method not allowed');
         $response->setStatusCode(405);
+        echo $response->getContent();
         break;
     case \FastRoute\Dispatcher::FOUND:
         $className = $routeInfo[1][0];

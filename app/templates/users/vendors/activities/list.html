@@ -1,0 +1,72 @@
+{% extends "layout.html" %} {% block content %}
+<div class="row my-5">
+  <h1>Activities Panel</h1>
+</div>
+<form action="/users/me/activities" class="row my-5">
+  <div class="col">
+    <input
+      type="text"
+      class="form-control"
+      name="search"
+      placeholder="Search activities..."
+    />
+    {% if search is not empty %}
+    <small
+      >Search results for: {{ search }} ({{ activities|length }} result{{
+      (activities|length != 1) ? 's' : '' }})
+      <a href="/users/me/activities">Clear Search</a></small
+    >
+    {% endif %}
+  </div>
+  <div class="col-auto">
+    <input type="submit" value="Search" class="btn btn-primary" />
+  </div>
+</form>
+<div class="my-5">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Description</th>
+        <th scope="col">Date / Time</th>
+        <th scope="col">Cost</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for activity in activities %}
+      <tr>
+        <th scope="row">{{ activity.id }}</th>
+        <td>{{ activity.name }}</td>
+        <td>{{ activity.description }}</td>
+        <td>{{ activity.dateTimeToString }}</td>
+        <td>{{ activity.costToString }}</td>
+        <td class="d-flex justify-content-between">
+          <a href="/activities/{{ activity.id }}" class="btn btn-primary"
+            >View</a
+          >
+          <a href="/activities/{{ activity.id }}/edit" class="btn btn-success"
+            >Edit</a
+          >
+          <form action="" method="">
+            <input
+              type="hidden"
+              name="activityId"
+              id="activityId"
+              value="{{ activity.id }}"
+            />
+            <input
+              type="submit"
+              value="Archive"
+              class="btn btn-danger"
+              value="archive"
+            />
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

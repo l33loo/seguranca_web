@@ -83,10 +83,11 @@ CREATE TABLE IF NOT EXISTS reservation_status (
 );
 
 INSERT INTO reservation_status(id, name)
-VALUES (1, 'Scheduled'),
-(2, 'Realized'),
-(3, 'Postponed'),
-(4, 'Cancelled');
+VALUES (1, 'Pending'),
+(2, 'Scheduled'),
+(3, 'Realized'),
+(4, 'Postponed'),
+(5, 'Cancelled');
 
 -- Tabela reservation
 CREATE TABLE IF NOT EXISTS reservation (
@@ -111,6 +112,7 @@ CREATE TABLE IF NOT EXISTS reservation (
     REFERENCES reservation_status (id)
 );
 
+-- TODO: delete either activity_id here, or the reservation_activity table
 INSERT INTO reservation(reservedbyuser_id, reservedon, activity_id, creditcard_id, reservationstatus_id)
 VALUES (1, '2024-10-15 20:55:04', 1, 1, 1),
 (1, '2024-10-20 07:05:22', 2, 1, 3),

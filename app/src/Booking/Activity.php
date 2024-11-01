@@ -237,11 +237,7 @@ class Activity
             ],
         ];
 
-        try {
-            $this->comments = Comment::search($filter, '', 'postedon', 'DESC');
-            return $this;
-        } catch (\PDOException) {
-            // TODO
-        }
+        $this->comments = Comment::search($filter, '', 'postedon', 'DESC');
+        return $this;
     }
 }
