@@ -20,6 +20,15 @@ $injector->alias('App\Template\Renderer', 'App\Template\TwigRenderer');
 $injector->delegate('\Twig\Environment', function () use ($injector) {
     $loader = new \Twig\Loader\FilesystemLoader(dirname(__DIR__) . '/templates');
     $twig = new \Twig\Environment($loader);
+    $twig->addGlobal('session', $_SESSION);
+    $func = new \Twig\TwigFunction('getUserType', function () {
+        if (!empty($_SESSION['logged_id']) && isset($_SESSION['isVendor'])) {
+            return ($_SESSION['isVendor'] === 'true') ? 'vendor' : 'client';
+        }
+
+        return 'guest';
+    });
+    $twig->addFunction($func);
     return $twig;
 });
 

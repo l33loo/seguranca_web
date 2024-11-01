@@ -6,6 +6,7 @@ use Http\Request;
 use Http\Response;
 use App\Booking\User;
 use App\Template\FrontendRenderer;
+use Exception;
 
 class UserController
 {
@@ -93,21 +94,60 @@ class UserController
 
     public function login()
     {
-        $request->getParameter($key, $defaultValue = null);
-        $email = $this->request->post('email');
-        $password = $this->request->post('password');
-        $user = User::find($id);
-        if ($user && password_verify($password, $user->password)) {
-            header('Location: /users/profile');
-        } else {
-            header('Location: /users/login');
+        $email = $this->request->getParameter('email');
+        $password = $this->request->getParameter('password');
+        $filters = [
+            [
+                'column' => 'email',
+                'operator' => '=',
+                'value' => trim($email),
+            ]
+        ];
+        $users = User::search($filters);
+        
+        // User found and valid password
+        if (count($users) === 1 && password_verify(trim($password), $users[0]->getPasswordhash()) === true) {
+            $user = $users[0];
+            $_SESSION['logged_id'] = $user->getId();
+            $_SESSION['name'] = htmlspecialchars($user->getFirstname());
+            $_SESSION['isVendor'] = $user->getIsvendor();
+
+            $redirect = $this->request->getQueryParameter('redirect');
+            if (!$redirect) {
+                header('Location: /');
+                $html = $this->renderer->render('activities/list');
+                $this->response->setContent($html);
+            } else {
+                header("Location: $redirect");
+                // TODO: set template based on redirect, if possible
+                $html = $this->renderer->render('users/profile');
+                $this->response->setContent($html);
+            }
+            return;
         }
+
+        // More than one user found - fatal error
+        if (count($users) > 1) {
+            throw new Exception('More than one user found with the same email');
+            return;
+        }
+
+        // User error cases: either wrong password, or user not found
+        // TODO: error message on login page
+        $data = [
+
+        ];
+        $html = $this->renderer->render('users/login', $data);
+        $this->response->setContent($html);
     }
 
     public function logout()
     {
-        session_start();
         session_destroy();
-        header('Location: /app/public');
+        $_SESSION = [];
+        header('Location: /');
+
+        $html = $this->renderer->render('activities/list');
+        $this->response->setContent($html);
     }
 }
