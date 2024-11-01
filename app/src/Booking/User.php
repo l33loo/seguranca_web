@@ -141,4 +141,28 @@ class User
 
         return $this;
     }
+
+    public static function getLoggedUserType(): string
+    {
+        if (!empty($_SESSION['logged_id']) && isset($_SESSION['isVendor'])) {
+            return ($_SESSION['isVendor'] === 'true') ? 'vendor' : 'client';
+        }
+
+        return 'guest';
+    }
+
+    public static function userHasAccess(string $access): bool
+    {
+        $type = self::getLoggedUserType();
+        switch($access) {
+            case 'client':
+                return ($type === $access || $type === 'vendor');
+            case 'vendor':
+                return $type === $access;
+            case 'guest':
+            default:
+                return true;
+        }
+        
+    }
 }

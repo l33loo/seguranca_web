@@ -22,11 +22,7 @@ $injector->delegate('\Twig\Environment', function () use ($injector) {
     $twig = new \Twig\Environment($loader);
     $twig->addGlobal('session', $_SESSION);
     $func = new \Twig\TwigFunction('getUserType', function () {
-        if (!empty($_SESSION['logged_id']) && isset($_SESSION['isVendor'])) {
-            return ($_SESSION['isVendor'] === 'true') ? 'vendor' : 'client';
-        }
-
-        return 'guest';
+        return \App\Booking\User::getLoggedUserType();
     });
     $twig->addFunction($func);
     return $twig;
