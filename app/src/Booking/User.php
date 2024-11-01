@@ -10,7 +10,8 @@ abstract class User
     protected string $lastname;
     protected string $email;
     protected string $password;
-    protected array $creditcards;
+    protected int $creditcard_id;
+    protected Creditcard $creditcard;
 
     public function __construct(
         ?int $id = null,
@@ -18,7 +19,7 @@ abstract class User
         ?string $lastname = null,
         ?string $email = null,
         ?string $password = null,
-        ?array $creditcards = null
+        ?int $creditcard_id = null,
     ){
         $this->tableName = 'user';
 
@@ -37,8 +38,8 @@ abstract class User
         if ($password !== null) {
             $this->password = $password;
             }
-        if ($creditcards !== null) {
-            $this->creditcards = $creditcards;
+        if ($creditcard_id !== null) {
+            $this->creditcard_id = $creditcard_id;
             }
     }
 
@@ -111,6 +112,11 @@ abstract class User
      */
     public function validPassword(string $password): bool
     {
+        if (count($this->password) == 1) {
+            return password_verify($password, $this->password[0]);
+        }
+        return false;
+
         $users = self::search(['email' => trim($this->email)]);
         if ($users[0]) {
             $passwordHash = $users[0]['password'];
@@ -122,21 +128,21 @@ abstract class User
     }
 
     /**
-     * Get the value of creditcards
+     * Get the value of creditcard_id
      */ 
-    public function getCreditcards(): int
+    public function getCreditcard_id()
     {
-        return $this->creditcards;
+        return $this->creditcard_id;
     }
 
     /**
-     * Set the value of creditcards
+     * Set the value of creditcard_id
      *
      * @return  self
      */ 
-    public function setCreditcards(int $creditcards): self
+    public function setCreditcard_id($creditcard_id)
     {
-        $this->creditcards = $creditcards;
+        $this->creditcard_id = $creditcard_id;
 
         return $this;
     }
