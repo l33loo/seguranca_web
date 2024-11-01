@@ -93,20 +93,21 @@ class UserController
 
     public function login()
     {
+        $request->getParameter($key, $defaultValue = null);
         $email = $this->request->post('email');
         $password = $this->request->post('password');
         $user = User::find($id);
         if ($user && password_verify($password, $user->password)) {
-            $this->response->redirect('/users/profile');
+            header('Location: /users/profile');
         } else {
-            $this->response->redirect('/users/login');
+            header('Location: /users/login');
         }
-        $html = $this->renderer->render('/activities/list');
-        $this->response->setContent($html);
     }
 
     public function logout()
     {
-        //Redirecionar para a página Login?
+        session_start();
+        session_destroy();
+        header('Location: /app/public');
     }
 }
