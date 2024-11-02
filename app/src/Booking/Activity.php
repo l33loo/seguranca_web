@@ -256,7 +256,6 @@ class Activity
         foreach ($this->reservations as $reservation) {
             $reservation
                 ->loadRelation('reservedbyuser', 'user')
-                ->loadRelation('activity')
                 ->loadRelation('creditcard')
                 ->loadRelation('reservationstatus', 'reservation_status');
         }

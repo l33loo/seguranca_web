@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use App\Booking\Activity;
+use App\Booking\ReservationStatus;
 use Http\Request;
 use Http\Response;
 use App\Booking\User;
@@ -79,6 +81,19 @@ class UserController
         $this->response->setContent($html);
     }
 
+    public function vendorActivity($params): void
+    {
+        $activity = Activity::find(intval($params['activityId']));
+        $reservationStatuses = ReservationStatus::search([], 'reservation_status', 'id'); 
+        $activity->loadReservations();
+        $data = [
+            'activity' => $activity,
+            'reservationStatuses' => $reservationStatuses,
+        ];
+        $html = $this->renderer->render('users/vendors/activities/show', $data);
+        $this->response->setContent($html);
+    }
+
     public function showProfile()
     {
         $html = $this->renderer->render('users/profile');
@@ -112,17 +127,24 @@ class UserController
             $_SESSION['isVendor'] = $user->getIsvendor();
 
             $redirect = $this->request->getQueryParameter('redirect');
-            if (!$redirect) {
-                header('Location: /');
-                $html = $this->renderer->render('activities/list');
-                $this->response->setContent($html);
-            } else {
+            if (!empty($redirect)) {
                 header("Location: $redirect");
                 // TODO: set template based on redirect, if possible
                 $html = $this->renderer->render('users/profile');
                 $this->response->setContent($html);
+                return;
             }
-            return;
+
+            if (User::getLoggedUserType() === 'vendor' ) {
+                header('Location: /users/me/activities');
+                $html = $this->renderer->render('users/vendors/activities/list');
+                $this->response->setContent($html);
+                return;
+            }
+
+            header('Location: /');
+            $html = $this->renderer->render('activities/list');
+            $this->response->setContent($html);
         }
 
         // More than one user found - fatal error
