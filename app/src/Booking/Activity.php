@@ -16,6 +16,7 @@ class Activity
     protected int $vendoruser_id;
     protected User $vendoruser;
     protected array $comments;
+    protected array $reservations;
     protected bool $isarchived;
 
     public function __construct(
@@ -214,18 +215,6 @@ class Activity
         return $this->comments;
     }
 
-    /**
-     * Set the value of comments
-     *
-     * @return  self
-     */ 
-    public function setComments(array $comments): self
-    {
-        $this->comments = $comments;
-
-        return $this;
-    }
-
     public function loadComments(): self
     {
         $filter = [
@@ -240,6 +229,36 @@ class Activity
 
         foreach ($this->comments as $comment) {
             $comment->loadRelation('user');
+        }
+        return $this;
+    }
+
+    /**
+     * Get the value of reservations
+     */ 
+    public function getReservations(): array
+    {
+        return $this->reservations;
+    }
+
+    public function loadReservations(): self
+    {
+        $filter = [
+            [
+                'column' => 'activity_id',
+                'operator' => '=',
+                'value' => $this->id,
+            ],
+        ];
+
+        $this->reservations = Reservation::search($filter, '', 'id', 'DESC');
+
+        foreach ($this->reservations as $reservation) {
+            $reservation
+                ->loadRelation('reservedbyuser', 'user')
+                ->loadRelation('activity')
+                ->loadRelation('creditcard')
+                ->loadRelation('reservationstatus', 'reservation_status');
         }
         return $this;
     }

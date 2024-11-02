@@ -136,25 +136,47 @@ class ActivityController
             'activity' => $activity,
         ];
 
+        header('Location: /users/me/activities');
         $html = $this->renderer->render('activities/edit', $data);
         $this->response->setContent($html);
     }
 
     public function archive($params)
     {
-        $activity = Activity::find(intval($params['activityId']));
-        $activity->setIsarchived(true)->save();
-
-        // TODO: make sure there are no reservations
+        $archiveParam = $this->request->getParameter('archive');
+        if (isset($archiveParam)) {
+            $activity = Activity::find(intval($params['activityId']));
+            $activity->setIsarchived(true)->save();
+        }
 
         header('Location: /users/me/activities');
         $html = $this->renderer->render('users/vendors/activities/list');
         $this->response->setContent($html);
     }
 
-    public function delete()
+    public function delete($params)
     {
-        // TODO
+        $deleteParam = $this->request->getParameter('delete');
+        if (isset($deleteParam)) {
+            $activity = Activity::find(intval($params['activityId']));
+            $activity->loadReservations();
+
+            if (count($activity->getReservations()) > 0) {
+                // TODO send error message
+            }
+
+            if (count($activity->getReservations()) === 0) {
+                $activity->delete();
+            }
+
+            header('Location: /users/me/activities');
+            $html = $this->renderer->render('users/vendors/activities/list');
+            $this->response->setContent($html);
+        }
+
+        header('Location: /users/me/activities');
+        $html = $this->renderer->render('users/vendors/activities/list');
+        $this->response->setContent($html);
     }
 
     public function listReservations($params): void

@@ -11,7 +11,7 @@ class Reservation
     protected int $activity_id;
     protected int $creditcard_id;
     protected int $reservationstatus_id;
-    protected User $user;
+    protected User $reservedbyuser;
     protected Activity $activity;
     protected Creditcard $creditcard;
     protected ReservationStatus $reservationstatus;
@@ -147,21 +147,21 @@ class Reservation
     }
     
     /**
-     * Get the value of user
+     * Get the value of reservedbyuser
      */ 
-    public function getUser()
+    public function getReserverdbyuser()
     {
-        return $this->user;
+        return $this->reservedbyuser;
     }
 
     /**
-     * Set the value of user
+     * Set the value of reservedbyuser
      *
      * @return  self
      */ 
-    public function setUser($user): self
+    public function setReservedbyuser($reservedbyuser): self
     {
-        $this->user = $user;
+        $this->reservedbyuser = $reservedbyuser;
 
         return $this;
     }

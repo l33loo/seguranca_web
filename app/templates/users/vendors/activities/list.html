@@ -57,20 +57,30 @@
           <a href="/activities/{{ activity.id }}" class="btn btn-primary"
             >View</a
           >
-          <a href="/activities/{{ activity.id }}/edit" class="btn btn-warning"
+          <a href="/activities/{{ activity.id }}/edit" class="btn btn-success"
             >Edit</a
           >
           <form action="/activities/{{ activity.id }}/archive" method="POST">
             <input
               type="submit"
               value="Archive"
-              class="btn btn-danger"
+              class="btn btn-warning"
               name="archive"
+            />
+          </form>
+          <form action="/activities/{{ activity.id }}/delete" method="POST">
+            <input
+              type="submit"
+              value="Delete"
+              class="btn btn-danger"
+              name="delete"
             />
           </form>
           {% else %}
           <div class="flex-grow-1 text-center">
-            ARCHIVED
+            <strong>
+              ARCHIVED
+            </strong>
           </div>
           {% endif %}
           </div>

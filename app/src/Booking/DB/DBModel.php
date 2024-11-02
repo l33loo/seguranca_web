@@ -172,6 +172,18 @@ trait DBModel
         return $this;
     }
 
+    public function delete()
+    {
+        if (empty($this->id)) {
+            return;
+        }
+
+        $connection = MyConnect::getInstance();
+        $sql = "delete from " . $this->tableName . " where id = ?";
+        $params = [$this->id];
+        $connection->escapedDeleteQuery($sql, $params);
+    }
+
     public static function snakeToCamel($string, $capitalizeFirstCharacter = true): string
     {
         $str = str_replace(' ', '', ucwords(str_replace('_', ' ', $string)));
