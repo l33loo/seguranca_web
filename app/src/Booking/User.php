@@ -158,7 +158,7 @@ class User
         return !empty($_SESSION['logged_id']) ? $_SESSION['logged_id'] : null;
     }
 
-    public static function userHasAccess(string $access, array $params): bool
+    public static function hasAccess(string $access, array $params): bool
     {
         $hasAccess = false;
         $type = self::getLoggedUserType();
