@@ -59,14 +59,14 @@ switch ($routeInfo[0]) {
     case \FastRoute\Dispatcher::FOUND:
         $className = $routeInfo[1][0];
         $method = $routeInfo[1][1];
+        $vars = $routeInfo[2];
 
         // If user not allowed, redirect to homepage
-        $accessAllowed = \App\Booking\User::userHasAccess($routeInfo[1][2]);
+        $accessAllowed = \App\Booking\User::userHasAccess($routeInfo[1][2], $vars);
         if (!$accessAllowed) {
             header('Location: /');
             return;
         }
-        $vars = $routeInfo[2];
 
         $class = $injector->make($className);
         $class->$method($vars);

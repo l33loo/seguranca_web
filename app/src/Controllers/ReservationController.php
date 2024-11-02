@@ -34,7 +34,7 @@ class ReservationController
 
     public function show($params)
     {
-        $reservation = Reservation::find(intval($params['id']));
+        $reservation = Reservation::find(intval($params['reservationId']));
         $reservation
             ->loadRelation('activity')
             ->loadRelation('creditcard')
@@ -52,7 +52,7 @@ class ReservationController
     {
         // TODO: redirect to login form if user is not logged in
 
-        $activityId = $params['id'];
+        $activityId = $params['reservationId'];
 
         $data = [
             'activity' => Activity::find(intval($activityId)),
@@ -99,7 +99,7 @@ class ReservationController
 
         // TODO: use id of user that's logged in
         $userId = 1;
-        $activityId = intval($params['id']);
+        $activityId = intval($params['reservationId']);
         // New credit card
         if ($paymentOption === 'cc-other') {
             $ccNumber = $this->request->getParameter('ccNumber');
