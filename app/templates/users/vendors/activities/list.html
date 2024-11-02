@@ -40,43 +40,40 @@
       </tr>
     </thead>
     <tbody>
-      {% for activity in activities %}
-      <tr>
+      {% for activity in activities %} {% if activity.isarchived is same as true
+      %}
+      <tr class="table-secondary">
+        {% else %}
+      </tr>
+        {% endif %}
         <th scope="row">{{ activity.id }}</th>
         <td>{{ activity.name }}</td>
         <td>{{ activity.description }}</td>
         <td>{{ activity.dateTimeToString }}</td>
         <td>{{ activity.costToString }}</td>
-        <td class="d-flex" style="gap: 1rem">
+        <td>
+          <div class="d-flex justify-content-between align-items-center w-100 h-100" style="gap: 1rem">
+            {% if activity.isarchived is same as false %}
           <a href="/activities/{{ activity.id }}" class="btn btn-primary"
             >View</a
           >
           <a href="/activities/{{ activity.id }}/edit" class="btn btn-warning"
             >Edit</a
           >
-          <form action="" method="">
-            <input
-              type="hidden"
-              name="activityId"
-              id="activityId"
-              value="{{ activity.id }}"
-            />
-            {% if activity.isarchived %}
+          <form action="/activities/{{ activity.id }}/archive" method="POST">
             <input
               type="submit"
               value="Archive"
               class="btn btn-danger"
-              value="archive"
+              name="archive"
             />
-            {% else %}
-            <input
-              type="submit"
-              value="Archive"
-              class="btn btn-danger"
-              value="archive"
-            />
-            {% endif %}
           </form>
+          {% else %}
+          <div class="flex-grow-1 text-center">
+            ARCHIVED
+          </div>
+          {% endif %}
+          </div>
         </td>
       </tr>
       {% endfor %}

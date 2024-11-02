@@ -124,10 +124,10 @@ class ActivityController
         $activity = Activity::find(intval($params['activityId']));
         
         $activity
-            ->setName($name)
-            ->setDescription($description)
-            ->setDate($date)
-            ->setTime($time)
+            ->setName(trim($name))
+            ->setDescription(trim($description))
+            ->setDate(trim($date))
+            ->setTime(trim($time))
             ->setCost(floatval($cost));
         // TODO: $activity->validate();
      
@@ -140,9 +140,16 @@ class ActivityController
         $this->response->setContent($html);
     }
 
-    public function archive()
+    public function archive($params)
     {
-        // TODO
+        $activity = Activity::find(intval($params['activityId']));
+        $activity->setIsarchived(true)->save();
+
+        // TODO: make sure there are no reservations
+
+        header('Location: /users/me/activities');
+        $html = $this->renderer->render('users/vendors/activities/list');
+        $this->response->setContent($html);
     }
 
     public function delete()
@@ -163,9 +170,8 @@ class ActivityController
     public function postComment($params): void
     {
         $newComment = new \App\Booking\Comment(
-            htmlspecialchars($this->request->getBodyParameters()['comment']),
-            // TODO: put id of logged-in user
-            2,
+            $this->request->getBodyParameters()['comment'],
+            \App\Booking\User::getLoggedUserId(),
             intval($params['activityId'])
         );
 
