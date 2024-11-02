@@ -17,7 +17,7 @@
 {# TODO: hide Comments section if activity is planned for the future #}
 <div class="mt-5">
   <h2>Comments</h2>
-  {# TODO: show only for authenticated users #}
+  {% if getUserType() is not same as 'guest' %}
   <div class="accordion" id="accordionExample">
     <div class="accordion-item">
       <h3 class="accordion-header">
@@ -53,6 +53,7 @@
       </div>
     </div>
   </div>
+  {% endif %}
   <ul class="list-group list-group-numbered">
     {% for comment in activity.comments %}
     <li
