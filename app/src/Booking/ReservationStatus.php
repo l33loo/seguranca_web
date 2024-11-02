@@ -17,7 +17,6 @@ class ReservationStatus
             $this->id = $id;
         }
     }
-    
 
     /**
      * Get the value of name
