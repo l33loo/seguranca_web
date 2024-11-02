@@ -24,11 +24,13 @@ return [
 
     // Vendors only
     ['GET', '/users/me/activities', [\App\Controllers\UserController::class, 'vendorActivities', Access::VENDOR]],
-    ['GET', '/users/me/activities/{activityId:\d+}', [\App\Controllers\UserController::class, 'vendorActivity', Access::VENDOR]],
+    // ['GET', '/users/me/activities/{activityId:\d+}', [\App\Controllers\UserController::class, 'vendorActivity', Access::VENDOR]],
     ['GET', '/activities/new', [\App\Controllers\ActivityController::class, 'new', Access::VENDOR]],
     ['POST', '/activities/new', [\App\Controllers\ActivityController::class, 'create', Access::VENDOR]],
-    ['PUT', '/activities/{activityId:\d+}', [\App\Controllers\ActivityController::class, 'update', Access::VENDOR]],
+    ['GET', '/activities/{activityId:\d+}/edit', [\App\Controllers\ActivityController::class, 'editForm', Access::VENDOR]],
+    ['POST', '/activities/{activityId:\d+}/edit', [\App\Controllers\ActivityController::class, 'edit', Access::VENDOR]],
     ['PATCH', '/activities/{activityId:\d+}/archive', [\App\Controllers\ActivityController::class, 'archive', Access::VENDOR]],
+    ['POST', '/activities/{activityId:\d+}/delete', [\App\Controllers\ActivityController::class, 'delete', Access::VENDOR]],
     ['GET', '/activities/{activityId:\d+}/reservations', [\App\Controllers\ActivityController::class, 'listReservations', Access::VENDOR]],
-    ['PATCH', '/reservations/{reservationId:\d+}', [\App\Controllers\ReservationController::class, 'updateStatus', Access::VENDOR]],
+    ['PATCH', '/reservations/{reservationId:\d+}', [\App\Controllers\ReservationController::class, 'editStatus', Access::VENDOR]],
 ];

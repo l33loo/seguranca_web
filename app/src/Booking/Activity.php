@@ -19,7 +19,6 @@ class Activity
     protected int $isarchived;
 
     public function __construct(
-        ?int $id = null,
         ?string $name = null,
         ?string $description = null,
         ?string $date = null,
@@ -27,6 +26,7 @@ class Activity
         ?float $cost = null,
         ?int $vendoruser_id = null,
         ?int $isarchived = null,
+        ?int $id = null,
     ) {
         $this->tableName = 'activity';
         

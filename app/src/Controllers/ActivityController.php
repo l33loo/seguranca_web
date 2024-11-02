@@ -78,12 +78,51 @@ class ActivityController
         // TODO
     }
 
-    public function update()
+    public function editForm($params)
+    {
+        // TODO: add errors
+        $activity = Activity::find(intval($params['activityId']));
+        $data = [
+            'activity' => $activity,
+        ];
+
+        $html = $this->renderer->render('activities/edit', $data);
+        $this->response->setContent($html);
+    }
+
+    public function edit($params)
+    {
+        $name = $this->request->getParameter('name');
+        $description = $this->request->getParameter('description');
+        $date = $this->request->getParameter('date');
+        $time = $this->request->getParameter('time');
+        $cost = $this->request->getParameter('cost');
+
+        $activity = Activity::find(intval($params['activityId']));
+        
+        $activity
+            ->setName($name)
+            ->setDescription($description)
+            ->setDate($date)
+            ->setTime($time)
+            ->setCost(floatval($cost));
+        // TODO: $activity->validate();
+     
+        $activity->save();
+        $data = [
+            'activity' => $activity,
+        ];
+
+        $html = $this->renderer->render('activities/edit', $data);
+        $this->response->setContent($html);
+    }
+
+    public function archive()
     {
         // TODO
     }
 
-    public function archive()
+    public function delete()
     {
         // TODO
     }
