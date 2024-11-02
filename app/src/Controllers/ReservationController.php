@@ -163,8 +163,6 @@ class ReservationController
             ];
 
             $cc = Creditcard::search($filters);
-            // echo count($cc);
-            // die;
             if (count($cc) !== 1) {
                 throw new Exception('Error retrieving credit card information');
             }
