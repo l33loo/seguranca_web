@@ -1,28 +1,34 @@
 <?php declare(strict_types = 1);
 
+abstract class Access {
+    public const GUEST = 'guest';
+    public const CLIENT = 'client';
+    public const VENDOR = 'vendor';
+}
+
 return [
     // Non-authenticated Users
-    ['GET', '/[activities]', ['App\Controllers\ActivityController', 'list']],
-    ['GET', '/activities/{id:\d+}', ['App\Controllers\ActivityController', 'show']],
-    ['GET', '/login', ['App\Controllers\UserController', 'showLoginForm']],
-    ['POST', '/login', ['App\Controllers\UserController', 'login']],
+    ['GET', '/[activities]', [\App\Controllers\ActivityController::class, 'list', Access::GUEST]],
+    ['GET', '/activities/{activityId:\d+}', [\App\Controllers\ActivityController::class, 'show', Access::GUEST]],
+    ['GET', '/login', [\App\Controllers\UserController::class, 'showLoginForm', Access::GUEST]],
+    ['POST', '/login', [\App\Controllers\UserController::class, 'login', Access::GUEST]],
 
     // Authenticated Users - Clients and Vendors
-    ['POST', '/logout', ['App\Controllers\UserController', 'logout']],
-    ['GET', '/users/me', ['App\Controllers\UserController', 'showProfile']],
-    ['GET', '/users/me/reservations', ['App\Controllers\UserController', 'reservations']],
-    ['GET', '/activities/{id:\d+}/reserve', ['App\Controllers\ReservationController', 'new']],
-    ['POST', '/activities/{id:\d+}/reserve', ['App\Controllers\ReservationController', 'reserve']],
-    ['GET', '/reservations/{id:\d+}', ['App\Controllers\ReservationController', 'show']],
-    ['POST', '/activities/{id:\d+}', ['App\Controllers\ActivityController', 'postComment']],
+    ['POST', '/logout', [\App\Controllers\UserController::class, 'logout', Access::CLIENT]],
+    ['GET', '/users/me', [\App\Controllers\UserController::class, 'showProfile', Access::CLIENT]],
+    ['GET', '/users/me/reservations', [\App\Controllers\UserController::class, 'reservations', Access::CLIENT]],
+    ['GET', '/activities/{activityId:\d+}/reserve', [\App\Controllers\ReservationController::class, 'new', Access::CLIENT]],
+    ['POST', '/activities/{activityId:\d+}/reserve', [\App\Controllers\ReservationController::class, 'reserve', Access::CLIENT]],
+    ['GET', '/reservations/{reservationId:\d+}', [\App\Controllers\ReservationController::class, 'show', Access::CLIENT]],
+    ['POST', '/activities/{activityId:\d+}', [\App\Controllers\ActivityController::class, 'postComment', Access::CLIENT]],
 
     // Vendors only
-    ['GET', '/users/me/activities', ['App\Controllers\UserController', 'vendorActivities']],
-    ['GET', '/users/me/activities/{id:\d+}', ['App\Controllers\UserController', 'vendorActivity']],
-    ['GET', '/activities/new', ['App\Controllers\ActivityController', 'new']],
-    ['POST', '/activities/new', ['App\Controllers\ActivityController', 'create']],
-    ['PUT', '/activities/{id:\d+}', ['App\Controllers\ActivityController', 'update']],
-    ['PATCH', '/activities/{id:\d+}/archive', ['App\Controllers\ActivityController', 'archive']],
-    ['GET', '/activities/{id:\d+}/reservations', ['App\Controllers\ActivityController', 'listReservations']],
-    ['PATCH', '/reservations/{id:\d+}', ['App\Controllers\ReservationController', 'updateStatus']],
+    ['GET', '/users/me/activities', [\App\Controllers\UserController::class, 'vendorActivities', Access::VENDOR]],
+    ['GET', '/users/me/activities/{activityId:\d+}', [\App\Controllers\UserController::class, 'vendorActivity', Access::VENDOR]],
+    ['GET', '/activities/new', [\App\Controllers\ActivityController::class, 'new', Access::VENDOR]],
+    ['POST', '/activities/new', [\App\Controllers\ActivityController::class, 'create', Access::VENDOR]],
+    ['PUT', '/activities/{activityId:\d+}', [\App\Controllers\ActivityController::class, 'update', Access::VENDOR]],
+    ['PATCH', '/activities/{activityId:\d+}/archive', [\App\Controllers\ActivityController::class, 'archive', Access::VENDOR]],
+    ['GET', '/activities/{activityId:\d+}/reservations', [\App\Controllers\ActivityController::class, 'listReservations', Access::VENDOR]],
+    ['PATCH', '/reservations/{reservationId:\d+}', [\App\Controllers\ReservationController::class, 'updateStatus', Access::VENDOR]],
 ];

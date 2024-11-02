@@ -2,6 +2,8 @@
 
 namespace App\Booking;
 
+use Exception;
+
 class User 
 {
     use DB\DBModel;
@@ -140,5 +142,92 @@ class User
         $this->isvendor = $isvendor;
 
         return $this;
+    }
+
+    public static function getLoggedUserType(): string
+    {
+        if (!empty($_SESSION['logged_id']) && isset($_SESSION['isVendor'])) {
+            return ($_SESSION['isVendor'] === true) ? 'vendor' : 'client';
+        }
+
+        return 'guest';
+    }
+
+    public static function getLoggedUserId(): ?int
+    {
+        return !empty($_SESSION['logged_id']) ? $_SESSION['logged_id'] : null;
+    }
+
+    public static function hasAccess(string $access, array $params): bool
+    {
+        $hasAccess = false;
+        $type = self::getLoggedUserType();
+        $userId = self::getLoggedUserId();
+        switch($access) {
+            case 'vendor':
+                // Must be Vendor to access
+                $hasAccess = $type === $access;
+
+                // Vendor must 'own' activity
+                if (!empty($params['activityId'])) {
+                    $filters = [
+                        [
+                            'column' => 'vendoruser_id',
+                            'operator' => '=',
+                            'value' => $userId,
+                        ],
+                        [
+                            'column' => 'id',
+                            'operator' => '=',
+                            'value' => $params['activityId']
+                        ]
+                    ];
+                    $activities = Activity::search($filters);
+                    $hasAccess = count($activities) === 1;
+                }
+
+                // Vendor must 'own' activity associated with reservation
+                if (!empty($params['reservationId'])) {
+                    try {
+                        $reservation = Reservation::find($params['reservationId']);
+                        $reservation->loadRelation('activity');
+                        $vendorId = $reservation->getActivity()->getVendoruser_id();
+                        $hasAccess = $userId === $vendorId;
+                    } catch(Exception $e) {
+                        $hasAccess = false;
+                    }
+                }
+
+                break;
+            case 'client':
+                // User must be Client or Vendor to access
+                $hasAccess = ($type === $access || $type === 'vendor');
+
+                // Must be user's own reservation
+                if (!empty($params['reservationId'])) {
+                    $filters = [
+                        [
+                            'column' => 'id',
+                            'operator' => '=',
+                            'value' => $params['reservationId'],
+                        ],
+                        [
+                            'column' => 'reservedbyuser_id',
+                            'operator' => '=',
+                            'value' => $userId,
+                        ],
+                    ];
+                    $reservations = Reservation::search($filters);
+                    $hasAccess = count($reservations) === 1;
+                }
+
+                break;
+            case 'guest':
+            default:
+                $hasAccess = true;
+                break;
+        }
+
+        return $hasAccess;
     }
 }

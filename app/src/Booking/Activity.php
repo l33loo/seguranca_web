@@ -14,8 +14,7 @@ class Activity
     protected string $time;
     protected float $cost;
     protected int $vendoruser_id;
-    // TODO: change to User type
-    protected array $vendor;
+    protected User $vendoruser;
     protected array $comments;
     protected int $isarchived;
 
@@ -238,6 +237,10 @@ class Activity
         ];
 
         $this->comments = Comment::search($filter, '', 'postedon', 'DESC');
+
+        foreach ($this->comments as $comment) {
+            $comment->loadRelation('user');
+        }
         return $this;
     }
 }

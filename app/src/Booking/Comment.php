@@ -10,8 +10,7 @@ class Comment
     protected int $user_id;
     protected string $postedon;
     protected int $activity_id;
-    // TODO: Change to User type
-    protected array $user;
+    protected User $user;
 
     public function __construct(
         ?string $comment = null,
@@ -122,5 +121,13 @@ class Comment
     public function getPostedOnToString(): string
     {
         return \App\Utils\Helper::dateTimeToString($this->postedon);
+    }
+
+    /**
+     * Get the value of user
+     */ 
+    public function getUser(): User
+    {
+        return $this->user;
     }
 }

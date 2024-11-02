@@ -61,6 +61,13 @@ switch ($routeInfo[0]) {
         $method = $routeInfo[1][1];
         $vars = $routeInfo[2];
 
+        // If user not allowed, redirect to homepage
+        $accessAllowed = \App\Booking\User::hasAccess($routeInfo[1][2], $vars);
+        if (!$accessAllowed) {
+            header('Location: /');
+            return;
+        }
+
         $class = $injector->make($className);
         $class->$method($vars);
         echo $response->getContent();

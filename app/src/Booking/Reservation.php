@@ -11,8 +11,7 @@ class Reservation
     protected int $activity_id;
     protected int $creditcard_id;
     protected int $reservationstatus_id;
-    // TODO: change to User type
-    protected array $user;
+    protected User $user;
     protected Activity $activity;
     protected Creditcard $creditcard;
     protected ReservationStatus $reservationstatus;
