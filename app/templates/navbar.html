@@ -35,11 +35,13 @@ dynamically #}
                 >Reservations</a
               >
             </li>
+            {% if getUserType() is same as 'vendor' %}
             <li>
               <a class="dropdown-item" href="/users/me/activities"
                 >Manage Activities</a
               >
             </li>
+            {% endif %}
             <li><hr class="dropdown-divider" /></li>
             <li>
               <form action="/logout" method="post">
@@ -54,12 +56,11 @@ dynamically #}
             </li>
           </ul>
         </li>
-        {% endif %}
+        {% endif %} {% if getUserType() is same as 'guest' %}
         <li>
-          {% if getUserType() is same as 'guest' %}
           <a class="nav-link ms-5" href="\login">Login</a>
-          {% endif %}
         </li>
+        {% endif %}
       </ul>
     </div>
   </div>
