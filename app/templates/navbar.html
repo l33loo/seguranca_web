@@ -1,7 +1,7 @@
 {# TODO: make menu items dynamic #} {# TODO: mark *active* menu items
 dynamically #}
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container-fluid">
+  <div class="container-fluid container">
     <a class="navbar-brand" href="/">Booking</a>
     <button
       class="navbar-toggler"
@@ -16,15 +16,8 @@ dynamically #}
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        {% for menuItem in menuItems %}
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
-        </li>
-        {% endfor %}
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        {% if getUserType() is not same as 'guest' %}
+        {% for menuItem in menuItems %} {% endfor %} {% if getUserType() is not
+        same as 'guest' %}
         <li class="nav-item dropdown">
           <a
             class="nav-link dropdown-toggle"
