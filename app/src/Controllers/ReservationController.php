@@ -178,8 +178,24 @@ class ReservationController
         // } catch...
     }
 
-    public function updateStatus($newStatus)
+    public function editStatus($params)
     {
-        // For VENDOR
+        $newStatusId = $this->request->getParameter('status');
+        if (!empty($newStatusId)) {
+            $reservation = Reservation::find(intval($params['reservationId']));
+            $reservation->setReservationstatus_id(intval($newStatusId))->save();
+        }
+
+        $activityId = $reservation->getActivity_id();
+        $activity = Activity::find(intval($activityId));
+        $reservationStatuses = \App\Booking\ReservationStatus::search([], 'reservation_status', 'id'); 
+        $activity->loadReservations();
+        $data = [
+            'activity' => $activity,
+            'reservationStatuses' => $reservationStatuses,
+        ];
+        header("Location: /users/me/activities/$activityId");
+        $html = $this->renderer->render('users/vendors/activities/show', $data);
+        $this->response->setContent($html);
     }
 }

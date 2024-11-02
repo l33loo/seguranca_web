@@ -32,5 +32,5 @@ return [
     ['POST', '/activities/{activityId:\d+}/archive', [\App\Controllers\ActivityController::class, 'archive', Access::VENDOR]],
     ['POST', '/activities/{activityId:\d+}/delete', [\App\Controllers\ActivityController::class, 'delete', Access::VENDOR]],
     ['GET', '/activities/{activityId:\d+}/reservations', [\App\Controllers\ActivityController::class, 'listReservations', Access::VENDOR]],
-    ['PATCH', '/reservations/{reservationId:\d+}', [\App\Controllers\ReservationController::class, 'editStatus', Access::VENDOR]],
+    ['POST', '/reservations/{reservationId:\d+}/edit', [\App\Controllers\ReservationController::class, 'editStatus', Access::VENDOR]],
 ];

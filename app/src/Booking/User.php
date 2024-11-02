@@ -189,7 +189,7 @@ class User
                 // Vendor must 'own' activity associated with reservation
                 if (!empty($params['reservationId'])) {
                     try {
-                        $reservation = Reservation::find($params['reservationId']);
+                        $reservation = Reservation::find(intval($params['reservationId']));
                         $reservation->loadRelation('activity');
                         $vendorId = $reservation->getActivity()->getVendoruser_id();
                         $hasAccess = $userId === $vendorId;
