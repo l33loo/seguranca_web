@@ -7,6 +7,7 @@ use Http\Response;
 use App\Booking\Activity;
 use App\Booking\Creditcard;
 use App\Booking\Reservation;
+use App\Booking\User;
 use App\Template\FrontendRenderer;
 use Exception;
 
@@ -50,16 +51,13 @@ class ReservationController
 
     public function new($params)
     {
-        // TODO: redirect to login form if user is not logged in
-
         $activityId = $params['reservationId'];
 
         $data = [
             'activity' => Activity::find(intval($activityId)),
         ];
 
-        // TODO: use id of logged-in user
-        $userId = 1;
+        $userId = User::getLoggedUserId();
         $filters = [
             [
                 'column' => 'user_id',
@@ -73,7 +71,6 @@ class ReservationController
             ],
         ];
 
-        // TODO: Expose just the last 4 digits of the credit card
         $creditCards = Creditcard::search($filters);
 
         $data['creditCards'] = $creditCards;
@@ -97,8 +94,7 @@ class ReservationController
             return;
         }
 
-        // TODO: use id of user that's logged in
-        $userId = 1;
+        $userId = User::getLoggedUserId();;
         $activityId = intval($params['reservationId']);
         // New credit card
         if ($paymentOption === 'cc-other') {
@@ -123,8 +119,7 @@ class ReservationController
             // User requested to save credit card to their account
             $requestToSave = $this->request->getParameter('cc-save');
             if ($requestToSave === 'yes') {
-                // TODO: get id of logged in user
-                $ccData->setUser_id(1)->save();
+                $ccData->setUser_id(User::getLoggedUserId())->save();
             
             } else {
                 // User doesn't want to save their cc to their account,

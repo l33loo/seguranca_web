@@ -59,7 +59,9 @@ class ActivityController
     public function show($params)
     {
         $data = [
-            'activity' => Activity::find(intval($params['activityId']))->loadComments()/* TODO: ->loadRelation('user') */,
+            'activity' => Activity::find(intval($params['activityId']))
+                ->loadComments()
+                ->loadRelation('vendoruser', 'user'),
         ];
         
         $html = $this->renderer->render('activities/show', $data);
@@ -68,27 +70,26 @@ class ActivityController
 
     public function new()
     {
-        // If VENDOR
+        // TODO
     }
 
     public function create()
     {
-        // If VENDOR
+        // TODO
     }
 
     public function update()
     {
-        // IF VENDOR
+        // TODO
     }
 
     public function archive()
     {
-        // If VENDOR
+        // TODO
     }
 
     public function listReservations($params): void
     {
-        // If VENDOR
         $data = [
             'activityId' => $params['activityId'],
         ];

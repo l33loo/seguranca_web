@@ -26,8 +26,7 @@ class UserController
 
     public function vendorActivities(): void
     {
-        // TODO: get logged-in user's id
-        $vendorId = 1;
+        $vendorId = User::getLoggedUserId();;
         $data = [];
         $filters = [
             [
@@ -60,7 +59,7 @@ class UserController
             [
                 'column' => 'reservedbyuser_id',
                 'operator' => '=',
-                'value' => 1, // TODO: change to having a user, and loading reservations onto it
+                'value' => User::getLoggedUserId(),
             ],
         ];
 
