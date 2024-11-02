@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use App\Booking\Activity;
+use App\Booking\ReservationStatus;
 use Http\Request;
 use Http\Response;
 use App\Booking\User;
@@ -76,6 +78,19 @@ class UserController
         ];
 
         $html = $this->renderer->render('users/reservations', $data);
+        $this->response->setContent($html);
+    }
+
+    public function vendorActivity($params): void
+    {
+        $activity = Activity::find(intval($params['activityId']));
+        $reservationStatuses = ReservationStatus::search([], 'reservation_status', 'id'); 
+        $activity->loadReservations();
+        $data = [
+            'activity' => $activity,
+            'reservationStatuses' => $reservationStatuses,
+        ];
+        $html = $this->renderer->render('users/vendors/activities/show', $data);
         $this->response->setContent($html);
     }
 

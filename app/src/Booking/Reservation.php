@@ -230,4 +230,12 @@ class Reservation
     {
         return \App\Utils\Helper::dateTimeToString($this->reservedon);
     }
+
+    /**
+     * Get the value of reservedbyuser
+     */ 
+    public function getReservedbyuser()
+    {
+        return $this->reservedbyuser;
+    }
 }

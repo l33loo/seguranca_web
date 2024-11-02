@@ -24,7 +24,7 @@ return [
 
     // Vendors only
     ['GET', '/users/me/activities', [\App\Controllers\UserController::class, 'vendorActivities', Access::VENDOR]],
-    // ['GET', '/users/me/activities/{activityId:\d+}', [\App\Controllers\UserController::class, 'vendorActivity', Access::VENDOR]],
+    ['GET', '/users/me/activities/{activityId:\d+}', [\App\Controllers\UserController::class, 'vendorActivity', Access::VENDOR]],
     ['GET', '/activities/new', [\App\Controllers\ActivityController::class, 'new', Access::VENDOR]],
     ['POST', '/activities/new', [\App\Controllers\ActivityController::class, 'create', Access::VENDOR]],
     ['GET', '/activities/{activityId:\d+}/edit', [\App\Controllers\ActivityController::class, 'editForm', Access::VENDOR]],
