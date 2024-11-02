@@ -16,7 +16,7 @@ class Activity
     protected int $vendoruser_id;
     protected User $vendoruser;
     protected array $comments;
-    protected int $isarchived;
+    protected bool $isarchived;
 
     public function __construct(
         ?string $name = null,
@@ -25,7 +25,7 @@ class Activity
         ?string $time = null,
         ?float $cost = null,
         ?int $vendoruser_id = null,
-        ?int $isarchived = null,
+        ?bool $isarchived = null,
         ?int $id = null,
     ) {
         $this->tableName = 'activity';
@@ -179,7 +179,7 @@ class Activity
     /**
      * Get the value of isarchived
      */ 
-    public function getIsarchived(): int
+    public function getIsarchived(): bool
     {
         return $this->isarchived;
     }
@@ -189,7 +189,7 @@ class Activity
      *
      * @return  self
      */ 
-    public function setIsarchived(int $isarchived): self
+    public function setIsarchived(bool $isarchived): self
     {
         $this->isarchived = $isarchived;
 
