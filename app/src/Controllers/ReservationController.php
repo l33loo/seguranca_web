@@ -51,7 +51,7 @@ class ReservationController
 
     public function new($params)
     {
-        $activityId = $params['reservationId'];
+        $activityId = $params['activityId'];
 
         $data = [
             'activity' => Activity::find(intval($activityId)),
