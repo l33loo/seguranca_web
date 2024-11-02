@@ -108,7 +108,7 @@ class UserController
         if (count($users) === 1 && password_verify(trim($password), $users[0]->getPasswordhash()) === true) {
             $user = $users[0];
             $_SESSION['logged_id'] = $user->getId();
-            $_SESSION['name'] = htmlspecialchars($user->getFirstname());
+            $_SESSION['name'] = $user->getFirstname();
             $_SESSION['isVendor'] = $user->getIsvendor();
 
             $redirect = $this->request->getQueryParameter('redirect');
