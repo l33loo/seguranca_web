@@ -70,12 +70,35 @@ class ActivityController
 
     public function new()
     {
-        // TODO
+        $html = $this->renderer->render('activities/new');
+        $this->response->setContent($html);
     }
 
     public function create()
     {
-        // TODO
+        $name = $this->request->getParameter('name');
+        $description = $this->request->getParameter('description');
+        $date = $this->request->getParameter('date');
+        $time = $this->request->getParameter('time');
+        $cost = $this->request->getParameter('cost');
+
+        // TODO: activity validate
+
+        $activity = new Activity(
+            trim($name),
+            trim($description),
+            trim($date),
+            trim($time),
+            floatval($cost),
+            \App\Booking\User::getLoggedUserId()
+        );
+        
+        // TODO: $activity->validate();
+        $activity->save();
+        
+        header('Location: /users/me/activities');
+        $html = $this->renderer->render('users/vendors/activities/list');
+        $this->response->setContent($html);
     }
 
     public function editForm($params)

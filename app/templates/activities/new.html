@@ -1,0 +1,61 @@
+{% extends "layout.html" %} {% block content %}
+<div class="card my-5">
+  <!-- <img src="/img/surfing.jpg" alt="" class="card-img-top" /> -->
+  <div class="card-body">
+    <div class="d-flex justify-content-between align-items-center">
+      <h1 class="mt-2 mb-4">New Activity</h1>
+    </div>
+    <form action="/activities/new" method="post">
+      <div class="mb-3">
+        <label for="name" class="form-label">Activity name</label>
+        <input type="text" class="form-control" name="name" id="name" />
+      </div>
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea
+          class="form-control"
+          id="description"
+          rows="3"
+          name="description"
+        >
+{{ activity.description }}</textarea
+        >
+      </div>
+      <div class="row">
+        <div class="col">
+          <label for="date" class="form-label">Date</label>
+          <input
+            type="date"
+            class="form-control"
+            id="date"
+            min="{{ 'now'|date('Y-m-d') }}"
+            name="date"
+          />
+        </div>
+        <div class="col">
+          <label for="time" class="form-label">Time</label>
+          <input type="time" class="form-control" id="time" name="time" />
+        </div>
+        <div class="col">
+          <label for="cost" class="form-label">Cost (€)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="cost"
+            name="cost"
+            step="any"
+          />
+        </div>
+      </div>
+      <div>
+        <input
+          type="submit"
+          value="Post New Activity"
+          name="edit"
+          class="btn btn-success mt-4 mb-2"
+        />
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

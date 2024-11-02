@@ -48,7 +48,7 @@ class UserController
             $data['search'] = htmlspecialchars($search);
         }
 
-        $data['activities'] = \App\Booking\Activity::search($filters, '', 'date');
+        $data['activities'] = \App\Booking\Activity::search($filters, '', 'id', 'DESC');
 
         $html = $this->renderer->render('/users/vendors/activities/list', $data);
         $this->response->setContent($html);
