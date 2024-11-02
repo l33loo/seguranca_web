@@ -147,7 +147,7 @@ class User
     public static function getLoggedUserType(): string
     {
         if (!empty($_SESSION['logged_id']) && isset($_SESSION['isVendor'])) {
-            return ($_SESSION['isVendor'] === 'true') ? 'vendor' : 'client';
+            return ($_SESSION['isVendor'] === true) ? 'vendor' : 'client';
         }
 
         return 'guest';
