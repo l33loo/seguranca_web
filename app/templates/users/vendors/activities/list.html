@@ -1,8 +1,13 @@
 {% extends "layout.html" %} {% block content %}
-<div class="row my-5">
+<div class="d-flex justify-content-between align-items-center my-5">
   <h1>Activities Panel</h1>
+  <a href="/activities/new" class="btn btn-success">New Activity</a>
 </div>
-<form action="/users/me/activities" class="row my-5">
+<form
+  action="/users/me/activities"
+  class="row my-5 w-100"
+  style="max-width: 800px"
+>
   <div class="col">
     <input
       type="text"
@@ -19,7 +24,7 @@
     {% endif %}
   </div>
   <div class="col-auto">
-    <input type="submit" value="Search" class="btn btn-primary" />
+    <input type="submit" value="Search" class="btn btn-secondary" />
   </div>
 </form>
 <div class="my-5">
@@ -35,34 +40,50 @@
       </tr>
     </thead>
     <tbody>
-      {% for activity in activities %}
-      <tr>
+      {% for activity in activities %} {% if activity.isarchived is same as true
+      %}
+      <tr class="table-secondary">
+        {% else %}
+      </tr>
+        {% endif %}
         <th scope="row">{{ activity.id }}</th>
         <td>{{ activity.name }}</td>
         <td>{{ activity.description }}</td>
         <td>{{ activity.dateTimeToString }}</td>
         <td>{{ activity.costToString }}</td>
-        <td class="d-flex justify-content-between">
+        <td>
+          <div class="d-flex justify-content-between align-items-center w-100 h-100" style="gap: 1rem">
+            {% if activity.isarchived is same as false %}
           <a href="/activities/{{ activity.id }}" class="btn btn-primary"
             >View</a
           >
           <a href="/activities/{{ activity.id }}/edit" class="btn btn-success"
             >Edit</a
           >
-          <form action="" method="">
-            <input
-              type="hidden"
-              name="activityId"
-              id="activityId"
-              value="{{ activity.id }}"
-            />
+          <form action="/activities/{{ activity.id }}/archive" method="POST">
             <input
               type="submit"
               value="Archive"
-              class="btn btn-danger"
-              value="archive"
+              class="btn btn-warning"
+              name="archive"
             />
           </form>
+          <form action="/activities/{{ activity.id }}/delete" method="POST">
+            <input
+              type="submit"
+              value="Delete"
+              class="btn btn-danger"
+              name="delete"
+            />
+          </form>
+          {% else %}
+          <div class="flex-grow-1 text-center">
+            <strong>
+              ARCHIVED
+            </strong>
+          </div>
+          {% endif %}
+          </div>
         </td>
       </tr>
       {% endfor %}

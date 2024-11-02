@@ -47,6 +47,11 @@ class MyConnect
         $this->escapedQuery($sql, $params);
     }
 
+    public function escapedDeleteQuery(string $sql, array $params): void
+    {
+        $this->escapedQuery($sql, $params);
+    }
+
     public function escapedSelectQuery(string $sql, ?array $params = null): \PDOStatement|false
     {
         return $this->escapedQuery($sql, $params);

@@ -16,17 +16,18 @@ class Activity
     protected int $vendoruser_id;
     protected User $vendoruser;
     protected array $comments;
-    protected int $isarchived;
+    protected array $reservations;
+    protected bool $isarchived;
 
     public function __construct(
-        ?int $id = null,
         ?string $name = null,
         ?string $description = null,
         ?string $date = null,
         ?string $time = null,
         ?float $cost = null,
         ?int $vendoruser_id = null,
-        ?int $isarchived = null,
+        ?bool $isarchived = null,
+        ?int $id = null,
     ) {
         $this->tableName = 'activity';
         
@@ -179,7 +180,7 @@ class Activity
     /**
      * Get the value of isarchived
      */ 
-    public function getIsarchived(): int
+    public function getIsarchived(): bool
     {
         return $this->isarchived;
     }
@@ -189,7 +190,7 @@ class Activity
      *
      * @return  self
      */ 
-    public function setIsarchived(int $isarchived): self
+    public function setIsarchived(bool $isarchived): self
     {
         $this->isarchived = $isarchived;
 
@@ -214,18 +215,6 @@ class Activity
         return $this->comments;
     }
 
-    /**
-     * Set the value of comments
-     *
-     * @return  self
-     */ 
-    public function setComments(array $comments): self
-    {
-        $this->comments = $comments;
-
-        return $this;
-    }
-
     public function loadComments(): self
     {
         $filter = [
@@ -240,6 +229,36 @@ class Activity
 
         foreach ($this->comments as $comment) {
             $comment->loadRelation('user');
+        }
+        return $this;
+    }
+
+    /**
+     * Get the value of reservations
+     */ 
+    public function getReservations(): array
+    {
+        return $this->reservations;
+    }
+
+    public function loadReservations(): self
+    {
+        $filter = [
+            [
+                'column' => 'activity_id',
+                'operator' => '=',
+                'value' => $this->id,
+            ],
+        ];
+
+        $this->reservations = Reservation::search($filter, '', 'id', 'DESC');
+
+        foreach ($this->reservations as $reservation) {
+            $reservation
+                ->loadRelation('reservedbyuser', 'user')
+                ->loadRelation('activity')
+                ->loadRelation('creditcard')
+                ->loadRelation('reservationstatus', 'reservation_status');
         }
         return $this;
     }

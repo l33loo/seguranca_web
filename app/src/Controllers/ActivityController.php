@@ -70,22 +70,113 @@ class ActivityController
 
     public function new()
     {
-        // TODO
+        $html = $this->renderer->render('activities/new');
+        $this->response->setContent($html);
     }
 
     public function create()
     {
-        // TODO
+        $name = $this->request->getParameter('name');
+        $description = $this->request->getParameter('description');
+        $date = $this->request->getParameter('date');
+        $time = $this->request->getParameter('time');
+        $cost = $this->request->getParameter('cost');
+
+        // TODO: activity validate
+
+        $activity = new Activity(
+            trim($name),
+            trim($description),
+            trim($date),
+            trim($time),
+            floatval($cost),
+            \App\Booking\User::getLoggedUserId()
+        );
+        
+        // TODO: $activity->validate();
+        $activity->save();
+        
+        header('Location: /users/me/activities');
+        $html = $this->renderer->render('users/vendors/activities/list');
+        $this->response->setContent($html);
     }
 
-    public function update()
+    public function editForm($params)
     {
-        // TODO
+        // TODO: add errors
+        $activity = Activity::find(intval($params['activityId']));
+        $data = [
+            'activity' => $activity,
+        ];
+
+        $html = $this->renderer->render('activities/edit', $data);
+        $this->response->setContent($html);
     }
 
-    public function archive()
+    public function edit($params)
     {
-        // TODO
+        $name = $this->request->getParameter('name');
+        $description = $this->request->getParameter('description');
+        $date = $this->request->getParameter('date');
+        $time = $this->request->getParameter('time');
+        $cost = $this->request->getParameter('cost');
+
+        $activity = Activity::find(intval($params['activityId']));
+        
+        $activity
+            ->setName(trim($name))
+            ->setDescription(trim($description))
+            ->setDate(trim($date))
+            ->setTime(trim($time))
+            ->setCost(floatval($cost));
+        // TODO: $activity->validate();
+     
+        $activity->save();
+        $data = [
+            'activity' => $activity,
+        ];
+
+        header('Location: /users/me/activities');
+        $html = $this->renderer->render('activities/edit', $data);
+        $this->response->setContent($html);
+    }
+
+    public function archive($params)
+    {
+        $archiveParam = $this->request->getParameter('archive');
+        if (isset($archiveParam)) {
+            $activity = Activity::find(intval($params['activityId']));
+            $activity->setIsarchived(true)->save();
+        }
+
+        header('Location: /users/me/activities');
+        $html = $this->renderer->render('users/vendors/activities/list');
+        $this->response->setContent($html);
+    }
+
+    public function delete($params)
+    {
+        $deleteParam = $this->request->getParameter('delete');
+        if (isset($deleteParam)) {
+            $activity = Activity::find(intval($params['activityId']));
+            $activity->loadReservations();
+
+            if (count($activity->getReservations()) > 0) {
+                // TODO send error message
+            }
+
+            if (count($activity->getReservations()) === 0) {
+                $activity->delete();
+            }
+
+            header('Location: /users/me/activities');
+            $html = $this->renderer->render('users/vendors/activities/list');
+            $this->response->setContent($html);
+        }
+
+        header('Location: /users/me/activities');
+        $html = $this->renderer->render('users/vendors/activities/list');
+        $this->response->setContent($html);
     }
 
     public function listReservations($params): void
@@ -101,9 +192,8 @@ class ActivityController
     public function postComment($params): void
     {
         $newComment = new \App\Booking\Comment(
-            htmlspecialchars($this->request->getBodyParameters()['comment']),
-            // TODO: put id of logged-in user
-            2,
+            $this->request->getBodyParameters()['comment'],
+            \App\Booking\User::getLoggedUserId(),
             intval($params['activityId'])
         );
 

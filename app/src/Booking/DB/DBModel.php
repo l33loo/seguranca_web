@@ -56,9 +56,12 @@ trait DBModel
             foreach ($properties as $property => $value) {
                 $sql .= '?,';
 
+                // Protect against XSS
+                $escapedValue = is_string($value) ? htmlspecialchars($value) : $value;
+
                 // PDO does not accept booleans, so they need to be converted
                 // to their int equivalent.
-                $params[] = is_bool($value) ? (int)$value : $value;
+                $params[] = is_bool($escapedValue) ? (int)$escapedValue : $escapedValue;
             }
 
             $sql = rtrim($sql, ',');
@@ -71,9 +74,12 @@ trait DBModel
             foreach ($properties as $property => $value) {
                 $sql .= $property . ' = ?,';
 
+                // Protect against XSS
+                $escapedValue = is_string($value) ? htmlspecialchars($value) : $value;
+
                 // PDO does not accept booleans, so they need to be converted
                 // to their int equivalent.
-                $params[] = is_bool($value) ? (int)$value: $value;
+                $params[] = is_bool($escapedValue) ? (int)$escapedValue: $escapedValue;
             }
 
             $sql = rtrim($sql, ',');
@@ -164,6 +170,18 @@ trait DBModel
         $this->{$relationName} = $className::find($this->{$relationName . '_id'}, $tableName);
 
         return $this;
+    }
+
+    public function delete()
+    {
+        if (empty($this->id)) {
+            return;
+        }
+
+        $connection = MyConnect::getInstance();
+        $sql = "delete from " . $this->tableName . " where id = ?";
+        $params = [$this->id];
+        $connection->escapedDeleteQuery($sql, $params);
     }
 
     public static function snakeToCamel($string, $capitalizeFirstCharacter = true): string
