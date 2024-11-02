@@ -56,9 +56,12 @@ trait DBModel
             foreach ($properties as $property => $value) {
                 $sql .= '?,';
 
+                // Protect against XSS
+                $escapedValue = is_string($value) ? htmlspecialchars($value) : $value;
+
                 // PDO does not accept booleans, so they need to be converted
                 // to their int equivalent.
-                $params[] = is_bool($value) ? (int)$value : $value;
+                $params[] = is_bool($escapedValue) ? (int)$escapedValue : $escapedValue;
             }
 
             $sql = rtrim($sql, ',');
@@ -71,9 +74,12 @@ trait DBModel
             foreach ($properties as $property => $value) {
                 $sql .= $property . ' = ?,';
 
+                // Protect against XSS
+                $escapedValue = is_string($value) ? htmlspecialchars($value) : $value;
+
                 // PDO does not accept booleans, so they need to be converted
                 // to their int equivalent.
-                $params[] = is_bool($value) ? (int)$value: $value;
+                $params[] = is_bool($escapedValue) ? (int)$escapedValue: $escapedValue;
             }
 
             $sql = rtrim($sql, ',');
