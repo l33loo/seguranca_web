@@ -19,7 +19,21 @@ $injector->alias('App\Template\FrontendRenderer', 'App\Template\FrontendTwigRend
 $injector->alias('App\Template\Renderer', 'App\Template\TwigRenderer');
 $injector->delegate('\Twig\Environment', function () use ($injector) {
     $loader = new \Twig\Loader\FilesystemLoader(dirname(__DIR__) . '/templates');
-    $twig = new \Twig\Environment($loader);
+    $config = [];
+    $environment = getenv('ENVIRONMENT');
+    if ($environment === 'development') {
+        $config = [
+            'cache' => false,
+            'debug' => true,
+        ];
+    }
+    if ($environment === 'production') {
+        $config = [
+            // 'cache' => ..., 
+            'debug' => false,
+        ];
+    }
+    $twig = new \Twig\Environment($loader, $config);
     $twig->addGlobal('session', $_SESSION);
     $func = new \Twig\TwigFunction('getUserType', function () {
         return \App\Booking\User::getLoggedUserType();
