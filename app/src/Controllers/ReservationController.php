@@ -119,7 +119,7 @@ class ReservationController
             $ccNumber = $this->request->getParameter('ccNumber');
             $ccExpiry = $this->request->getParameter('ccExpiry');
             $cvv = $this->request->getParameter('cvv');
-            $ccData = new Creditcard(trim($ccNumber), trim($cvv), trim($ccExpiry));
+            $ccData = new Creditcard($ccNumber, $cvv, $ccExpiry);
             // TODO: implement validation
             // $validation = $ccData->validate();
             // TODO: something like if $validation->hasErrors()

@@ -7,6 +7,7 @@ use App\Booking\Comment;
 class Activity
 {
     use DB\DBModel;
+    use Validation\FormValidatorTrait;
 
     protected string $name;
     protected string $description;
@@ -44,6 +45,8 @@ class Activity
             $this->date = $date;
         }
         if ($time !== null) {
+            // $t = strtotime($time);
+            // $this->time = date('H:i',$t);
             $this->time = $time;
         }
         if ($cost !== null) {
@@ -122,7 +125,7 @@ class Activity
      */ 
     public function getTime():string
     {
-        return $this->time;
+        return date('H:i', strtotime($this->time));
     }
 
     /**
@@ -264,9 +267,36 @@ class Activity
 
     public function hasPassed(): bool
     {
-        $format = 'Y-m-d H:i:s';
+        $format = 'Y-m-d H:i';
         $now = date_create_from_format($format, date($format));
         $activityDate = date_create_from_format($format, $this->getDate() . ' ' . $this->getTime());
         return $now > $activityDate;
+    }
+
+    public static function getValidationRules(): array
+    {
+        return [
+            'name' => [
+                'name' => 'name',
+                'required' => true,
+                'maxLength' => 45,
+            ],
+            'description' => [
+                'name' => 'description',
+                'required' => true,
+                'maxLength' => 215,
+            ],
+            'date' => [
+                'name' => 'date',
+                'required' => true,
+                'type' => 'dateString',
+                'mustBeInFuture' => true,
+            ],
+            // 'time' => [
+            //     'name' => 'time',
+            //     'required' => true,
+            //     // 'type' => 'timeString',
+            // ],
+        ];
     }
 }

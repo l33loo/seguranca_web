@@ -85,10 +85,10 @@ class ActivityController
         // TODO: activity validate
 
         $activity = new Activity(
-            trim($name),
-            trim($description),
-            trim($date),
-            trim($time),
+            $name,
+            $description,
+            $date,
+            $time,
             floatval($cost),
             \App\Booking\User::getLoggedUserId()
         );
@@ -104,6 +104,7 @@ class ActivityController
     public function editForm($params)
     {
         $activity = Activity::find(intval($params['activityId']));
+      
         if ($activity->hasPassed() || $activity->getIsarchived()) {
             // TODO: add error
             header('Location: /users/me/activities');
@@ -138,19 +139,29 @@ class ActivityController
         $cost = $this->request->getParameter('cost');
         
         $activity
-            ->setName(trim($name))
-            ->setDescription(trim($description))
-            ->setDate(trim($date))
-            ->setTime(trim($time))
+            ->setName($name)
+            ->setDescription($description)
+            ->setDate($date)
+            ->setTime($time)
             ->setCost(floatval($cost));
         // TODO: $activity->validate();
      
-        $activity->save();
         $data = [
             'activity' => $activity,
         ];
 
-        header('Location: /users/me/activities');
+        $bodyParams = $this->request->getParameters();
+        $validOrErrors = Activity::validateForm($bodyParams);
+        // print_r($validOrErrors);
+        // die;
+        if ($validOrErrors === true) {
+            $activity->save();
+            $data['success'] = 'The activity was updated successfully.';
+        } else {
+            $data['errors'] = $validOrErrors;
+        }
+
+        // header('Location: /activities/' . $activity->getId() . '/edit');
         $html = $this->renderer->render('activities/edit', $data);
         $this->response->setContent($html);
     }
