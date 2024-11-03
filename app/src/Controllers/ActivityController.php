@@ -103,8 +103,15 @@ class ActivityController
 
     public function editForm($params)
     {
-        // TODO: add errors
         $activity = Activity::find(intval($params['activityId']));
+        if ($activity->hasPassed() || $activity->getIsarchived()) {
+            // TODO: add error
+            header('Location: /users/me/activities');
+            $userController = new UserController($this->request, $this->response, $this->renderer);
+            $userController->vendorActivities();
+            return;
+        }
+        
         $data = [
             'activity' => $activity,
         ];
@@ -115,13 +122,20 @@ class ActivityController
 
     public function edit($params)
     {
+        $activity = Activity::find(intval($params['activityId']));
+        if ($activity->hasPassed() || $activity->getIsarchived()) {
+            // TODO: add error
+            header('Location: /users/me/activities');
+            $userController = new UserController($this->request, $this->response, $this->renderer);
+            $userController->vendorActivities();
+            return;
+        }
+
         $name = $this->request->getParameter('name');
         $description = $this->request->getParameter('description');
         $date = $this->request->getParameter('date');
         $time = $this->request->getParameter('time');
         $cost = $this->request->getParameter('cost');
-
-        $activity = Activity::find(intval($params['activityId']));
         
         $activity
             ->setName(trim($name))
@@ -168,10 +182,6 @@ class ActivityController
             if (count($activity->getReservations()) === 0) {
                 $activity->delete();
             }
-
-            header('Location: /users/me/activities');
-            $html = $this->renderer->render('users/vendors/activities/list');
-            $this->response->setContent($html);
         }
 
         header('Location: /users/me/activities');
