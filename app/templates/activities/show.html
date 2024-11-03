@@ -1,28 +1,47 @@
 {% extends "layout.html" %} {% block content %}
-<div class="row my-5">
-  <h1>{{ activity.name }}</h1>
-</div>
-<div class="card">
-  <img src="/img/surfing.jpg" alt="" class="card-img-top" />
-  <div class="card-body">
-    <p class="card-text">{{ activity.description }}</p>
-    <p class="card-text">Cost: {{ activity.costToString() }} per person</p>
-    {% if activity.isarchived is same as false and activity.hasPassed() is same
-    as false %}
-    <a href="/activities/{{ activity.id }}/reserve" class="btn btn-success"
-      >Book Now</a
-    >
-    {% endif %} {% if activity.isarchived is same as true %}
-    <p>
-      <strong>INACTIVE LISTING </strong>
-    </p>
-    {% elseif activity.hasPassed() is same as true %}
-    <p>
-      <strong>The activity occured on: {{ activity.dateTimeToString }}</strong>
-    </p>
-    {% endif %}
+<div class="card my-5">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img src="/img/surfing.jpg" alt="" class="img-fluid rounded-start" />
+    </div>
+    <div class="col-md-8">
+      <div class="card-body h-100">
+        <div class="d-flex flex-column justify-content-between h-100">
+          <div>
+            <h1 class="card-title">{{ activity.name }}</h1>
+            <p class="card-text">{{ activity.description }}</p>
+            <p class="card-text">{{ activity.dateTimeToString }}</p>
+            <p class="card-text">
+              Cost: {{ activity.costToString() }} per person
+            </p>
+          </div>
+          <div class="mb-2 mt-4">
+            {% if activity.isarchived is same as false and activity.hasPassed()
+            is same as false %}
+            <a
+              href="/activities/{{ activity.id }}/reserve"
+              class="btn btn-success"
+              >Book Now</a
+            >
+            {% endif %} {% if activity.isarchived is same as true %}
+            <p>
+              <strong>INACTIVE LISTING </strong>
+            </p>
+            {% elseif activity.hasPassed() is same as true %}
+            <p>
+              <strong
+                >The activity occured on: {{ activity.dateTimeToString
+                }}</strong
+              >
+            </p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
+
 {% if activity.hasPassed() is same as false %} {% else %}
 <div class="mt-5">
   <h2>Comments</h2>
