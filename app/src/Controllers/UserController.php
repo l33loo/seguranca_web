@@ -159,9 +159,8 @@ class UserController
         }
 
         // User error cases: either wrong password, or user not found
-        // TODO: error message on login page
         $data = [
-
+            'error' => 'Invalid credentials',
         ];
         $html = $this->renderer->render('users/login', $data);
         $this->response->setContent($html);

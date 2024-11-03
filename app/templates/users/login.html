@@ -1,6 +1,9 @@
 {% extends "layout.html" %} {% block content %}
 <div class="row my-5">
   <h1>Login</h1>
+  {% if error is not null %}
+  <div class="alert alert-danger" role="alert">{{ error }}</div>
+  {% endif %}
 </div>
 <div class="w-100" style="max-width: 500px">
   <form action="/login" method="POST">
