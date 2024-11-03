@@ -76,7 +76,7 @@ trait FormValidatorTrait
 
             if (!empty($field['regexMatch'])) {
                 if (preg_match($field['regexMatch'], trim($value)) !== 1) {
-                    throw new \Exception('Wrong credit card data');
+                    throw new \Exception('Invalid format.');
                 }
             }
 
