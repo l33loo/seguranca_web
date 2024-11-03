@@ -4,7 +4,7 @@ set -e
 
 OS=$(uname)
 
-# Load production MySQL secrets from `pass` into RAM.
+# Load production secrets from `pass` into RAM.
 if [[ "$OS" == "Linux" ]]; then
     DIR="/mnt/seguranca_web/secrets/"
 
@@ -24,12 +24,23 @@ if [[ "$OS" == "Linux" ]]; then
         fi
     fi
 
-    FILE="${DIR}mysql.prod.env"
-    if pass uac/seguranca_web/mysql.prod.env > "$FILE"; then
-        chmod 0400 "$FILE"
-        echo "MySQL production secrets have been loaded into ${FILE}."
+    # Load MySQL secrets
+    MYSQL_FILE="${DIR}mysql.prod.env"
+    if pass uac/seguranca_web/mysql.prod.env > "$MYSQL_FILE"; then
+        chmod 0400 "$MYSQL_FILE"
+        echo "MySQL production secrets have been loaded into ${MYSQL_FILE}."
     else
-        echo "Failed to load secrets into ${FILE}." >&2
+        echo "Failed to load MySQL secrets into ${MYSQL_FILE}." >&2
+        exit 1
+    fi
+
+    # Load App secrets
+    APPL_FILE="${DIR}app.prod.env"
+    if pass uac/seguranca_web/app.prod.env > "$APP_FILE"; then
+        chmod 0400 "$APP_FILE"
+        echo "App production secrets have been loaded into ${APP_FILE}."
+    else
+        echo "Failed to load App secrets into ${APP_FILE}." >&2
         exit 1
     fi
 else
