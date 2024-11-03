@@ -37,6 +37,8 @@ else
     exit 1
 fi
 
+touch app/logs/err.log
+
 cd app && composer install && cd ..
 
 docker compose up --build

@@ -15,4 +15,4 @@ vendor/
 /tls/*
 
 # Logs
-logs/*
+/app/logs/*
