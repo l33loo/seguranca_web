@@ -4,6 +4,9 @@ vendor/
 # mysql
 /mysql/data/
 
+# ignore dummy data
+/mysql/init/02-dummy.sql
+
 # Development env vars file that includes secrets
 /dev.env
 

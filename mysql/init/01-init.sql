@@ -11,13 +11,6 @@ CREATE TABLE IF NOT EXISTS user (
   PRIMARY KEY (id)
 );
 
--- Pedro's passwordhash: 123
--- Lila's passwordhash: 456
--- bcrypt without salt for now
-INSERT INTO user(id, firstname, lastname, email, passwordhash, isvendor)
-VALUES (1, 'Pedro','Paula','pedropaula@uac.pt','$2y$10$HkCd5wTbke4wG4wWh9t0pOLsDsYaDPAxS8JwW5cyZoUmQ4WiaJ9Y6', true),
-(2, 'Lila','Karpowicz','lilakarpowicz@uac.pt','$2y$10$4GFUqTp1GUTlQxMeO4QCceqXLA75nr7g9k01MHJ6ZdnGS6K8gXgwq', false);
-
 -- Tabela creditcard
 CREATE TABLE IF NOT EXISTS creditcard (
   id INT NOT NULL AUTO_INCREMENT,
@@ -30,11 +23,6 @@ CREATE TABLE IF NOT EXISTS creditcard (
     FOREIGN KEY (user_id)
     REFERENCES user (id)
 );
-
-INSERT INTO creditcard(id, number, cvv, expiry, user_id)
-VALUES (1, '1234567891234567', '123', '2026-12-01', 1),
-(2, '1234567891234568', '124', '2025-10-11', 1),
-(3, 'XXXXXXXXXXXX4568', NULL, NULL, NULL);
 
 -- Tabela activity
 CREATE TABLE IF NOT EXISTS activity (
@@ -52,13 +40,6 @@ CREATE TABLE IF NOT EXISTS activity (
     REFERENCES user (id)
 );
 
-INSERT INTO activity(id, name, description, date, time, cost, vendoruser_id, isarchived)
-VALUES (1, 'Surfing at Santa Barbara Beach', 'Enjoy a surfing session with renowed local surf instructor. Duration 2 hours.', '2025-01-01', '15:00', 15, 1, true),
-(2, 'Hike Lagoa do Fogo', "Half day hike around one of Sao Miguel's most beautiful lakes", '2024-10-04', '19:30', 10, 1, false),
-(3, 'Learn to cook Cozido from Furnas', 'Chef Alberto will teach you how to cook Cozido Azorean style, in geothermal pits', '2024-12-13', '12:30', 20, 2, false),
-(4, 'Learn to cook Cozido from Furnas', 'Chef Alberto will teach you how to cook Cozido Azorean style, in geothermal pits', '2024-11-13', '12:30', 20, 2, false),
-(5, 'Surfing at Monte Verde Beach', 'Enjoy a surfing session with renowed local surf instructor. Duration 3 hours.', '2025-01-01', '15:00', 15, 1, false);
-
 -- Tabela comment
 CREATE TABLE IF NOT EXISTS comment (
   id INT NOT NULL AUTO_INCREMENT,
@@ -74,11 +55,6 @@ CREATE TABLE IF NOT EXISTS comment (
     FOREIGN KEY (user_id)
     REFERENCES user (id)
 );
-
-INSERT INTO comment(id, comment, activity_id, user_id, postedon)
-VALUES (1, 'Muito Bom', 2, 1, '2024-10-05 15:45:34'),
-(2, 'Muito Mau', 2, 1, '2024-10-06 11:35:14'),
-(3, 'Bom', 2, 2, '2024-10-05 07:05:01');
 
 -- Tabela reservation_status
 CREATE TABLE IF NOT EXISTS reservation_status (
@@ -117,11 +93,6 @@ CREATE TABLE IF NOT EXISTS reservation (
     REFERENCES reservation_status (id)
 );
 
-INSERT INTO reservation(reservedbyuser_id, reservedon, activity_id, creditcard_id, reservationstatus_id)
-VALUES (1, '2024-10-15 20:55:04', 1, 1, 1),
-(1, '2024-10-20 07:05:22', 2, 1, 3),
-(2, '2024-09-22 17:44:31', 1, 2, 2);
-
 -- Tabela reservation_activity
 CREATE TABLE IF NOT EXISTS reservation_activity (
   reservation_id INT NOT NULL,
@@ -133,8 +104,3 @@ CREATE TABLE IF NOT EXISTS reservation_activity (
     FOREIGN KEY (activity_id)
     REFERENCES activity (id)
 );
-
-INSERT INTO reservation_activity(reservation_id, activity_id)
-VALUES (1,1),
-(1,2),
-(2,1);
