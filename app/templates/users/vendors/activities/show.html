@@ -13,14 +13,8 @@
                 <p class="card-text">{{ activity.dateTimeToString }}</p>
                 <p class="card-text">Cost: {{ activity.costToString() }} per person</p>
             </div>
-            {# TODO: hide 'Book Now' button if the activity is not bookable #}
             <div class="d-flex mb-4" style="gap: 1rem">
-                <a href="/activities/{{ activity.id }}" class="btn btn-primary">
-                    View Posting
-                </a>
-                <a href="/activities/{{ activity.id }}/edit" class="btn btn-warning">
-                    Edit Activity
-                </a>
+              {{ include('components/activityButtons.html', {view: false}) }}
             </div>
         </div>
       </div>
