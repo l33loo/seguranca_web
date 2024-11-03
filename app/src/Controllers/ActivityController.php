@@ -102,11 +102,9 @@ class ActivityController
             $html = $this->renderer->render('users/vendors/activities/list', $data);
             $this->response->setContent($html);
         } else {
-            $data['activity'] = $activity;
             $data['errors'] = $validOrErrors;
             $data['error'] = 'There was an error creating the activity.';
-            // header('Location: /activities/new');
-            $html = $this->renderer->render('activities/edit', $data);
+            $html = $this->renderer->render('activities/new', $data);
             $this->response->setContent($html);
         }
     }
