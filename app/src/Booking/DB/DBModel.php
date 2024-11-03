@@ -57,7 +57,7 @@ trait DBModel
                 $sql .= '?,';
 
                 // Protect against XSS
-                $escapedValue = is_string($value) ? htmlspecialchars($value) : $value;
+                $escapedValue = is_string($value) ? htmlspecialchars(trim($value)) : $value;
 
                 // PDO does not accept booleans, so they need to be converted
                 // to their int equivalent.
@@ -75,7 +75,7 @@ trait DBModel
                 $sql .= $property . ' = ?,';
 
                 // Protect against XSS
-                $escapedValue = is_string($value) ? htmlspecialchars($value) : $value;
+                $escapedValue = is_string($value) ? htmlspecialchars(trim($value)) : $value;
 
                 // PDO does not accept booleans, so they need to be converted
                 // to their int equivalent.

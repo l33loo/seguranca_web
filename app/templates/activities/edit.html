@@ -1,6 +1,5 @@
 {% extends "layout.html" %} {% block content %}
 <div class="card my-5">
-  <img src="/img/surfing.jpg" alt="" class="img-fluid rounded-start" />
   <div class="card-body">
     <div class="d-flex justify-content-between align-items-center">
       <h1 class="mt-2 mb-4">Edit Activity: {{ activity.name }}</h1>
@@ -30,6 +29,13 @@
         </form>
       </div>
     </div>
+    {% if success is not null %}
+    <div class="alert alert-success" role="alert">{{ success }}</div>
+    {% endif %} {% if errors is not null %}
+    <div class="alert alert-danger" role="alert">
+      There was an error updating the activity.
+    </div>
+    {% endif %}
     <form action="/activities/{{ activity.id }}/edit" method="post">
       <div class="mb-3">
         <label for="name" class="form-label">Activity name</label>
@@ -40,6 +46,7 @@
           id="name"
           value="{{ activity.name }}"
         />
+        <div class="text-danger">{{ errors['name'] }}</div>
       </div>
       <div class="mb-3">
         <label for="description" class="form-label">Description</label>
@@ -51,6 +58,7 @@
         >
 {{ activity.description }}</textarea
         >
+        <div class="text-danger">{{ errors['description'] }}</div>
       </div>
       <div class="row">
         <div class="col">
@@ -59,10 +67,11 @@
             type="date"
             class="form-control"
             id="date"
-            value="{{ activity.date }}"
             min="{{ 'now'|date('Y-m-d') }}"
+            value="{{ activity.date }}"
             name="date"
           />
+          <div class="text-danger">{{ errors['date'] }}</div>
         </div>
         <div class="col">
           <label for="time" class="form-label">Time</label>
@@ -73,6 +82,7 @@
             value="{{ activity.time }}"
             name="time"
           />
+          <div class="text-danger">{{ errors['time'] }}</div>
         </div>
         <div class="col">
           <label for="cost" class="form-label">Cost (€)</label>
@@ -84,6 +94,7 @@
             step="any"
             value="{{ activity.cost }}"
           />
+          <div class="text-danger">{{ errors['cost'] }}</div>
         </div>
       </div>
       <div>
@@ -96,5 +107,6 @@
       </div>
     </form>
   </div>
+  <img src="/img/surfing.jpg" alt="" class="card-img-bottom" />
 </div>
 {% endblock %}

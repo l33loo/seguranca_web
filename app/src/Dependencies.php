@@ -34,6 +34,7 @@ $injector->delegate('\Twig\Environment', function () use ($injector) {
         ];
     }
     $twig = new \Twig\Environment($loader, $config);
+    $twig->addExtension(new \Twig\Extension\DebugExtension());
     $twig->addGlobal('session', $_SESSION);
     $func = new \Twig\TwigFunction('getUserType', function () {
         return \App\Booking\User::getLoggedUserType();
