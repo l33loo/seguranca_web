@@ -136,6 +136,12 @@ class UserController
                 error_log($logMsg . PHP_EOL, 3, __DIR__ . '/../../logs/login.log');
                 // This would normally send an email. Adding only as an example of logging messages.
                 error_log($logMsg, 1, "operator@example.com");
+                // TODO: email user to let them know their account got blocked, and how to recover it
+
+                // Exponential backoff to deter attackers, capped at 30 seconds
+                $delay = min(pow(2, $failedAttempts), 30);
+                sleep($delay);
+
                 $data['error'] = 'Account blocked after too many failed login attemps. Please contact support.';
                 $html = $this->renderer->render('users/login', $data);
                 $this->response->setContent($html);
