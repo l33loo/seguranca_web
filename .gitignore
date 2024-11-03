@@ -10,7 +10,8 @@ vendor/
 # Development env vars file that includes secrets
 /dev.env
 
-# TLS-related files
+# TLS-related files. Keeping the directory in version control
+# to alert it is necessary.
 /tls/*
 
 # Logs
