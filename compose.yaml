@@ -17,7 +17,7 @@ services:
       - ./tls/server.key:/etc/ssl/private/server.key
     env_file:
       - path: ./dev.env
-        required: false # development, overrides the production env file
+        required: false # development
       - path: /mnt/seguranca_web/secrets/prod.env
         required: false # production, for Linux. Created by running `./compose-production.sh`. Overrides the development env file.
     depends_on:
