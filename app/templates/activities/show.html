@@ -14,7 +14,7 @@
     >
   </div>
 </div>
-{# TODO: hide Comments section if activity is planned for the future #}
+{% if activity.hasPassed() is same as false %} {% else %}
 <div class="mt-5">
   <h2>Comments</h2>
   {% if getUserType() is not same as 'guest' %}
@@ -70,4 +70,4 @@
     {% endfor %}
   </ul>
 </div>
-{% endblock %}
+{% endif %} {% endblock %}
