@@ -4,7 +4,7 @@
 
 Rename the `/dev.env.sample` file to `/dev.env`, and add in the missing MySQL secrets.
 
-`docker compose up`
+`./compose-development.sh`
 
 ## Production Setup
 

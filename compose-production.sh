@@ -37,4 +37,6 @@ else
     exit 1
 fi
 
-docker compose up
+cd app && composer install && cd ..
+
+docker compose up --build
