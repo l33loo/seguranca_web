@@ -17,3 +17,6 @@ vendor/
 
 # Logs
 /app/logs/*
+
+# Where we keep the script to generate encryption keys
+/encryption/

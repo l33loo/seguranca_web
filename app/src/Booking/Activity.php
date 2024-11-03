@@ -231,7 +231,7 @@ class Activity
         $this->comments = Comment::search($filter, '', 'postedon', 'DESC');
 
         foreach ($this->comments as $comment) {
-            $comment->loadRelation('user');
+            $comment->loadRelation('reservedbyuser', 'user');
         }
         return $this;
     }
@@ -261,6 +261,7 @@ class Activity
                 ->loadRelation('reservedbyuser', 'user')
                 ->loadRelation('creditcard')
                 ->loadRelation('reservationstatus', 'reservation_status');
+            $reservation->getCreditcard()->decryptAll();
         }
         return $this;
     }

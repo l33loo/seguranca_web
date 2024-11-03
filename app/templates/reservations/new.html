@@ -16,7 +16,8 @@
             class="form-check-input"
           />
           <label for="cc-{{ creditCard.id }}" class="form-check-label">
-            <strong>Credit card: </strong>{{ creditCard.number }}
+            <strong>Credit card: </strong>{{ creditCard.number }} expiring on {{
+            creditCard.expiry }}
           </label>
         </div>
         {% endfor %}
