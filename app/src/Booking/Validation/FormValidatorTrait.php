@@ -74,6 +74,12 @@ trait FormValidatorTrait
                 throw new \Exception('Must be ' . $field['setLength'] . ' characters long.');
             }
 
+            if (!empty($field['regexMatch'])) {
+                if (preg_match($field['regexMatch'], trim($value)) !== 1) {
+                    throw new \Exception('Wrong credit card data');
+                }
+            }
+
             // if (!empty($field['mustMatch']) && !empty($_POST[$field['mustMatch']]) && trim($value) !== trim($_POST[$field['mustMatch']])) {
             //     throw new \Exception('Passwords must match.');
             // }

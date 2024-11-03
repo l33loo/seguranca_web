@@ -9,7 +9,13 @@
     <form action="/activities/new" method="post">
       <div class="mb-3">
         <label for="name" class="form-label">Activity name</label>
-        <input type="text" class="form-control" name="name" id="name" />
+        <input
+          type="text"
+          class="form-control"
+          name="name"
+          id="name"
+          value="{{ activity.name }}"
+        />
         <div class="text-danger">{{ errors['name'] }}</div>
       </div>
       <div class="mb-3">
