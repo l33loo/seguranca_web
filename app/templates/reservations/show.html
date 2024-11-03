@@ -4,6 +4,7 @@
     <h2 class="h1 my-5">
       <strong>Booking #{{ reservation.id }}</strong>
     </h2>
+    {{ include('components/alerts/success.html') }}
     <div class="pt-3">
       <p><strong>Reserved on:</strong> {{ reservation.dateTimeToString() }}</p>
       <p>

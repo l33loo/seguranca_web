@@ -5,6 +5,7 @@ namespace App\Booking;
 class Creditcard
 {
     use DB\DBModel;
+    use Validation\FormValidatorTrait;
 
     protected string $number;
     protected ?string $cvv;
@@ -42,7 +43,8 @@ class Creditcard
      */ 
     public function getNumber(): string
     {
-        return self::obfuscateNum($this->number);
+        // return self::obfuscateNum($this->number);
+        return $this->number;
     }
 
     /**
@@ -121,5 +123,27 @@ class Creditcard
     public static function obfuscateNum(string $num)
     {
         return str_repeat('*', strlen($num) - 4) . substr($num, -4);
+    }
+
+    public static function getValidationRules(): array
+    {
+        return [
+            'number' => [
+                'name' => 'number',
+                'required' => true,
+                'regexMatch' => '/^\d{15,16}$/',
+            ],
+            'cvv' => [
+                'name' => 'cvv',
+                'required' => true,
+                'regexMatch' => '/^\d{3,4}$/',
+            ],
+            'expiry' => [
+                'name' => 'expiry',
+                'required' => true,
+                'type' => 'dateString',
+                'mustBeInFuture' => true,
+            ],
+        ];
     }
 }

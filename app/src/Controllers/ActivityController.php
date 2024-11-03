@@ -93,10 +93,8 @@ class ActivityController
         
         $bodyParams = $this->request->getParameters();
         $validOrErrors = Activity::validateForm($bodyParams);
-        $data = [
+        $data = [];
 
-        ];
-        
         if ($validOrErrors === true) {
             $activity->save();
             $data['success'] = 'New activity #' . $activity->getId() . ' was created successfully.';
@@ -104,10 +102,11 @@ class ActivityController
             $html = $this->renderer->render('users/vendors/activities/list', $data);
             $this->response->setContent($html);
         } else {
+            $data['activity'] = $activity;
             $data['errors'] = $validOrErrors;
             $data['error'] = 'There was an error creating the activity.';
             // header('Location: /activities/new');
-            $html = $this->renderer->render('activities/new', $data);
+            $html = $this->renderer->render('activities/edit', $data);
             $this->response->setContent($html);
         }
     }

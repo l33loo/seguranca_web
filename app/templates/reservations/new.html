@@ -2,6 +2,7 @@
 <div class="row">
   <div class="col">
     <h2 class="h1 mt-5 mb-4">Book <i>{{ activity.name }}</i> Now</h2>
+    {{ include('components/alerts/danger.html') }}
     <form action="" method="post">
       <fieldset>
         <legend>Select payment method:</legend>
@@ -35,35 +36,25 @@
         </div>
       </fieldset>
       <fieldset class="my-3 bg-secondary-subtle p-4">
-        <label for="ccNumber" class="form-label">Credit Card Number:</label>
-        <input
-          type="text"
-          class="form-control"
-          id="ccNumber"
-          name="ccNumber"
-          aria-describedby="emailHelp"
-        />
+        <label for="number" class="form-label">Credit Card Number:</label>
+        <input type="text" class="form-control" id="number" name="number" />
+        <div class="text-danger">{{ errors['number'] }}</div>
         <div class="row mt-1">
           <div class="col">
-            <label for="ccExpiry" class="form-label">Expiry Date:</label>
+            <label for="expiry" class="form-label">Expiry Date:</label>
             <input
               type="date"
               class="form-control"
-              id="ccExpiry"
-              name="ccExpiry"
+              id="expiry"
+              name="expiry"
               min="{{ 'now'|date('Y-m-d') }}"
-              aria-describedby="emailHelp"
             />
+            <div class="text-danger">{{ errors['expiry'] }}</div>
           </div>
           <div class="col">
             <label for="cvv" class="form-label">CVV:</label>
-            <input
-              type="text"
-              class="form-control"
-              id="cvv"
-              name="cvv"
-              aria-describedby="emailHelp"
-            />
+            <input type="text" class="form-control" id="cvv" name="cvv" />
+            <div class="text-danger">{{ errors['cvv'] }}</div>
           </div>
         </div>
         <div class="row">

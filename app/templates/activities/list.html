@@ -2,6 +2,7 @@
 <div class="row my-5">
   <h1>Activities</h1>
 </div>
+{{ include('components/alerts/danger.html') }}
 <form action="/activities" class="row my-5 w-100" style="max-width: 800px">
   <div class="col">
     <input
@@ -37,9 +38,7 @@
         <a href="/activities/{{ activity.id }}" class="btn btn-primary"
           >View Details</a
         >
-        <a
-          href="/users/me/activities/{{ activity.id }}/reserve"
-          class="btn btn-success"
+        <a href="/activities/{{ activity.id }}/reserve" class="btn btn-success"
           >Book Now</a
         >
       </div>

@@ -89,13 +89,14 @@ class ReservationController
 
     public function reserve($params)
     {
-        $activityId = $params['activityId'];
+        $activityId = intval($params['activityId']);
         $activity = Activity::find(intval($activityId));
+        $data = [];
         if ($activity->hasPassed() || $activity->getIsarchived()) {
-            // TODO: display error
+            $data['error'] = 'Activity "' . $activity->getName() . ' cannot be reserved.';
             header('Location: /');
-            $activityController = new ActivityController($this->request, $this->response, $this->renderer);
-            $activityController->list();
+            $html = $this->renderer->render('activities/list', $data);
+            $this->response->setContent($html);
             return;
         }
 
@@ -103,37 +104,29 @@ class ReservationController
 
         // No credit card selected
         if ($paymentOption === null) {
-            // TODO: add errors
-            $data = [
-
-            ];
+            $data['error'] = 'You must pick a credit card.';
             $html = $this->renderer->render('reservations/new', $data);
             $this->response->setContent($html);
             return;
         }
 
         $userId = User::getLoggedUserId();;
-        $activityId = intval($params['reservationId']);
         // New credit card
         if ($paymentOption === 'cc-other') {
-            $ccNumber = $this->request->getParameter('ccNumber');
-            $ccExpiry = $this->request->getParameter('ccExpiry');
+            $ccNumber = $this->request->getParameter('number');
+            $ccExpiry = $this->request->getParameter('expiry');
             $cvv = $this->request->getParameter('cvv');
             $ccData = new Creditcard($ccNumber, $cvv, $ccExpiry);
-            // TODO: implement validation
-            // $validation = $ccData->validate();
-            // TODO: something like if $validation->hasErrors()
-            $isValid = true;
-            if (!$isValid) {
-                // TODO: display error messages
-                $data = [
 
-                ];
+            $validOrErrors = $ccData->validateForm($this->request->getParameters());
+            if ($validOrErrors !== true) {
+                $data['errors'] = $validOrErrors;
                 $html = $this->renderer->render('reservations/new', $data);
                 $this->response->setContent($html);
                 return;
             }
 
+            // New credit card is valid.
             // User requested to save credit card to their account
             $requestToSave = $this->request->getParameter('cc-save');
             if ($requestToSave === 'yes') {
@@ -148,10 +141,13 @@ class ReservationController
             
             $newRes = new Reservation($userId, $activityId, $ccData->getId());
             $newRes->save();
+            $data['success'] = 'Reservation made with success.';
+            $data['reservation'] = Reservation::find($newRes->getId())
+                ->loadRelation('activity')
+                ->loadRelation('creditcard')
+                ->loadRelation('reservationstatus', 'reservation_status');
+            $data['success'] = 'Reservation made with success.';
             header('Location: /reservations/' . $newRes->getId());
-            $data = [
-                'id' => $newRes->getId(),
-            ];
             $html = $this->renderer->render('reservations/show', $data);
             $this->response->setContent($html);
             return;
@@ -159,41 +155,43 @@ class ReservationController
         
         // In this case, the user chose an existing credit card.
         // Payment option is cc id
+        $filters = [
+            [
+                'column' => 'id',
+                'operator' => '=',
+                'value' => $paymentOption,
+            ],
+            [
+                'column' => 'user_id',
+                'operator' => '=',
+                'value' => $userId,
+            ],
+            [
+                'column' => "expiry",
+                'operator' => '>',
+                'value' => date('Y-m-d'),
+            ],
+        ];
 
-        // TODO: set up try / catch
-        // try {
-            $filters = [
-                [
-                    'column' => 'id',
-                    'operator' => '=',
-                    'value' => $paymentOption,
-                ],
-                [
-                    'column' => 'user_id',
-                    'operator' => '=',
-                    'value' => $userId,
-                ],
-                [
-                    'column' => "expiry",
-                    'operator' => '>',
-                    'value' => date('Y-m-d'),
-                ],
-            ];
-
-            $cc = Creditcard::search($filters);
-            if (count($cc) !== 1) {
-                throw new Exception('Error retrieving credit card information');
-            }
-
-            $newReservation = new Reservation($userId, $activityId, $cc[0]->getId());
-            $newReservation->save();
-            header('Location: /reservations/' . $newReservation->getId());
-            $data = [
-                'id' => $newReservation->getId(),
-            ];
-            $html = $this->renderer->render('reservations/show', $data);
+        $cc = Creditcard::search($filters);
+        if (count($cc) !== 1) {
+            $data['error'] = 'Error retrieving credit card information.';
+            $html = $this->renderer->render('reservations/new', $data);
             $this->response->setContent($html);
-        // } catch...
+            return;
+        }
+
+        // Existing credit card successfully retrieved
+        $newReservation = new Reservation($userId, $activityId, $cc[0]->getId());
+        $newReservation->save();
+        $data['success'] = 'Reservation made with success.';
+        $data['reservation'] = Reservation::find($newReservation->getId())
+            ->loadRelation('activity')
+            ->loadRelation('creditcard')
+            ->loadRelation('reservationstatus', 'reservation_status');
+        header('Location: /reservations/' . $newReservation->getId());
+        $html = $this->renderer->render('reservations/show', $data);
+        $this->response->setContent($html);
     }
 
     public function editStatus($params)
