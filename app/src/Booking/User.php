@@ -13,6 +13,7 @@ class User
     protected string $email;
     protected string $passwordhash;
     protected bool $isvendor;
+    protected int $failed_login_attempts;
 
     public function __construct(
         ?string $firstname = null,
@@ -20,7 +21,8 @@ class User
         ?string $email = null,
         ?string $passwordhash = null,
         ?bool $isvendor = null,
-        ?int $id = null
+        ?int $id = null,
+        ?int $failed_login_attempts = null
     ){
         $this->tableName = 'user';
 
@@ -41,6 +43,9 @@ class User
         }
         if ($isvendor !== null) {
             $this->isvendor = $isvendor;
+        }
+        if ($failed_login_attempts !== null) {
+            $this->failed_login_attempts = $failed_login_attempts;
         }
     }
 
@@ -229,5 +234,25 @@ class User
         }
 
         return $hasAccess;
+    }
+
+    /**
+     * Get the value of failed_login_attempts
+     */ 
+    public function getFailed_login_attempts(): int
+    {
+        return $this->failed_login_attempts;
+    }
+
+    /**
+     * Set the value of failed_login_attempts
+     *
+     * @return  self
+     */ 
+    public function setFailed_login_attempts(int $failed_login_attempts): self
+    {
+        $this->failed_login_attempts = $failed_login_attempts;
+
+        return $this;
     }
 }
