@@ -9,9 +9,9 @@
           class="accordion-button"
           type="button"
           data-bs-toggle="collapse"
-          data-bs-target="#collapseOne-{{ reservation.id }}"
+          data-bs-target="#collapse-{{ reservation.id }}"
           aria-expanded="true"
-          aria-controls="collapseOne-{{ reservation.id }}"
+          aria-controls="collapse-{{ reservation.id }}"
         >
           <div class="d-flex justify-content-between w-100">
             <div>
@@ -23,7 +23,7 @@
         </button>
       </h3>
       <div
-        id="collapseOne-{{ reservation.id }}"
+        id="collapse-{{ reservation.id }}"
         class="accordion-collapse collapse"
         data-bs-parent="#accordion"
       >
@@ -38,6 +38,7 @@
           <p></p>
             <strong>Status: </strong>{{ reservation.reservationstatus.name }}
           </p>
+          <a href="/reservations/{{ reservation.id }}" class="btn btn-primary">View Details</a>
         </div>
       </div>
     </div>
