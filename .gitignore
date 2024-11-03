@@ -11,4 +11,7 @@ vendor/
 /dev.env
 
 # TLS-related files
-/tls
+/tls/*
+
+# Logs
+logs/*
