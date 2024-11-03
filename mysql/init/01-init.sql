@@ -14,9 +14,9 @@ CREATE TABLE IF NOT EXISTS user (
 -- Tabela creditcard
 CREATE TABLE IF NOT EXISTS creditcard (
   id INT NOT NULL AUTO_INCREMENT,
-  number VARCHAR(16) NOT NULL,
-  cvv VARCHAR(4) DEFAULT NULL,
-  expiry DATE DEFAULT NULL,
+  number TEXT NOT NULL,
+  cvv TEXT DEFAULT NULL,
+  expiry TEXT NOT NULL,
   user_id INT DEFAULT NULL,
   PRIMARY KEY (id),
   CONSTRAINT fk_user_creditcard

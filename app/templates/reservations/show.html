@@ -8,16 +8,26 @@
     <div class="pt-3">
       <p><strong>Reserved on:</strong> {{ reservation.dateTimeToString() }}</p>
       <p>
-        <strong>Payment:</strong> {{ reservation.activity.costToString() }}
+        <strong>Reserved by: </strong> {{ reservation.reservedbyuser.firstname
+        }} {{ reservation.reservedbyuser.lastname }}
+      </p>
+      <p><strong>Amount:</strong> {{ reservation.activity.costToString() }}</p>
+      <p>
+        <div>
+          <strong><u>Credit card details:</u></strong>
+        </div>
+        <div>
+          <div>
+            <strong>Number:</strong> {{ reservation.creditcard.number }}
+          </div>
+          <div>
+            <strong>Expiry:</strong> {{ reservation.creditcard.expiry }}
+          </div>
+        </div>
       </p>
       <p>
-        <strong>Payment method:</strong> {{ reservation.creditcard.number }}
-      </p>
-      <p></p>
-        <strong>Reservation status:</strong> {{ reservation.reservationstatus.name }}
-      </p>
-      <p>
-        <a class="btn btn-primary my-3" href="/activities/{{ reservation.activity.id }}">View Activity</a>
+        <strong>Reservation status:</strong> {{
+        reservation.reservationstatus.name }}
       </p>
     </div>
   </div>
@@ -27,7 +37,16 @@
       <div class="card-body">
         <h2 class="card-title">{{ reservation.activity.name }}</h2>
         <p class="card-text">{{ reservation.activity.description }}</p>
-        <p class="card-text"><strong>Date:</strong> {{ reservation.activity.dateTimeToString }}</p>
+        <p class="card-text">
+          <strong>Date:</strong> {{ reservation.activity.dateTimeToString }}
+        </p>
+        <p>
+          <a
+            class="btn btn-primary mt-3"
+            href="/activities/{{ reservation.activity.id }}"
+            >View Activity</a
+          >
+        </p>
       </div>
     </div>
   </div>

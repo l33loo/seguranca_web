@@ -43,7 +43,6 @@ class Creditcard
      */ 
     public function getNumber(): string
     {
-        // return self::obfuscateNum($this->number);
         return $this->number;
     }
 
@@ -120,9 +119,46 @@ class Creditcard
         return $this;
     }
 
-    public static function obfuscateNum(string $num)
+    public function obfuscateNum(): self
     {
-        return str_repeat('*', strlen($num) - 4) . substr($num, -4);
+        $num = $this->number;
+        $this->number = str_repeat('*', strlen($num) - 4) . substr($num, -4);
+        return $this;
+    }
+
+    private static function encrypt($data): string
+    {
+        $key = getenv('ENCRYPTION_KEY');
+        $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length('aes-256-cbc'));
+        $encryptedCard = openssl_encrypt($data, 'aes-256-cbc', $key, 0, $iv);
+        // Store IV along with the encrypted data for decryption later
+        return base64_encode($encryptedCard . '::' . $iv);
+    }
+
+    public function encryptAndSave(): void
+    {
+        $this->number = self::encrypt($this->number);
+        $this->expiry = self::encrypt($this->expiry);
+        if ($this->cvv !== null) {
+            $this->cvv = self::encrypt($this->cvv);
+        }
+        $this->save();
+    }
+
+    private static function decrypt($data): string
+    {
+        $key = getenv('ENCRYPTION_KEY');
+        list($encryptedCard, $iv) = explode('::', base64_decode($data), 2);
+        return openssl_decrypt($encryptedCard, 'aes-256-cbc', $key, 0, $iv);
+    }
+
+    public function decryptAll(): void
+    {
+        $this->number = self::decrypt($this->number);
+        $this->expiry = self::decrypt($this->expiry);
+        if ($this->cvv !== null) {
+            $this->cvv = self::decrypt($this->cvv);
+        }
     }
 
     public static function getValidationRules(): array

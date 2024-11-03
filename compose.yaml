@@ -20,6 +20,8 @@ services:
         required: false # development
       - path: /mnt/seguranca_web/secrets/mysql.prod.env
         required: false # production, for Linux. Created by running `./compose-production.sh`. Overrides the development env file.
+      - path: ./.env/app.dev.env
+        required: false
     depends_on:
       - mysql
 

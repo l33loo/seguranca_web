@@ -39,7 +39,9 @@ class ReservationController
         $reservation
             ->loadRelation('activity')
             ->loadRelation('creditcard')
+            ->loadRelation('reservedbyuser', 'user')
             ->loadRelation('reservationstatus', 'reservation_status');
+        $reservation->getCreditcard()->decryptAll();
 
         $data = [
             'reservation' => $reservation,
@@ -80,6 +82,10 @@ class ReservationController
         ];
 
         $creditCards = Creditcard::search($filters);
+        foreach ($creditCards as $cc) {
+            $cc->decryptAll();
+            $cc->obfuscateNum();
+        }
 
         $data['creditCards'] = $creditCards;
 
@@ -130,13 +136,17 @@ class ReservationController
             // User requested to save credit card to their account
             $requestToSave = $this->request->getParameter('cc-save');
             if ($requestToSave === 'yes') {
-                $ccData->setUser_id(User::getLoggedUserId())->save();
+                $ccData
+                    ->setUser_id(User::getLoggedUserId())
+                    ->encryptAndSave();
             
             } else {
                 // User doesn't want to save their cc to their account,
                 // so hide all numbers except last 4 for record keeping
-                $obfNumber = Creditcard::obfuscateNum($ccData->getNumber(), -4);
-                $ccData->setNumber($obfNumber)->setExpiry(null)->setCvv(null)->save();
+                $ccData
+                    ->obfuscateNum()
+                    ->setCvv(null)
+                    ->encryptAndSave();
             }
             
             $newRes = new Reservation($userId, $activityId, $ccData->getId());
@@ -145,7 +155,9 @@ class ReservationController
             $data['reservation'] = Reservation::find($newRes->getId())
                 ->loadRelation('activity')
                 ->loadRelation('creditcard')
+                ->loadRelation('reservedbyuser', 'user')
                 ->loadRelation('reservationstatus', 'reservation_status');
+            $data['reservation']->getCreditcard()->decryptAll();
             $data['success'] = 'Reservation made with success.';
             header('Location: /reservations/' . $newRes->getId());
             $html = $this->renderer->render('reservations/show', $data);
@@ -188,7 +200,9 @@ class ReservationController
         $data['reservation'] = Reservation::find($newReservation->getId())
             ->loadRelation('activity')
             ->loadRelation('creditcard')
+            ->loadRelation('reservedbyuser', 'user')
             ->loadRelation('reservationstatus', 'reservation_status');
+        $data['reservation']->getCreditcard()->decryptAll();
         header('Location: /reservations/' . $newReservation->getId());
         $html = $this->renderer->render('reservations/show', $data);
         $this->response->setContent($html);
