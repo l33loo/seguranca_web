@@ -24,8 +24,8 @@ if [[ "$OS" == "Linux" ]]; then
         fi
     fi
 
-    FILE="${DIR}prod.env"
-    if pass uac/seguranca_web/prod.env > "$FILE"; then
+    FILE="${DIR}mysql.prod.env"
+    if pass uac/seguranca_web/mysql.prod.env > "$FILE"; then
         chmod 0400 "$FILE"
         echo "MySQL production secrets have been loaded into ${FILE}."
     else
