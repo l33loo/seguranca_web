@@ -52,9 +52,17 @@ class ReservationController
     public function new($params)
     {
         $activityId = $params['activityId'];
+        $activity = Activity::find(intval($activityId));
+        if ($activity->hasPassed() || $activity->getIsarchived()) {
+            // TODO: display error
+            header('Location: /');
+            $activityController = new ActivityController($this->request, $this->response, $this->renderer);
+            $activityController->list();
+            return;
+        }
 
         $data = [
-            'activity' => Activity::find(intval($activityId)),
+            'activity' => $activity,
         ];
 
         $userId = User::getLoggedUserId();
@@ -81,6 +89,16 @@ class ReservationController
 
     public function reserve($params)
     {
+        $activityId = $params['activityId'];
+        $activity = Activity::find(intval($activityId));
+        if ($activity->hasPassed() || $activity->getIsarchived()) {
+            // TODO: display error
+            header('Location: /');
+            $activityController = new ActivityController($this->request, $this->response, $this->renderer);
+            $activityController->list();
+            return;
+        }
+
         $paymentOption = $this->request->getParameter('cc');
 
         // No credit card selected
@@ -181,15 +199,20 @@ class ReservationController
     public function editStatus($params)
     {
         $newStatusId = $this->request->getParameter('status');
-        if (!empty($newStatusId)) {
-            $reservation = Reservation::find(intval($params['reservationId']));
+        $reservation = Reservation::find(intval($params['reservationId']));
+        $reservation->loadRelation('activity');
+        $activity = $reservation->getActivity();
+        $activityId = $activity->getId();
+
+        $reservationStatuses = \App\Booking\ReservationStatus::search([], 'reservation_status', 'id'); 
+        $activity->loadReservations();
+
+        if (empty($newStatusId) || $activity->hasPassed() || $activity->getIsarchived()) {
+            // TODO: error
+        } else {
             $reservation->setReservationstatus_id(intval($newStatusId))->save();
         }
 
-        $activityId = $reservation->getActivity_id();
-        $activity = Activity::find(intval($activityId));
-        $reservationStatuses = \App\Booking\ReservationStatus::search([], 'reservation_status', 'id'); 
-        $activity->loadReservations();
         $data = [
             'activity' => $activity,
             'reservationStatuses' => $reservationStatuses,

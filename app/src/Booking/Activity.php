@@ -261,4 +261,12 @@ class Activity
         }
         return $this;
     }
+
+    public function hasPassed(): bool
+    {
+        $format = 'Y-m-d H:i:s';
+        $now = date_create_from_format($format, date($format));
+        $activityDate = date_create_from_format($format, $this->getDate() . ' ' . $this->getTime());
+        return $now > $activityDate;
+    }
 }
