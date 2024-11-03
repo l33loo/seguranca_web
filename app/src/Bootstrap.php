@@ -22,6 +22,7 @@ switch ($environment) {
             // This would normally send an email. Adding only as an example of logging messages.
             error_log($e->getMessage(), 1, "operator@example.com");
         });
+        break;
 }
 
 $whoops->register();
