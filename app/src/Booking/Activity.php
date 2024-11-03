@@ -231,7 +231,7 @@ class Activity
         $this->comments = Comment::search($filter, '', 'postedon', 'DESC');
 
         foreach ($this->comments as $comment) {
-            $comment->loadRelation('reservedbyuser', 'user');
+            $comment->loadRelation('user');
         }
         return $this;
     }
