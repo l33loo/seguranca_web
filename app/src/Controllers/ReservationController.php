@@ -207,7 +207,7 @@ class ReservationController
         $reservationStatuses = \App\Booking\ReservationStatus::search([], 'reservation_status', 'id'); 
         $activity->loadReservations();
 
-        if (empty($newStatusId)) {
+        if (empty($newStatusId) || $activity->hasPassed() || $activity->getIsarchived()) {
             // TODO: error
         } else {
             $reservation->setReservationstatus_id(intval($newStatusId))->save();
