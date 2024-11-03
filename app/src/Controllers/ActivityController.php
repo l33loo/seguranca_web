@@ -191,6 +191,12 @@ class ActivityController
 
     public function postComment($params): void
     {
+        $activity = Activity::find(intval($params['activityId']));
+        if ($activity->hasPassed() || $activity->getIsarchived()) {
+            // TODO: add error, cannot post comment
+            $this->show($params);
+            return;
+        }
         $newComment = new \App\Booking\Comment(
             $this->request->getBodyParameters()['comment'],
             \App\Booking\User::getLoggedUserId(),
