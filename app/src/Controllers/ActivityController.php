@@ -82,8 +82,6 @@ class ActivityController
         $time = $this->request->getParameter('time');
         $cost = $this->request->getParameter('cost');
 
-        // TODO: activity validate
-
         $activity = new Activity(
             $name,
             $description,
@@ -93,12 +91,25 @@ class ActivityController
             \App\Booking\User::getLoggedUserId()
         );
         
-        // TODO: $activity->validate();
-        $activity->save();
+        $bodyParams = $this->request->getParameters();
+        $validOrErrors = Activity::validateForm($bodyParams);
+        $data = [
+
+        ];
         
-        header('Location: /users/me/activities');
-        $html = $this->renderer->render('users/vendors/activities/list');
-        $this->response->setContent($html);
+        if ($validOrErrors === true) {
+            $activity->save();
+            $data['success'] = 'New activity #' . $activity->getId() . ' was created successfully.';
+            header('Location: /users/me/activities');
+            $html = $this->renderer->render('users/vendors/activities/list', $data);
+            $this->response->setContent($html);
+        } else {
+            $data['errors'] = $validOrErrors;
+            $data['error'] = 'There was an error creating the activity.';
+            // header('Location: /activities/new');
+            $html = $this->renderer->render('activities/new', $data);
+            $this->response->setContent($html);
+        }
     }
 
     public function editForm($params)
@@ -144,7 +155,6 @@ class ActivityController
             ->setDate($date)
             ->setTime($time)
             ->setCost(floatval($cost));
-        // TODO: $activity->validate();
      
         $data = [
             'activity' => $activity,
@@ -152,12 +162,11 @@ class ActivityController
 
         $bodyParams = $this->request->getParameters();
         $validOrErrors = Activity::validateForm($bodyParams);
-        // print_r($validOrErrors);
-        // die;
         if ($validOrErrors === true) {
             $activity->save();
             $data['success'] = 'The activity was updated successfully.';
         } else {
+            $data['error'] = 'There was an error updating the activity.';
             $data['errors'] = $validOrErrors;
         }
 

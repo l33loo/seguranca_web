@@ -29,13 +29,8 @@
         </form>
       </div>
     </div>
-    {% if success is not null %}
-    <div class="alert alert-success" role="alert">{{ success }}</div>
-    {% endif %} {% if errors is not null %}
-    <div class="alert alert-danger" role="alert">
-      There was an error updating the activity.
-    </div>
-    {% endif %}
+    {{ include('components/alerts/success.html') }} {{
+    include('components/alerts/danger.html') }}
     <form action="/activities/{{ activity.id }}/edit" method="post">
       <div class="mb-3">
         <label for="name" class="form-label">Activity name</label>

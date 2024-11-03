@@ -292,11 +292,11 @@ class Activity
                 'type' => 'dateString',
                 'mustBeInFuture' => true,
             ],
-            // 'time' => [
-            //     'name' => 'time',
-            //     'required' => true,
-            //     // 'type' => 'timeString',
-            // ],
+            'time' => [
+                'name' => 'time',
+                'required' => true,
+                // 'type' => 'timeString',
+            ],
         ];
     }
 }

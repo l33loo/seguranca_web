@@ -5,10 +5,12 @@
     <div class="d-flex justify-content-between align-items-center">
       <h1 class="mt-2 mb-4">New Activity</h1>
     </div>
+    {{ include('components/alerts/danger.html') }}
     <form action="/activities/new" method="post">
       <div class="mb-3">
         <label for="name" class="form-label">Activity name</label>
         <input type="text" class="form-control" name="name" id="name" />
+        <div class="text-danger">{{ errors['name'] }}</div>
       </div>
       <div class="mb-3">
         <label for="description" class="form-label">Description</label>
@@ -17,9 +19,8 @@
           id="description"
           rows="3"
           name="description"
-        >
-{{ activity.description }}</textarea
-        >
+        ></textarea>
+        <div class="text-danger">{{ errors['description'] }}</div>
       </div>
       <div class="row">
         <div class="col">
@@ -31,10 +32,12 @@
             min="{{ 'now'|date('Y-m-d') }}"
             name="date"
           />
+          <div class="text-danger">{{ errors['date'] }}</div>
         </div>
         <div class="col">
           <label for="time" class="form-label">Time</label>
           <input type="time" class="form-control" id="time" name="time" />
+          <div class="text-danger">{{ errors['time'] }}</div>
         </div>
         <div class="col">
           <label for="cost" class="form-label">Cost (€)</label>
@@ -45,6 +48,7 @@
             name="cost"
             step="any"
           />
+          <div class="text-danger">{{ errors['cost'] }}</div>
         </div>
       </div>
       <div>
