@@ -13,7 +13,7 @@
                 <p class="card-text">{{ activity.dateTimeToString }}</p>
                 <p class="card-text">Cost: {{ activity.costToString() }} per person</p>
             </div>
-            <div class="d-flex mb-4" style="gap: 1rem">
+            <div class="d-flex mb-2 mt-4" style="gap: 1rem">
               {{ include('components/activityButtons.html', {view: false}) }}
             </div>
         </div>
