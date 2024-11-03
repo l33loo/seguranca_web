@@ -18,7 +18,7 @@ switch ($environment) {
     default:
         $whoops->pushHandler(function($e) {
             echo 'There was an error. Please contact us at support@example.com';
-            error_log($e->getMessage() . '\n', 3, '../logs/err.log');
+            error_log($e->getMessage() . PHP_EOL, 3, __DIR__ . '/../logs/err.log');
             // This would normally send an email. Adding only as an example of logging messages.
             error_log($e->getMessage(), 1, "operator@example.com");
         });
