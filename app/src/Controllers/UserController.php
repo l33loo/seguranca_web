@@ -146,6 +146,12 @@ class UserController
         // User found and valid password
         if (count($users) === 1 && password_verify(trim($password), $users[0]->getPasswordhash())) {
             $user = $users[0];
+
+            if ($user->getFailed_login_attempts() > 0) {
+                // Reset failed attempts after successful login
+                $user->setFailed_login_attempts(0)->save();
+            }
+
             $_SESSION['logged_id'] = $user->getId();
             $_SESSION['name'] = $user->getFirstname();
             $_SESSION['isVendor'] = $user->getIsvendor();
