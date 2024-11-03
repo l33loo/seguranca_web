@@ -52,9 +52,17 @@ class ReservationController
     public function new($params)
     {
         $activityId = $params['activityId'];
+        $activity = Activity::find(intval($activityId));
+        if ($activity->hasPassed() || $activity->getIsarchived()) {
+            // TODO: display error
+            header('Location: /');
+            $activityController = new ActivityController($this->request, $this->response, $this->renderer);
+            $activityController->list();
+            return;
+        }
 
         $data = [
-            'activity' => Activity::find(intval($activityId)),
+            'activity' => $activity,
         ];
 
         $userId = User::getLoggedUserId();
@@ -81,6 +89,16 @@ class ReservationController
 
     public function reserve($params)
     {
+        $activityId = $params['activityId'];
+        $activity = Activity::find(intval($activityId));
+        if ($activity->hasPassed() || $activity->getIsarchived()) {
+            // TODO: display error
+            header('Location: /');
+            $activityController = new ActivityController($this->request, $this->response, $this->renderer);
+            $activityController->list();
+            return;
+        }
+
         $paymentOption = $this->request->getParameter('cc');
 
         // No credit card selected
