@@ -64,7 +64,12 @@ switch ($routeInfo[0]) {
         // If user not allowed, redirect to homepage
         $accessAllowed = \App\Booking\User::hasAccess($routeInfo[1][2], $vars);
         if (!$accessAllowed) {
-            header('Location: /');
+            $userType = \App\Booking\User::getLoggedUserType();
+            if ($userType === 'guest') {
+                header('Location: /login');
+            } else {
+                header('Location: /');
+            }
             return;
         }
 
