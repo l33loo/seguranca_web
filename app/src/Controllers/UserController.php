@@ -96,7 +96,12 @@ class UserController
 
     public function showProfile()
     {
-        $html = $this->renderer->render('users/profile');
+        $userId = User::getLoggedUserId();
+        $user = User::find($userId);
+        $data = [
+            'user' => $user,
+        ];
+        $html = $this->renderer->render('users/profile', $data);
         $this->response->setContent($html);
     }
 
