@@ -17,9 +17,8 @@ switch ($environment) {
     case 'production':
     default:
         $whoops->pushHandler(function($e) {
-            // Echo error
             echo 'There was an error. Please contact us at support@example.com';
-            error_log($e->getMessage(), 0);
+            error_log($e->getMessage() . '\n', 3, '../logs/err.log');
             // This would normally send an email. Adding only as an example of logging messages.
             error_log($e->getMessage(), 1, "operator@example.com");
         });
