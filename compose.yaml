@@ -16,7 +16,7 @@ services:
       - ./tls/MyCertificate.crt:/etc/ssl/certs/MyCertificate.crt
       - ./tls/server.key:/etc/ssl/private/server.key
     env_file:
-      - path: ./dev.env
+      - path: ./.env/mysql.dev.env
         required: false # development
       - path: /mnt/seguranca_web/secrets/prod.env
         required: false # production, for Linux. Created by running `./compose-production.sh`. Overrides the development env file.
@@ -30,7 +30,7 @@ services:
       - ./mysql/data:/var/lib/mysql
       - ./mysql/init:/docker-entrypoint-initdb.d/:ro
     env_file:
-      - path: ./dev.env
+      - path: ./.env/mysql.dev.env
         required: false # development
       - path: /mnt/seguranca_web/secrets/prod.env
         required: false # production, for Linux. Created by running `./compose-production.sh`. Overrides the development env file.
