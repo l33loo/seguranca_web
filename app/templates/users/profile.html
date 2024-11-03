@@ -1,10 +1,7 @@
 {% extends "layout.html" %} {% block content %}
-<h1>User Profile</h1>
+<h1 class="my-5">User Profile</h1>
 <div>
-  <form action="/login">
-    <p>Username: {{ user.firstname }} {{ user.lastname }}</p>
-    <p>Email: {{ user.email }}</p>
-  </form>
+  <p><strong>Name:</strong> {{ user.firstname }} {{ user.lastname }}</p>
+  <p><strong>Email:</strong> {{ user.email }}</p>
 </div>
-<!-- Mostrar reservas feitas? e actividades no cart? -->
 {% endblock %}
