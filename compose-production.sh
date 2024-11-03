@@ -48,7 +48,7 @@ else
     exit 1
 fi
 
-touch app/logs/err.log
+touch app/logs/err.log && touch app/logs/login.log
 
 cd app && composer install && cd ..
 

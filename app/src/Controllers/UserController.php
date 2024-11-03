@@ -122,10 +122,29 @@ class UserController
                 'value' => trim($email),
             ]
         ];
+        $data = [];
         $users = User::search($filters);
+
+        // User found but invalid password
+        if (count($users) === 1 && !password_verify(trim($password), $users[0]->getPasswordhash())) {
+            $user = $users[0];
+            $failedAttempts = $user->getFailed_login_attempts();
+            $user->setFailed_login_attempts($failedAttempts + 1)->save();
+
+            if ($failedAttempts >= 3) {
+                $logMsg = "Total of $failedAttempts failed login attempts for user '" . $user->getId() . "' on " . date('Y-m-d H:i:s');
+                error_log($logMsg . PHP_EOL, 3, __DIR__ . '/../../logs/login.log');
+                // This would normally send an email. Adding only as an example of logging messages.
+                error_log($logMsg, 1, "operator@example.com");
+                $data['error'] = 'Account blocked after too many failed login attemps. Please contact support.';
+                $html = $this->renderer->render('users/login', $data);
+                $this->response->setContent($html);
+                return;
+            }
+        }
         
         // User found and valid password
-        if (count($users) === 1 && password_verify(trim($password), $users[0]->getPasswordhash()) === true) {
+        if (count($users) === 1 && password_verify(trim($password), $users[0]->getPasswordhash())) {
             $user = $users[0];
             $_SESSION['logged_id'] = $user->getId();
             $_SESSION['name'] = $user->getFirstname();
@@ -159,9 +178,7 @@ class UserController
         }
 
         // User error cases: either wrong password, or user not found
-        $data = [
-            'error' => 'Invalid credentials',
-        ];
+        $data['error'] = 'Invalid credentials';
         $html = $this->renderer->render('users/login', $data);
         $this->response->setContent($html);
     }

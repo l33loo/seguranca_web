@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS user (
   email VARCHAR(45) NOT NULL UNIQUE,
   passwordhash VARCHAR(215) NOT NULL,
   isvendor BOOLEAN NOT NULL,
+  failed_login_attempts INT DEFAULT 0,
   PRIMARY KEY (id)
 );
 
