@@ -7,15 +7,17 @@
     <div class="col-md-8">
       <div class="card-body h-100">
         <div class="d-flex flex-column justify-content-between h-100">
-            <div>
-                <h1 class="card-title">{{ activity.name }}</h1>
-                <p class="card-text">{{ activity.description }}</p>
-                <p class="card-text">{{ activity.dateTimeToString }}</p>
-                <p class="card-text">Cost: {{ activity.costToString() }} per person</p>
-            </div>
-            <div class="d-flex mb-2 mt-4" style="gap: 1rem">
-              {{ include('components/activityButtons.html', {view: false}) }}
-            </div>
+          <div>
+            <h1 class="card-title">{{ activity.name }}</h1>
+            <p class="card-text">{{ activity.description }}</p>
+            <p class="card-text">{{ activity.dateTimeToString }}</p>
+            <p class="card-text">
+              Cost: {{ activity.costToString() }} per person
+            </p>
+          </div>
+          <div class="d-flex mb-2 mt-4" style="gap: 1rem">
+            {{ include('components/activityButtons.html', {view: false}) }}
+          </div>
         </div>
       </div>
     </div>
@@ -29,33 +31,46 @@
   <li class="list-group-item">
     <div class="ms-2 me-auto">
       <div class="d-flex justify-content-between align-items-center">
-          <div><h3>Reservation #{{ reservation.id }}</h3></div>
-          <div class="d-flex align-items-center">
-            <strong>Status:&nbsp;</strong>
-            {% if activity.isarchived is same as false and activity.hasPassed() is same
-              as false %}
-            <form action="/reservations/{{ reservation.id }}/edit" method="post" class="ps-2">
-              <div class="d-flex" style="gap: 1rem">
-                <select name="status" id="status" class="form-select">
-                  {% for status in reservationStatuses %}
-                  <option value="{{ status.id }}"
-                  {% if reservation.reservationstatus.id is same as status.id %}
+        <div><h3>Reservation #{{ reservation.id }}</h3></div>
+        <div class="d-flex align-items-center">
+          <strong>Status:&nbsp;</strong>
+          {% if activity.isarchived is same as false and activity.hasPassed() is
+          same as false %}
+          <form
+            action="/reservations/{{ reservation.id }}/edit"
+            method="post"
+            class="ps-2"
+          >
+            <div class="d-flex" style="gap: 1rem">
+              <select name="status" id="status" class="form-select">
+                {% for status in reservationStatuses %}
+                <option
+                  value="{{ status.id }}"
+                  {%
+                  if
+                  reservation.reservationstatus.id
+                  is
+                  same
+                  as
+                  status.id
+                  %}
                   selected
-                  {% endif %}
-                  >{{ status.name }}</option>
-                  {% endfor %}
-                </select>
-                <input
-                  type="submit"
-                  value="Update status"
-                  class="ms-2 btn btn-primary"
-                />
-              </div>
-            </form>
-            {% else %}
-            {{ reservation.reservationstatus.name }}
-            {% endif %}
-          </div>
+                  {%
+                  endif
+                  %}
+                >
+                  {{ status.name }}
+                </option>
+                {% endfor %}
+              </select>
+              <input
+                type="submit"
+                value="Update status"
+                class="ms-2 btn btn-primary"
+              />
+            </div>
+          </form>
+          {% else %} {{ reservation.reservationstatus.name }} {% endif %}
         </div>
       </div>
       <hr />
