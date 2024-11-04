@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS creditcard (
 -- Tabela activity
 CREATE TABLE IF NOT EXISTS activity (
   id INT NOT NULL AUTO_INCREMENT,
-  name VARCHAR(45) NOT NULL,
+  name VARCHAR(150) NOT NULL,
   description VARCHAR(215) NOT NULL,
   date DATE NOT NULL,
   time TIME NOT NULL,
