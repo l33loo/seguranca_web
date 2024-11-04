@@ -42,6 +42,7 @@ class ReservationController
             ->loadRelation('reservedbyuser', 'user')
             ->loadRelation('reservationstatus', 'reservation_status');
         $reservation->getCreditcard()->decryptAll();
+        $reservation->getCreditcard()->obfuscateNum();
 
         $data = [
             'reservation' => $reservation,
@@ -158,6 +159,7 @@ class ReservationController
                 ->loadRelation('reservedbyuser', 'user')
                 ->loadRelation('reservationstatus', 'reservation_status');
             $data['reservation']->getCreditcard()->decryptAll();
+            $data['reservation']->getCreditcard()->obfuscateNum();
             $data['success'] = 'Reservation made with success.';
             header('Location: /reservations/' . $newRes->getId());
             $html = $this->renderer->render('reservations/show', $data);
@@ -203,6 +205,7 @@ class ReservationController
             ->loadRelation('reservedbyuser', 'user')
             ->loadRelation('reservationstatus', 'reservation_status');
         $data['reservation']->getCreditcard()->decryptAll();
+        $data['reservation']->getCreditcard()->obfuscateNum();
         header('Location: /reservations/' . $newReservation->getId());
         $html = $this->renderer->render('reservations/show', $data);
         $this->response->setContent($html);

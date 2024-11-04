@@ -262,6 +262,7 @@ class Activity
                 ->loadRelation('creditcard')
                 ->loadRelation('reservationstatus', 'reservation_status');
             $reservation->getCreditcard()->decryptAll();
+            $reservation->getCreditcard()->obfuscateNum();
         }
         return $this;
     }
