@@ -21,6 +21,7 @@ switch ($environment) {
             error_log($e->getMessage() . PHP_EOL, 3, __DIR__ . '/../logs/err.log');
             // This would normally send an email. Adding only as an example of logging messages.
             error_log($e->getMessage(), 1, "operator@example.com");
+            die;
         });
         break;
 }
